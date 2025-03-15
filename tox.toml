@@ -30,7 +30,6 @@ labels.tests = [
 [env_run_base]
 runner = "uv-venv-lock-runner"
 description = "run tests under {env_name}"
-package = "skip"
 pass_env = [
   "PYTEST_*",
 ]
@@ -41,6 +40,7 @@ commands = [
 
 [env.lint]
 description = "run pre-commit linting"
+skip_install = true
 pass_env = [
   "DISABLE_PRE_COMMIT_UV_PATCH",
 ]
@@ -59,7 +59,6 @@ commands = [
 
 [env.type]
 description = "type check source code"
-base_python = [ "3.13" ]
 dependency_groups = [ "type" ]
 commands = [
   [ "mypy", "extensions.py" ],
@@ -67,7 +66,6 @@ commands = [
 
 [env.type-tests]
 description = "type check tests"
-base_python = [ "3.13" ]
 dependency_groups = [
   "tests",
   "type",
@@ -90,7 +88,7 @@ commands = [
 
 [env.docs]
 description = "generate documentation"
-base_python = [ "3.13" ]
+skip_install = true
 dependency_groups = [ "docs" ]
 commands = [
   [
@@ -104,7 +102,7 @@ commands = [
 
 [env.autodocs]
 description = "serve documentation locally"
-base_python = [ "3.13" ]
+skip_install = true
 dependency_groups = [ "docs" ]
 commands = [
   [
