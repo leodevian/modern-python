@@ -1,0 +1,230 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [
+  "hatch-vcs>=0.4",
+  "hatchling>=1.27",
+]
+
+[project]
+name = "{{ distribution_name }}"
+description = "{{ project_description }}"
+readme = "README.md"
+license = "{{ license }}"
+license-files = [
+  "LICENSE",
+]
+maintainers = [
+  { name = "{{ user_name }}", email = "{{ user_email }}" },
+]
+authors = [
+  { name = "{{ user_name }}", email = "{{ user_email }}" },
+]
+requires-python = ">=3.9"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Typing :: Typed",
+]
+dynamic = [
+  "version",
+]
+dependencies = [  ]
+{%- if docs %}
+urls.changelog = "{{ documentation_url }}/changelog"
+urls.documentation = "{{ documentation_url }}"
+{%- else %}
+urls.changelog = "{{ repository_url }}/blob/main/CHANGELOG.md"
+{%- endif %}
+urls.homepage = "{{ repository_url }}"
+urls.issues = "{{ repository_url }}/issues"
+urls.repository = "{{ repository_url }}"
+{% if cli -%}
+scripts.{{ distribution_name }} = "{{ package_name }}.cli:main"
+{% endif %}
+[dependency-groups]
+dev = [
+  { include-group = "lint" },
+  { include-group = "release" },
+  { include-group = "type" },
+]
+type = [
+  "mypy>=1.15",
+]
+{%- if docs == 'mkdocs' %}
+docs = [
+  "black>=24.10",
+  "mkdocs>=1.6.1",
+  "mkdocs-material>=9.5.47",
+  "mkdocstrings[python]>=0.28.2",
+]
+{%- endif %}
+lint = [
+  "pre-commit-uv>=4.1.4",
+]
+docstrings = [
+  "interrogate>=1.7",
+]
+tests = [
+  "covdefaults>=2.3",
+  "pytest>=8.3.4",
+  "pytest-cov>=6",
+  "pytest-xdist>=3.6.1",
+]
+pkg = [
+  "check-wheel-contents>=0.6.1",
+  "twine>=6.0.1",
+  "uv>=0.6.5",
+]
+release = [
+{%- if tasks == 'tox' %}
+  "packaging>=24.2",
+{%- endif %}
+  "towncrier>=24.8",
+]
+
+[tool.hatch]
+build.hooks.vcs.version-file = "src/{{ package_name }}/VERSION.txt"
+version.fallback-version = "0.0.0"
+version.source = "vcs"
+
+[tool.ruff]
+lint.select = [
+  "ALL",
+]
+lint.ignore = [
+  "COM812", # conflicts with formatter
+  "ISC001", # conflicts with formatter
+]
+lint.per-file-ignores."scripts/**" = [
+  "INP001",
+]
+lint.per-file-ignores."scripts/release.py" = [
+  "S603", # using subprocess is okay
+]
+lint.per-file-ignores."tests/**" = [
+  "S101", # using assert is okay in tests
+]
+lint.pydocstyle.convention = "google"
+
+[tool.codespell]
+write-changes = true
+
+[tool.pyproject-fmt]
+max_supported_python = "3.13"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+  "-ra",
+  "--showlocals",
+  "--strict-config",
+  "--strict-markers",
+]
+filterwarnings = [ "error" ]
+log_level = "info"
+testpaths = [ "tests" ]
+xfail_strict = true
+
+[tool.coverage]
+html.show_contexts = true
+html.skip_covered = false
+paths.source = [
+  "src",
+{%- if tasks == 'tox' %}
+  ".tox/**/site-packages",
+{%- elif tasks == 'nox' %}
+  ".nox/**/site-packages",
+{%- endif %}
+]
+{%- if tasks == 'nox' %}
+run.omit = [
+  "noxfile.py",
+]
+{%- endif %}
+run.parallel = true
+run.plugins = [
+  "covdefaults",
+]
+
+[tool.towncrier]
+name = "{{ project_name }}"
+filename = "CHANGELOG.md"
+directory = "changelog.d"
+start_string = "<!-- towncrier release notes start -->\n"
+underlines = [ "", "", "" ]
+title_format = "## [{version}]({{ repository_url }}/tree/v{version}) - {project_date}"
+issue_format = "[#{issue}]({{ repository_url }}/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[tool.mypy]
+python_version = "3.9"
+warn_unreachable = true
+enable_error_code = [
+  "ignore-without-code",
+  "redundant-expr",
+  "truthy-bool",
+]
+strict = true
+pretty = true
+
+[tool.interrogate]
+ignore-init-method = false
+ignore-init-module = false
+ignore-magic = true
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = false
+ignore-nested-functions = false
+ignore-nested-classes = false
+ignore-setters = false
+{%- if tasks == 'tox' %}
+exclude = [  ]
+{%- elif tasks == 'nox' %}
+exclude = [
+  ".nox",
+]
+{%- endif %}
+fail-under = 100
+verbose = 0
+quiet = false
+whitelist-regex = [  ]
+color = true

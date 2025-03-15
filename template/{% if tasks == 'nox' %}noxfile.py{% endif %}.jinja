@@ -1,0 +1,223 @@
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "nox>=2025.2.9",
+#     "packaging>=24.2",
+# ]
+# ///
+"""Task automation with Nox."""
+
+from __future__ import annotations
+
+import argparse
+import os
+import subprocess
+from pathlib import Path
+
+import nox
+from nox.command import CommandFailed
+from packaging.version import Version
+
+nox.needs_version = ">=2025.2.9"
+nox.options.default_venv_backend = "uv"
+nox.options.reuse_existing_virtualenvs = True
+nox.options.sessions = (
+    "lint",
+    "type",
+    "type-tests",
+    "docstrings",
+    "pkg",
+    "tests",
+)
+
+PYPROJECT = nox.project.load_toml("pyproject.toml")
+SUPPORTED_PYTHON_VERSIONS = nox.project.python_versions(PYPROJECT)
+DEFAULT_PYTHON_VERSION = Path(".python-version").read_text().rstrip()
+
+
+@nox.session(python=SUPPORTED_PYTHON_VERSIONS)
+def tests(session: nox.Session) -> None:
+    """Run the test suite."""
+    session.install(".")
+    session.install(*nox.project.dependency_groups(PYPROJECT, "tests"))
+    coverage_path = Path(".nox", f".coverage.{session.python}")
+    tmp_dir = session.create_tmp()
+    htmlcov_dir = Path(tmp_dir, "htmlcov")
+    session.run(
+        "pytest",
+        *(
+            session.posargs
+            or (
+                "--durations",
+                "15",
+                "-n",
+                os.getenv("PYTEST_XDIST_AUTO_NUM_WORKERS") or "auto",
+                "--cov",
+                "--cov-config",
+                "pyproject.toml",
+                "--cov-context",
+                "test",
+                "--cov-report",
+                "term-missing:skip-covered",
+                "--cov-report",
+                f"html:{htmlcov_dir}",
+            )
+        ),
+        env={
+            "COVERAGE_FILE": os.getenv("COVERAGE_FILE") or str(coverage_path),
+            "COVERAGE_PROCESS_START": "pyproject.toml",
+        },
+    )
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def lint(session: nox.Session) -> None:
+    """Run pre-commit linting."""
+    session.install(*nox.project.dependency_groups(PYPROJECT, "lint"))
+    session.run(
+        "pre-commit",
+        "run",
+        "--all-files",
+        *session.posargs,
+        env={"FORCE_PRE_COMMIT_UV_PATCH": "1"},
+    )
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION, name="type")
+def type_check_src(session: nox.Session) -> None:
+    """Type check source code."""
+    session.install(".")
+    session.install(*nox.project.dependency_groups(PYPROJECT, "type"))
+    session.run("mypy", "src")
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION, name="type-tests")
+def type_check_tests(session: nox.Session) -> None:
+    """Type check tests."""
+    session.install(".")
+    session.install(*nox.project.dependency_groups(PYPROJECT, "tests", "type"))
+    session.run("mypy", "tests")
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def docstrings(session: nox.Session) -> None:
+    """Check docstring coverage."""
+    session.install(*nox.project.dependency_groups(PYPROJECT, "docstrings"))
+    session.run("interrogate", "--verbose", *session.posargs)
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def pkg(session: nox.Session) -> None:
+    """Check package distributions."""
+    session.install(*nox.project.dependency_groups(PYPROJECT, "pkg"))
+    tmp_dir = session.create_tmp()
+    session.run("uv", "build", "--out-dir", tmp_dir)
+    session.run("check-wheel-contents", "--no-config", tmp_dir)
+    session.run("twine", "check", "--strict", Path(tmp_dir, "*"))
+
+{% if docs == 'mkdocs' %}
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def docs(session: nox.Session) -> None:
+    """Generate documentation."""
+    session.install(".")
+    session.install(*nox.project.dependency_groups(PYPROJECT, "docs"))
+    session.run(
+        "mkdocs",
+        "build",
+        "--clean",
+        "--strict",
+        *session.posargs,
+    )
+
+
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def autodocs(session: nox.Session) -> None:
+    """Serve documentation locally."""
+    session.install("-e", ".")
+    session.install(*nox.project.dependency_groups(PYPROJECT, "docs"))
+    session.run(
+        "mkdocs",
+        "serve",
+        "--strict",
+        "--open",
+        *session.posargs,
+    )
+
+{% endif %}
+@nox.session(python=DEFAULT_PYTHON_VERSION)
+def release(session: nox.Session) -> None:
+    """Prepare a new release."""
+    parser = argparse.ArgumentParser(description="prepare a new release")
+    parser.add_argument("--version", type=Version, required=True, help="target version")
+    parser.add_argument("--dry-run", action="store_true", help="perform dry run")
+    args = parser.parse_args(session.posargs)
+
+    session.install(*nox.project.dependency_groups(PYPROJECT, "release"))
+
+    version = args.version.public
+
+    session.run("git", "diff", "--quiet", external=True)
+
+    base_branch = session.run(  # type: ignore[union-attr]
+        "git", "rev-parse", "--abbrev-ref", "HEAD", silent=True, external=True
+    ).rstrip()
+
+    release_branch = f"release/{version}"
+    release_tag = f"v{version}"
+
+    session.run("git", "checkout", "-b", release_branch, external=True)
+
+    try:
+        release_notes = session.run(
+            "towncrier",
+            "build",
+            "--draft",
+            "--version",
+            version,
+            silent=True,
+            stderr=subprocess.DEVNULL,
+        )
+        session.run("towncrier", "build", "--yes", "--version", version)
+        session.run(
+            "git", "add", "-A", ":/CHANGELOG.md", ":/changelog.d", external=True
+        )
+        session.run(
+            "git",
+            "commit",
+            "-m",
+            f"chore: prepare release {version}",
+            "--no-verify",
+            external=True,
+        )
+        session.run(
+            "git",
+            "tag",
+            "-a",
+            release_tag,
+            "-m",
+            release_notes,  # type: ignore[arg-type]
+            "--cleanup",
+            "verbatim",
+        )
+
+    except CommandFailed:
+        session.run("git", "checkout", base_branch, external=True)
+        session.run("git", "branch", "-D", release_branch, external=True)
+        raise
+
+    if not args.dry_run:
+        session.run(
+            "git",
+            "push",
+            "--follow-tags",
+            f"{release_branch}:main",
+            external=True,
+        )
+        session.run("git", "checkout", "main", external=True)
+        session.run("git", "branch", "-D", release_branch, external=True)
+        session.run("git", "fetch", external=True)
+        session.run("git", "reset", "--hard", "origin/main", external=True)
+
+
+if __name__ == "__main__":
+    nox.main()

@@ -1,0 +1,18 @@
+# {{ project_name }}
+
+## Installation
+
+Install `{{ distribution_name }}` using [pip](https://pip.pypa.io/en/stable/):
+
+```console
+$ pip install {{ distribution_name }}
+```
+{% if cli %}
+## Invocation
+
+Invoke `{{ distribution_name }}` using [uvx](https://docs.astral.sh/uv/):
+
+```console
+$ uvx {{ distribution_name }}
+```
+{% endif -%}

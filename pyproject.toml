@@ -1,0 +1,228 @@
+[project]
+name = "modern-python"
+version = "2025.3.14"
+description = "Copier template for Python projects"
+readme = "README.md"
+keywords = [
+  "copier",
+  "template",
+]
+license = "MIT"
+license-files = [
+  "LICENSE",
+]
+maintainers = [
+  { name = "Léo Bernard", email = "leodevian.gh@gmail.com" },
+]
+authors = [
+  { name = "Léo Bernard", email = "leodevian.gh@gmail.com" },
+]
+requires-python = ">=3.9"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: Software Development",
+  "Typing :: Typed",
+]
+dependencies = [
+  "copier>=9.6",
+  "copier-templates-extensions>=0.3.1",
+]
+urls.changelog = "https://github.com/leodevian/modern-python/blob/main/CHANGELOG.md"
+urls.documentation = "https://github.com/leodevian/modern-python/tree/main/docs"
+urls.homepage = "https://github.com/leodevian/modern-python"
+urls.issues = "https://github.com/leodevian/modern-python/issues"
+urls.repository = "https://github.com/leodevian/modern-python"
+
+[dependency-groups]
+dev = [
+  { include-group = "lint" },
+  { include-group = "release" },
+  { include-group = "type" },
+]
+type = [
+  "mypy>=1.15",
+]
+docs = [
+  "mkdocs>=1.6.1",
+  "mkdocs-material>=9.5.47",
+]
+docstrings = [
+  "interrogate>=1.7",
+]
+tests = [
+  "copier>=9.6",
+  "copier-templates-extensions>=0.3.1",
+  "pytest>=8.3.4",
+  "uv>=0.6.5",
+]
+lint = [
+  "pre-commit-uv>=4.1.4",
+]
+release = [
+  "bump-my-version>=0.28.1",
+  "towncrier>=24.8",
+]
+
+[tool.ruff]
+extend-exclude = [  ]
+lint.select = [
+  "ALL",
+]
+lint.ignore = [
+  "ANN401", # using Any is okay
+  "COM812", # conflicts with formatter
+  "ISC001", # conflicts with formatter
+]
+lint.per-file-ignores."extensions.py" = [
+  "DTZ011", # naive datetime objects are okay
+  "S603",   # using subprocess is okay
+]
+lint.per-file-ignores."tests/**" = [
+  "S101", # using assert is okay in tests
+  "S603", # using subprocess is okay
+]
+lint.per-file-ignores."tests/conftest.py" = [
+  "BLE001", # broad exception clauses are okay
+]
+lint.pydocstyle.convention = "google"
+
+[tool.codespell]
+write-changes = true
+
+[tool.pyproject-fmt]
+max_supported_python = "3.13"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+  "-ra",
+  "--showlocals",
+  "--strict-config",
+  "--strict-markers",
+]
+filterwarnings = [ "error" ]
+log_level = "info"
+testpaths = [ "tests" ]
+xfail_strict = true
+markers = [
+  "integration: integration tests",
+]
+
+[tool.bumpversion]
+current_version = "2025.3.10"
+parse = """(?x)
+  (?P<release>
+    (?:[1-9][0-9]{3})\\.
+    (?:1[0-2]|[1-9])\\.
+    (?:3[0-1]|[1-2][0-9]|[1-9])
+  )
+  (?:\\.(?P<patch>\\d+))?
+"""
+serialize = [
+  "{release}.{patch}",
+  "{release}",
+]
+commit = true
+commit_args = "--no-verify"
+tag = true
+tag_name = "v{new_version}"
+tag_message = ""
+allow_dirty = true
+message = "build: bump version to {new_version}"
+setup_hooks = [
+  "towncrier build --yes",
+  "git add -A :/changelog.d :/CHANGELOG.md",
+]
+pre_commit_hooks = [
+  "uv lock -P modern-python",
+  "git add :/uv.lock",
+]
+parts.release.calver_format = "{YYYY}.{MM}.{DD}"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = "CHANGELOG.md"
+search = "Unreleased"
+replace = "[{new_version}](https://github.com/leodevian/modern-python/tree/v{new_version})"
+
+[tool.towncrier]
+version = "Unreleased"
+filename = "CHANGELOG.md"
+directory = "changelog.d"
+start_string = "<!-- towncrier release notes start -->\n"
+underlines = [ "", "", "" ]
+title_format = "## {version}"
+issue_format = "[#{issue}](https://github.com/leodevian/modern-python/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[tool.mypy]
+python_version = "3.9"
+warn_unreachable = true
+enable_error_code = [
+  "ignore-without-code",
+  "redundant-expr",
+  "truthy-bool",
+]
+strict = true
+pretty = true
+
+[tool.interrogate]
+ignore-init-method = false
+ignore-init-module = false
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = false
+ignore-nested-functions = false
+ignore-nested-classes = false
+ignore-setters = false
+exclude = [  ]
+fail-under = 100
+verbose = 0
+quiet = false
+whitelist-regex = [  ]
+color = true
