@@ -1,0 +1,45 @@
+"""The logging setup."""
+
+from __future__ import annotations
+
+import logging
+
+LEVELS = {
+    0: logging.CRITICAL,
+    1: logging.ERROR,
+    2: logging.WARNING,
+    3: logging.INFO,
+    4: logging.DEBUG,
+    5: logging.NOTSET,
+}
+
+
+def get_log_level(verbosity: int) -> int:
+    """Return the log level from the verbosity level.
+
+    Args:
+        verbosity: A verbosity level.
+
+    Returns:
+        A log level.
+    """
+    return LEVELS[min(verbosity, max(LEVELS))]
+
+
+def setup_logging(verbosity: int) -> None:
+    """Setup logging.
+
+    Args:
+        verbosity: A verbosity level.
+    """
+    logger = logging.getLogger("{{ package_name }}")
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter(
+        "%(asctime)s [%(levelname)-8s] %(message)s",
+        "%Y-%m-%d %H:%M:%S",
+    )
+    stderr_handler = logging.StreamHandler()
+    level = get_log_level(verbosity)
+    stderr_handler.setLevel(level)
+    stderr_handler.setFormatter(formatter)
+    logger.addHandler(stderr_handler)
