@@ -1,0 +1,40 @@
+"""Tests for the command-line interface."""
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+import pytest
+
+from {{ package_name }} import __version__
+from {{ package_name }}.cli import main
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+
+def test_main() -> None:
+    """Test the main program."""
+    assert main([]) == 0
+
+
+def test_show_help(capsys: pytest.CaptureFixture[str]) -> None:
+    """Test the help flag of the command-line interface."""
+    with pytest.raises(SystemExit) as excinfo:
+        main(["-h"])
+
+    assert excinfo.value.code == 0
+
+    captured = capsys.readouterr()
+    assert "{{ distribution_name }}" in captured.out
+
+
+def test_show_version(capsys: pytest.CaptureFixture[str]) -> None:
+    """Test the version flag of the command-line interface."""
+    with pytest.raises(SystemExit) as excinfo:
+        main(["-V"])
+
+    assert excinfo.value.code == 0
+
+    captured = capsys.readouterr()
+    assert __version__ in captured.out

@@ -1,0 +1,115 @@
+requires = [
+  "tox>=4.23.2",
+  "tox-uv>=1.25",
+]
+env_list = [
+  "lint",
+  "type",
+  "type-tests",
+  "docstrings",
+  "3.13",
+  "3.12",
+  "3.11",
+  "3.10",
+  "3.9",
+]
+labels.checks = [
+  "lint",
+  "type",
+  "type-tests",
+  "docstrings",
+]
+labels.tests = [
+  "3.13",
+  "3.12",
+  "3.11",
+  "3.10",
+  "3.9",
+]
+
+[env_run_base]
+runner = "uv-venv-lock-runner"
+description = "run tests under {env_name}"
+pass_env = [
+  "PYTEST_*",
+]
+dependency_groups = [ "tests" ]
+commands = [
+  [ "pytest", { replace = "posargs", extend = true } ],
+]
+
+[env.lint]
+description = "run pre-commit linting"
+skip_install = true
+pass_env = [
+  "DISABLE_PRE_COMMIT_UV_PATCH",
+]
+set_env = [
+  { FORCE_PRE_COMMIT_UV_PATCH = "1" },
+]
+dependency_groups = [ "lint" ]
+commands = [
+  [
+    "pre-commit",
+    "run",
+    "--all-files",
+    { replace = "posargs", extend = true },
+  ],
+]
+
+[env.type]
+description = "type check source code"
+dependency_groups = [ "type" ]
+commands = [
+  [ "mypy", "extensions.py" ],
+]
+
+[env.type-tests]
+description = "type check tests"
+dependency_groups = [
+  "tests",
+  "type",
+]
+commands = [
+  [ "mypy", "tests" ],
+]
+
+[env.docstrings]
+description = "check docstring coverage"
+skip_install = true
+dependency_groups = [ "docstrings" ]
+commands = [
+  [
+    "interrogate",
+    "--verbose",
+    { replace = "posargs", extend = true },
+  ],
+]
+
+[env.docs]
+description = "generate documentation"
+skip_install = true
+dependency_groups = [ "docs" ]
+commands = [
+  [
+    "mkdocs",
+    "build",
+    "--clean",
+    "--strict",
+    { replace = "posargs", extend = true },
+  ],
+]
+
+[env.autodocs]
+description = "serve documentation locally"
+skip_install = true
+dependency_groups = [ "docs" ]
+commands = [
+  [
+    "mkdocs",
+    "serve",
+    "--strict",
+    "--open",
+    { replace = "posargs", extend = true },
+  ],
+]

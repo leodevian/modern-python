@@ -1,0 +1,145 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags-ignore: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - lint
+          - type
+          - type-tests
+          - docstrings
+          - pkg
+{%- if docs %}
+          - docs
+{%- endif %}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+          github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+{% if tasks == 'tox' %}
+      - name: Install tox
+        run: >-
+          uv tool install tox
+          --python-preference only-managed
+          --python 3.13
+          --with tox-uv
+
+      - name: Setup the check suite
+        run: >-
+          tox run
+          --notest
+          --skip-missing-interpreters false
+          -e {% raw %}${{ matrix.env }}{% endraw %}
+
+      - name: Run the check suite
+        run: >-
+          tox run
+          --skip-pkg-install
+          -e {% raw %}${{ matrix.env }}{% endraw %}
+{% elif tasks == 'nox' %}
+      - name: Install Nox
+        run: >-
+          uv tool install "nox[uv]"
+          --python-preference only-managed
+          --python 3.13
+
+      - name: Setup the check suite
+        run: >-
+          nox
+          --install-only
+          --session {% raw %}${{ matrix.env }}{% endraw %}
+
+      - name: Run the check suite
+        run: >-
+          nox
+          --no-install
+          --session {% raw %}${{ matrix.env }}{% endraw %}
+{% endif %}
+  tests:
+    runs-on: ubuntu-latest
+    needs: check
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version:
+          - "3.13"
+          - "3.12"
+          - "3.11"
+          - "3.10"
+          - "3.9"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+          github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+{% if tasks == 'tox' %}
+      - name: Install tox
+        run: >-
+          uv tool install tox
+          --python-preference only-managed
+          --python 3.13
+          --with tox-uv
+
+      - name: Setup the test suite
+        run: >-
+          tox run
+          --notest
+          --skip-missing-interpreters false
+          -e {% raw %}${{ matrix.python_version }}{% endraw %}
+
+      - name: Run the test suite
+        run: >-
+          tox run
+          --skip-pkg-install
+          -e {% raw %}${{ matrix.python_version }}{% endraw %}
+{% elif tasks == 'nox' %}
+      - name: Install Nox
+        run: >-
+          uv tool install "nox[uv]"
+          --python-preference only-managed
+          --python 3.13
+
+      - name: Setup the test suite
+        run: >-
+          nox
+          --install-only
+          --session {% raw %}tests-${{ matrix.python_version }}{% endraw %}
+
+      - name: Run the test suite
+        run: >-
+          nox
+          --no-install
+          --session {% raw %}tests-${{ matrix.python_version }}{% endraw %}
+{% endif -%}
