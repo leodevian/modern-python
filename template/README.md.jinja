@@ -1,0 +1,24 @@
+# {{ project_name }}
+
+- GitHub repository: <{{ repository_url }}>
+{%- if docs %}
+- Documentation: <{{ documentation_url }}>
+{%- endif %}
+- License: {{ license }}
+
+## Installation
+
+Install `{{ distribution_name }}` using [pip](https://pip.pypa.io/en/stable/):
+
+```console
+$ pip install {{ distribution_name }}
+```
+{% if cli %}
+## Invocation
+
+Invoke `{{ distribution_name }}` using [uvx](https://docs.astral.sh/uv/):
+
+```console
+$ uvx {{ distribution_name }}
+```
+{% endif -%}

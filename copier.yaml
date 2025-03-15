@@ -1,0 +1,105 @@
+---
+_min_copier_version: "9.6.0"
+_subdirectory: template
+_template_suffix: .jinja
+_envops:
+  autoescape: false
+  keep_trailing_newline: true
+_jinja_extensions:
+  - copier_templates_extensions.TemplateExtensionLoader
+  - extensions.py:CurrentYearExtension
+  - extensions.py:ContextUpdater
+  - extensions.py:GitExtension
+  - extensions.py:SlugifyExtension
+_skip_if_exists:
+  - CHANGELOG.md
+_preserve_symlinks: true
+_message_after_copy: |
+  {{ project_name }} has been created successfully!
+
+  1. Change directory:
+
+     $ cd {{ _copier_conf.dst_path }}
+
+  2. Create an empty Git repository:
+
+     $ git init
+     $ git branch -M main
+
+  3. Add your GitHub repository to remotes:
+
+     $ git remote add origin {{ repository_url }}.git
+
+  4. Push your main branch to GitHub:
+
+     $ git add .
+     $ git commit -m "Initial commit"
+     $ git push -u origin main
+
+project_name:
+  type: str
+  help: Your project name?
+
+project_description:
+  type: str
+  help: Your project description?
+  default: ""
+
+user_name:
+  type: str
+  help: Your name?
+  default: "{{ 'Léo Bernard' | git_user_name }}"
+
+user_email:
+  type: str
+  help: Your email?
+  default: "{{ 'leodevian.gh@gmail.com' | git_user_email }}"
+
+github_user:
+  type: str
+  help: Your GitHub username?
+  default: leodevian
+
+license:
+  type: str
+  help: Which open-source license do you want to use?
+  default: MIT
+  choices:
+    Apache License 2.0: Apache-2.0
+    BSD 3-Clause "New" or "Revised" License: BSD-3-Clause
+    GNU General Public License v3.0 only: GPL-3.0-only
+    GNU Lesser General Public License v3.0 only: LGPL-3.0
+    MIT License: MIT
+    Mozilla Public License 2.0: MPL-2.0
+
+features:
+  type: str
+  help: Which features to you want to use?
+  multiselect: true
+  default: [tasks, docs]
+  choices:
+    Task automation: tasks
+    Documentation: docs
+    CLI: cli
+
+tasks:
+  type: str
+  help: Which task automation tool do you want to use?
+  when: "{{ 'tasks' in features }}"
+  choices:
+    tox: tox
+    nox: nox
+
+docs:
+  type: str
+  help: Which static site generator do you want to use?
+  when: "{{ 'docs' in features }}"
+  choices:
+    MkDocs: mkdocs
+
+cli:
+  type: str
+  help: Which CLI framework do you want to use?
+  when: "{{ 'cli' in features }}"
+  choices:
+    argparse: argparse
