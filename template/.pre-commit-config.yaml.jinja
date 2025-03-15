@@ -1,0 +1,75 @@
+---
+exclude: ^(CHANGELOG\.md|CODE_OF_CONDUCT\.md)$
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: v2.5.1
+    hooks:
+      - id: pyproject-fmt
+{% if tasks == 'tox' %}
+  - repo: https://github.com/tox-dev/tox-toml-fmt
+    rev: v1.0.0
+    hooks:
+      - id: tox-toml-fmt
+{% endif %}
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.6
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.6.16
+    hooks:
+      - id: uv-lock
+      - id: uv-export
+        args: [--output-file, pylock.toml]
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+        additional_dependencies:
+          - tomli
+
+  - repo: https://github.com/hukkin/mdformat
+    rev: 0.7.22
+    hooks:
+{%- if docs == 'mkdocs' %}
+      - id: mdformat
+        exclude: ^docs/
+        additional_dependencies:
+          - black==25.1.0
+          - mdformat-black
+          - mdformat-gfm
+      - id: mdformat
+        files: ^docs/
+        additional_dependencies:
+          - black==25.1.0
+          - mdformat-black
+          - mdformat-footnote
+          - mdformat-frontmatter
+          - mdformat-mkdocs
+          - mdformat-simple-breaks
+          - mdformat-tables
+{%- else %}
+      - id: mdformat
+        additional_dependencies:
+          - black==25.1.0
+          - mdformat-black
+          - mdformat-gfm
+{%- endif %}

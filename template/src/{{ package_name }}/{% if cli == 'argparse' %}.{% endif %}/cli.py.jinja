@@ -1,0 +1,87 @@
+"""This module contains the command-line interface."""
+
+from __future__ import annotations
+
+import argparse
+import logging
+from typing import TYPE_CHECKING
+
+from {{ package_name }}.__version__ import __version__
+from {{ package_name }}.log import setup_logging
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+LOGGER = logging.getLogger(__name__)
+
+
+class Args(argparse.Namespace):
+    """Arguments."""
+
+    verbose: int
+    """An integer to increase verbosity."""
+
+    quiet: int
+    """An integer to decrease verbosity."""
+
+    @property
+    def verbosity(self) -> int:
+        """Return the verbosity level.
+
+        Returns:
+            Verbosity level.
+        """
+        return max(self.verbose - self.quiet, 0)
+
+
+def add_verbosity_options(parser: argparse.ArgumentParser) -> None:
+    """Add options to increase or decrease verbosity to an argument parser.
+
+    Args:
+        parser: An argument parser.
+    """
+    verbosity_group = parser.add_argument_group("verbosity")
+    verbosity = verbosity_group.add_mutually_exclusive_group()
+    verbosity.add_argument(
+        "-v",
+        "--verbose",
+        action="count",
+        help="increase verbosity",
+        default=2,
+    )
+    verbosity.add_argument(
+        "-q",
+        "--quiet",
+        action="count",
+        help="decrease verbosity",
+        default=0,
+    )
+
+
+def create_parser() -> argparse.ArgumentParser:
+    """Create the argument parser.
+
+    Returns:
+        An argument parser.
+    """
+    parser = argparse.ArgumentParser(prog="{{ distribution_name }}")
+    parser.add_argument(
+        "-V", "--version", action="version", version="%(prog)s " + __version__
+    )
+    add_verbosity_options(parser)
+    return parser
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """Run the main program.
+
+    Args:
+        argv: Arguments passed from the command-line.
+
+    Returns:
+        An exit code.
+    """
+    parser = create_parser()
+    args = parser.parse_args(argv, Args())
+    setup_logging(verbosity=args.verbosity)
+    return 0

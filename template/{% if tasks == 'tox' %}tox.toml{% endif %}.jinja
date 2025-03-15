@@ -1,0 +1,169 @@
+requires = [
+  "tox>=4.23.2",
+  "tox-uv>=1.25",
+]
+env_list = [
+  "lint",
+  "type",
+  "type-tests",
+  "docstrings",
+  "pkg",
+  "3.13",
+  "3.12",
+  "3.11",
+  "3.10",
+]
+labels.checks = [
+  "lint",
+  "type",
+  "type-tests",
+  "docstrings",
+  "pkg",
+]
+labels.tests = [
+  "3.13",
+  "3.12",
+  "3.11",
+  "3.10",
+]
+
+[env_run_base]
+description = "run tests under {env_name}"
+package = "wheel"
+wheel_build_env = ".pkg"
+pass_env = [
+  "PYTEST_*",
+]
+set_env = [
+  { COVERAGE_FILE = { replace = "env", name = "COVERAGE_FILE", default = "{env_tmp_dir}{/}.coverage" } },
+  { COVERAGE_PROCESS_START = "{tox_root}/pyproject.toml" },
+]
+dependency_groups = [ "tests" ]
+commands = [
+  [
+    "pytest",
+    { replace = "posargs", extend = true, default = [
+      "--durations",
+      "15",
+      "-n",
+      { replace = "env", name = "PYTEST_XDIST_AUTO_NUM_WORKERS", default = "auto" },
+      "--cov",
+      "--cov-config",
+      "{tox_root}{/}pyproject.toml",
+      "--cov-context",
+      "test",
+      "--cov-report",
+      "term-missing:skip-covered",
+      "--cov-report",
+      "html:{env_tmp_dir}{/}htmlcov",
+    ] },
+  ],
+]
+
+[env.lint]
+description = "run pre-commit linting"
+skip_install = true
+pass_env = [
+  "DISABLE_PRE_COMMIT_UV_PATCH",
+]
+set_env = [
+  { FORCE_PRE_COMMIT_UV_PATCH = "1" },
+]
+dependency_groups = [ "lint" ]
+commands = [
+  [
+    "pre-commit",
+    "run",
+    "--all-files",
+    { replace = "posargs", extend = true },
+  ],
+]
+
+[env.type]
+description = "type check source code"
+dependency_groups = [ "type" ]
+commands = [
+  [ "mypy", "src" ],
+]
+
+[env.type-tests]
+description = "type check tests"
+dependency_groups = [ "tests", "type" ]
+commands = [
+  [ "mypy", "tests" ],
+]
+
+[env.docstrings]
+description = "check docstring coverage"
+skip_install = true
+dependency_groups = [ "docstrings" ]
+commands = [
+  [
+    "interrogate",
+    "--verbose",
+    { replace = "posargs", extend = true },
+  ],
+]
+
+[env.pkg]
+description = "check package distributions"
+skip_install = true
+dependency_groups = [ "pkg" ]
+commands = [
+  [
+    "uv",
+    "build",
+    "--out-dir",
+    "{env_tmp_dir}",
+  ],
+  [
+    "check-wheel-contents",
+    "--no-config",
+    "{env_tmp_dir}",
+  ],
+  [
+    "twine",
+    "check",
+    "--strict",
+    "{env_tmp_dir}{/}*",
+  ],
+]
+{% if docs == 'mkdocs' %}
+[env.docs]
+description = "generate documentation"
+dependency_groups = [ "docs" ]
+commands = [
+  [
+    "mkdocs",
+    "build",
+    "--clean",
+    "--strict",
+    { replace = "posargs", extend = true },
+  ],
+]
+
+[env.autodocs]
+description = "serve documentation locally"
+package = "editable"
+dependency_groups = [ "docs" ]
+commands = [
+  [
+    "mkdocs",
+    "serve",
+    "--strict",
+    "--open",
+    { replace = "posargs", extend = true },
+  ],
+]
+{% endif %}
+[env.release]
+description = "prepare a new release"
+skip_install = true
+dependency_groups = [ "release" ]
+commands = [
+  [
+    "python",
+    "{tox_root}{/}scripts{/}release.py",
+    { replace = "posargs", extend = true },
+  ],
+]
