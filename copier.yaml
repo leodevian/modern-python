@@ -1,0 +1,62 @@
+---
+_min_copier_version: "9.6.0"
+_subdirectory: template
+_template_suffix: .jinja
+_envops:
+  autoescape: false
+  keep_trailing_newline: true
+_jinja_extensions:
+  - copier_templates_extensions.TemplateExtensionLoader
+  - extensions.py:CurrentYearExtension
+  - extensions.py:ContextUpdater
+  - extensions.py:GitExtension
+  - extensions.py:SlugifyExtension
+_skip_if_exists:
+  - CHANGELOG.md
+_preserve_symlinks: true
+
+project_name:
+  type: str
+  help: Your project name?
+
+project_description:
+  type: str
+  help: Your project description?
+  default: ""
+
+user_name:
+  type: str
+  help: Your name?
+  default: "{{ 'Léo Bernard' | git_user_name }}"
+
+user_email:
+  type: str
+  help: Your email?
+  default: "{{ 'leodevian.gh@gmail.com' | git_user_email }}"
+
+github_user:
+  type: str
+  help: Your GitHub username?
+  default: leodevian
+
+license:
+  type: str
+  help: The license?
+  default: MIT
+  choices:
+    Apache License 2.0: Apache-2.0
+    BSD 3-Clause "New" or "Revised" License: BSD-3-Clause
+    GNU General Public License v3.0 only: GPL-3.0-only
+    GNU Lesser General Public License v3.0 only: LGPL-3.0
+    MIT License: MIT
+    Mozilla Public License 2.0: MPL-2.0
+
+docs:
+  type: bool
+  help: Setup documentation with MkDocs and GitHub Pages?
+  default: false
+
+cli:
+  type: bool
+  help: Setup a command-line interface?
+  default: false

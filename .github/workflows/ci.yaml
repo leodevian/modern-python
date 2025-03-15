@@ -1,0 +1,104 @@
+---
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags-ignore: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - lint
+          - type
+          - type-tests
+          - docstrings
+          - docs
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install tox
+        run: >-
+          uv tool install tox
+          --python-preference only-managed
+          --python 3.13
+          --with tox-uv
+
+      - name: Setup the check suite
+        run: >-
+          tox run
+          --notest
+          --skip-missing-interpreters false
+          -e ${{ matrix.env }}
+
+      - name: Run the check suite
+        run: >-
+          tox run
+          --skip-pkg-install
+          -e ${{ matrix.env }}
+
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version:
+          - "3.13"
+          - "3.12"
+          - "3.11"
+          - "3.10"
+          - "3.9"
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install tox
+        run: >-
+          uv tool install tox
+          --python-preference only-managed
+          --python 3.13
+          --with tox-uv
+
+      - name: Setup the test suite
+        run: >-
+          tox run
+          --notest
+          --skip-missing-interpreters false
+          -e ${{ matrix.python_version }}
+
+      - name: Run the test suite
+        run: >-
+          tox run
+          --skip-pkg-install
+          -e ${{ matrix.python_version }}
