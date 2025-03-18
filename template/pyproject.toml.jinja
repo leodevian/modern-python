@@ -1,7 +1,8 @@
 [build-system]
-build-backend = "pdm.backend"
+build-backend = "hatchling.build"
 requires = [
-  "pdm-backend>=2.4.3",
+  "hatch-vcs>=0.4",
+  "hatchling>=1.27",
 ]
 
 [project]
@@ -90,10 +91,10 @@ release = [
   "towncrier>=24.8",
 ]
 
-[tool.pdm]
-version.source = "scm"
-version.fallback_version = "0.0.0"
-version.write_to = "{{ package_name }}/VERSION.txt"
+[tool.hatch]
+build.hooks.vcs.version-file = "src/{{ package_name }}/VERSION.txt"
+version.fallback-version = "0.0.0"
+version.source = "vcs"
 
 [tool.ruff]
 lint.select = [
