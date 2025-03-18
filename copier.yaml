@@ -60,3 +60,11 @@ cli:
   type: bool
   help: Setup a command-line interface?
   default: false
+
+test_automation_tool:
+  type: str
+  help: Which test automation tool?
+  default: tox
+  choices:
+    tox: tox
+    Nox: nox

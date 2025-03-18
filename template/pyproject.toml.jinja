@@ -84,7 +84,9 @@ pkg = [
   "uv>=0.6.5",
 ]
 release = [
+{%- if test_automation_tool == 'tox' %}
   "packaging>=24.2",
+{%- endif %}
   "towncrier>=24.8",
 ]
 
@@ -138,6 +140,11 @@ paths.source = [
   "src",
   ".tox/**/site-packages",
 ]
+{%- if test_automation_tool == 'nox' %}
+run.omit = [
+  "noxfile.py",
+]
+{%- endif %}
 run.parallel = true
 run.plugins = [
   "covdefaults",
@@ -204,7 +211,7 @@ ignore-module = false
 ignore-nested-functions = false
 ignore-nested-classes = false
 ignore-setters = false
-exclude = [  ]
+exclude = [ {% if test_automation_tool == 'nox' %}".nox"{% endif %} ]
 fail-under = 100
 verbose = 0
 quiet = false
