@@ -6,7 +6,7 @@ import re
 import subprocess
 import unicodedata
 from datetime import date
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Literal
 
 from copier_templates_extensions import ContextHook
 from jinja2.ext import Extension
@@ -35,7 +35,7 @@ def git_user_email(user_email: str) -> str:
     )
 
 
-def slugify(string: str, separator: str = "-") -> str:
+def slugify(string: str, separator: Literal["-", "_"] = "-") -> str:
     """Create a slug from the given string."""
     string = (
         unicodedata.normalize("NFKD", string).encode("ascii", "ignore").decode("ascii")
