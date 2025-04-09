@@ -197,7 +197,7 @@ def release(session: nox.Session) -> None:
             "-m",
             release_notes,  # type: ignore[arg-type]
             "--cleanup",
-            "verbatim",
+            "whitespace",
         )
 
     except CommandFailed:
