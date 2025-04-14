@@ -36,7 +36,13 @@ classifiers = [
 dynamic = [
   "version",
 ]
+{%- if cli == 'click' %}
+dependencies = [
+  "click>=8.1.8",
+]
+{%- else %}
 dependencies = [  ]
+{%- endif %}
 {%- if docs %}
 urls.changelog = "{{ documentation_url }}/changelog"
 urls.documentation = "{{ documentation_url }}"

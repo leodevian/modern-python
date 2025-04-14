@@ -103,3 +103,4 @@ cli:
   when: "{{ 'cli' in features }}"
   choices:
     argparse: argparse
+    Click: click
