@@ -1,0 +1,129 @@
+"""The command-line interface."""
+
+from __future__ import annotations
+
+import logging
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, ParamSpec, TypeVar
+
+import click
+
+from {{ package_name }} import __version__
+from {{ package_name }}.log import setup_logging
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+LOGGER = logging.getLogger(__name__)
+
+P = ParamSpec("P")
+R = TypeVar("R")
+
+
+@dataclass(slots=True)
+class State:
+    """A data class for command states."""
+
+    verbose: int = 0
+    """An integer to increase verbosity."""
+
+    quiet: int = 0
+    """An integer to decrease verbosity."""
+
+    @property
+    def verbosity(self) -> int:
+        """Get the verbosity level.
+
+        Returns:
+            The verbosity level.
+        """
+        return max(self.verbose - self.quiet, 0)
+
+
+pass_state = click.make_pass_decorator(State, ensure=True)
+
+
+def verbose_option(func: Callable[P, R]) -> Callable[P, R]:
+    """Attach an option to increase verbosity to a command.
+
+    Args:
+        func: The command to attach the option to.
+
+    Returns:
+        The decorated command.
+    """
+
+    def callback(
+        ctx: click.Context,
+        param: click.Parameter,  # noqa: ARG001
+        value: int,
+    ) -> int:
+        state = ctx.ensure_object(State)
+        state.verbose = value
+        return value
+
+    return click.option(
+        "-v",
+        "--verbose",
+        count=True,
+        default=2,
+        expose_value=False,
+        help="Increase verbosity.",
+        callback=callback,
+    )(func)
+
+
+def quiet_option(func: Callable[P, R]) -> Callable[P, R]:
+    """Attach an option to decrease verbosity to a command.
+
+    Args:
+        func: The command to attach the option to.
+
+    Returns:
+        The decorated command.
+    """
+
+    def callback(
+        ctx: click.Context,
+        param: click.Parameter,  # noqa: ARG001
+        value: int,
+    ) -> int:
+        state = ctx.ensure_object(State)
+        state.quiet = value
+        return value
+
+    return click.option(
+        "-q",
+        "--quiet",
+        count=True,
+        expose_value=False,
+        help="Decrease verbosity.",
+        callback=callback,
+    )(func)
+
+
+def verbosity_options(func: Callable[P, R]) -> Callable[P, R]:
+    """Attach options to increase and decrease verbosity to a command.
+
+    Args:
+        func: The command to attach the options to.
+
+    Returns:
+        The decorated command.
+    """
+    func = verbose_option(func)
+    return quiet_option(func)
+
+
+@click.command(help="Run the main program.")
+@click.help_option("-h", "--help")
+@click.version_option(__version__, "-V", "--version")
+@verbosity_options
+@pass_state
+def main(state: State) -> None:
+    """Run the main program.
+
+    Args:
+        state: The state.
+    """
+    setup_logging(verbosity=state.verbosity)
