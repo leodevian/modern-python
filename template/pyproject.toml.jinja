@@ -130,13 +130,31 @@ max_supported_python = "3.13"
 minversion = "6.0"
 addopts = [
   "-ra",
+{%- if 'readme' in doctest or 'docs' in doctest and docs == 'mkdocs' %}
+  "--doctest-glob",
+  "*.md",
+{%- endif %}
+{%- if 'docstrings' in doctest %}
+  "--doctest-modules",
+{%- endif %}
   "--showlocals",
   "--strict-config",
   "--strict-markers",
 ]
 filterwarnings = [ "error" ]
 log_level = "info"
-testpaths = [ "tests" ]
+testpaths = [
+{%- if 'docs' in doctest %}
+  "docs",
+{%- endif %}
+{%- if 'docstrings' in doctest %}
+  "src",
+{%- endif %}
+  "tests",
+{%- if 'readme' in doctest %}
+  "README.md",
+{%- endif %}
+]
 xfail_strict = true
 
 [tool.coverage]
