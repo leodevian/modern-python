@@ -81,6 +81,7 @@ features:
     Task automation: tasks
     Documentation: docs
     CLI: cli
+    Test interactive Python examples: doctest
 
 tasks:
   type: str
@@ -104,3 +105,15 @@ cli:
   choices:
     argparse: argparse
     Click: click
+
+doctest:
+  type: str
+  help: What interactive Python examples do you want to test?
+  when: "{{ 'doctest' in features }}"
+  multiselect: true
+  choices:
+    Docstrings: docstrings
+    Documentation:
+      value: docs
+      validator: "{% if not docs %}requires documentation{% endif %}"
+    README: readme
