@@ -30,4 +30,4 @@ def test_show_version(option: str) -> None:
     runner = CliRunner()
     result = runner.invoke(main, [option])
     assert result.exit_code == 0
-    assert __version__ in result.output
+    assert __version__ in result.stdout
