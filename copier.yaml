@@ -72,6 +72,20 @@ license:
     MIT License: MIT
     Mozilla Public License 2.0: MPL-2.0
 
+entry_points:
+  type: str
+  help: What entry points do you want to add?
+  choices:
+    Command-line interface: cli
+
+cli:
+  type: str
+  help: Which CLI framework do you want to use?
+  when: "{{ 'cli' in entry_points }}"
+  choices:
+    argparse: argparse
+    Click: click
+
 features:
   type: str
   help: Which features to you want to use?
@@ -97,14 +111,6 @@ docs:
   when: "{{ 'docs' in features }}"
   choices:
     MkDocs: mkdocs
-
-cli:
-  type: str
-  help: Which CLI framework do you want to use?
-  when: "{{ 'cli' in features }}"
-  choices:
-    argparse: argparse
-    Click: click
 
 doctest:
   type: str
