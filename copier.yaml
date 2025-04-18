@@ -75,6 +75,7 @@ license:
 entry_points:
   type: str
   help: What entry points do you want to add?
+  multiselect: true
   choices:
     Command-line interface: cli
 
