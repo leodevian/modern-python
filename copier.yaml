@@ -95,7 +95,6 @@ features:
   choices:
     Task automation: tasks
     Documentation: docs
-    CLI: cli
     Test interactive Python examples: doctest
 
 tasks:
