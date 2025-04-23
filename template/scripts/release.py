@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from collections.abc import Sequence
 
 
-def main(argv: Sequence[str] | None = None) -> None:
+def prepare_release(argv: Sequence[str] | None = None) -> None:
     """Prepare a new release.
 
     Args:
@@ -94,4 +94,4 @@ def main(argv: Sequence[str] | None = None) -> None:
 
 
 if __name__ == "__main__":
-    main()
+    prepare_release()
