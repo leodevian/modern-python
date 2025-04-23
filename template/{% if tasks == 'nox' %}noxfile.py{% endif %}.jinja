@@ -2,7 +2,6 @@
 # requires-python = ">=3.10"
 # dependencies = [
 #     "nox>=2025.2.9",
-#     "packaging>=24.2",
 # ]
 # ///
 """Task automation with Nox."""
@@ -147,76 +146,8 @@ def autodocs(session: nox.Session) -> None:
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def release(session: nox.Session) -> None:
     """Prepare a new release."""
-    parser = argparse.ArgumentParser(description="prepare a new release")
-    parser.add_argument("--version", type=Version, required=True, help="target version")
-    parser.add_argument("--dry-run", action="store_true", help="perform dry run")
-    args = parser.parse_args(session.posargs)
-
     session.install(*nox.project.dependency_groups(PYPROJECT, "release"))
-
-    version = args.version.public
-
-    session.run("git", "diff", "--quiet", external=True)
-
-    base_branch = session.run(  # type: ignore[union-attr]
-        "git", "rev-parse", "--abbrev-ref", "HEAD", silent=True, external=True
-    ).rstrip()
-
-    release_branch = f"release/{version}"
-    release_tag = f"v{version}"
-
-    session.run("git", "checkout", "-b", release_branch, external=True)
-
-    try:
-        release_notes = session.run(
-            "towncrier",
-            "build",
-            "--draft",
-            "--version",
-            version,
-            silent=True,
-            stderr=subprocess.DEVNULL,
-        )
-        session.run("towncrier", "build", "--yes", "--version", version)
-        session.run(
-            "git", "add", "-A", ":/CHANGELOG.md", ":/changelog.d", external=True
-        )
-        session.run(
-            "git",
-            "commit",
-            "-m",
-            f"chore: prepare release {version}",
-            "--no-verify",
-            external=True,
-        )
-        session.run(
-            "git",
-            "tag",
-            "-a",
-            release_tag,
-            "-m",
-            release_notes,  # type: ignore[arg-type]
-            "--cleanup",
-            "whitespace",
-        )
-
-    except CommandFailed:
-        session.run("git", "checkout", base_branch, external=True)
-        session.run("git", "branch", "-D", release_branch, external=True)
-        raise
-
-    if not args.dry_run:
-        session.run(
-            "git",
-            "push",
-            "--follow-tags",
-            f"{release_branch}:main",
-            external=True,
-        )
-        session.run("git", "checkout", "main", external=True)
-        session.run("git", "branch", "-D", release_branch, external=True)
-        session.run("git", "fetch", external=True)
-        session.run("git", "reset", "--hard", "origin/main", external=True)
+    session.run("python", Path("scripts", "release.py"), *session.posargs)
 
 
 if __name__ == "__main__":

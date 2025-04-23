@@ -78,10 +78,15 @@ def main(argv: Sequence[str] | None = None) -> None:
         subprocess.check_call(("git", "branch", "-D", release_branch))
         raise
 
-    if not args.dry_run:
+    if args.dry_run:
+        return
+
+    try:
         subprocess.check_call(
             ("git", "push", "--follow-tags", f"{release_branch}:main")
         )
+
+    finally:
         subprocess.check_call(("git", "checkout", "main"))
         subprocess.check_call(("git", "branch", "-D", release_branch))
         subprocess.check_call(("git", "fetch"))
