@@ -1,1 +1,1 @@
-# Modern Python
+# modern-python

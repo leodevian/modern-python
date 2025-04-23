@@ -1,4 +1,4 @@
-# Modern Python
+# modern-python
 
 [Copier](https://copier.readthedocs.io/en/stable/) template for modern Python packages.
 
