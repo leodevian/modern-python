@@ -140,7 +140,7 @@ tag = true
 tag_name = "v{new_version}"
 tag_message = ""
 allow_dirty = true
-message = "build: bump version to {new_version}"
+message = "chore: prepare release {new_version}"
 setup_hooks = [
   "towncrier build --yes",
   "git add -A :/changelog.d :/CHANGELOG.md",
