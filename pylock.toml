@@ -62,10 +62,10 @@ wheels = [{ url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e
 
 [[packages]]
 name = "copier"
-version = "9.6.0"
+version = "9.7.1"
 index = "https://pypi.org/simple"
-sdist = { url = "https://files.pythonhosted.org/packages/d2/a2/b8919c3c3fe31ccfae6a16bbef0279396c0f9d4fb49dfd333ab4cc92bdb6/copier-9.6.0.tar.gz", upload-time = 2025-03-09T22:13:39Z, size = 45523, hashes = { sha256 = "e05a18b387b96e8d1fbd5271d37f59c9a02be5ad717f7878d0505562fd62b786" } }
-wheels = [{ url = "https://files.pythonhosted.org/packages/7b/ac/5c267efc8a34484dd470cae530fd5c50bc34b2631e0e928f0eb91d792fae/copier-9.6.0-py3-none-any.whl", upload-time = 2025-03-09T22:13:38Z, size = 48681, hashes = { sha256 = "aaf992600a373fa2dda9f61725916a230c210ede14a968c60dab855d524c6cf3" } }]
+sdist = { url = "https://files.pythonhosted.org/packages/08/ac/4d8fc462d06dcd25d35b0e8983b5a7466d82a8d8fa50c17f616d1fa65ee8/copier-9.7.1.tar.gz", upload-time = 2025-04-23T15:47:49Z, size = 606482, hashes = { sha256 = "83da2cbe5e28a1593c649f5dac37d916774b07a3ba3ce66e6966a3e84e557885" } }
+wheels = [{ url = "https://files.pythonhosted.org/packages/83/df/36f3fa22894a3d74bc847732614f697f70b149c783b5a5020f45ed7a7ace/copier-9.7.1-py3-none-any.whl", upload-time = 2025-04-23T15:47:48Z, size = 54456, hashes = { sha256 = "89f2a3f3f9134af35a7d4e2aa63b6468dbff18d82c8369f995b126de9faf0f08" } }]
 
 [[packages]]
 name = "copier-templates-extensions"
