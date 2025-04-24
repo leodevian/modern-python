@@ -1,4 +1,4 @@
-"""Test for the version."""
+"""This module contains the version test."""
 
 from __future__ import annotations
 
@@ -7,6 +7,7 @@ from importlib.metadata import version
 from {{ package_name }} import __version__
 
 
+# https://packaging.python.org/en/latest/discussions/single-source-version/#single-sourcing-the-project-version
 def test_version() -> None:
     """Test that the version is correct."""
     assert __version__ == version("{{ distribution_name }}")
