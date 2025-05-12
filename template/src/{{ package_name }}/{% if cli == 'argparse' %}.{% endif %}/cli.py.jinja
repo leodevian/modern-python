@@ -39,3 +39,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = create_parser()
     parser.parse_args(argv)
     return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
