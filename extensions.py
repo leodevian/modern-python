@@ -8,6 +8,7 @@ import unicodedata
 from datetime import date
 from typing import TYPE_CHECKING, Any
 
+from copier import Phase
 from copier_templates_extensions import ContextHook
 from jinja2.ext import Extension
 
@@ -61,30 +62,31 @@ class ContextUpdater(ContextHook):
 
     def hook(self, context: dict[str, Any]) -> None:  # type: ignore[override]
         """Update Copier context."""
-        # Update distribution name and package name.
-        project_name = context["project_name"]
-        distribution_name = slugify(project_name)
-        context["distribution_name"] = distribution_name
-        context["package_name"] = slugify(project_name, separator="_")
+        if context["_copier_phase"] != Phase.PROMPT:
+            # Update distribution name and package name.
+            project_name = context["project_name"]
+            distribution_name = slugify(project_name)
+            context["distribution_name"] = distribution_name
+            context["package_name"] = slugify(project_name, separator="_")
 
-        # Update GitHub URLs.
-        github_user = context["github_user"]
-        repository_path = f"{github_user}/{distribution_name}"
-        context["repository_path"] = repository_path
-        context["repository_url"] = f"https://github.com/{repository_path}"
-        context["documentation_url"] = (
-            f"https://{github_user}.github.io/{distribution_name}/"
-        )
+            # Update GitHub URLs.
+            github_user = context["github_user"]
+            repository_path = f"{github_user}/{distribution_name}"
+            context["repository_path"] = repository_path
+            context["repository_url"] = f"https://github.com/{repository_path}"
+            context["documentation_url"] = (
+                f"https://{github_user}.github.io/{distribution_name}/"
+            )
 
-        # Update ownership.
-        context["copyright_owner"] = context["user_name"]
-        context["copyright_year"] = date.today().year
+            # Update ownership.
+            context["copyright_owner"] = context["user_name"]
+            context["copyright_year"] = date.today().year
 
-        # Update dependencies.
-        context["dependencies"] = []
+            # Update dependencies.
+            context["dependencies"] = []
 
-        if context.get("cli") == "click":
-            context["dependencies"].append("click>=8.1.8")
+            if context.get("cli") == "click":
+                context["dependencies"].append("click>=8.1.8")
 
-        elif context.get("cli") == "typer":
-            context["dependencies"].append("typer>=0.15.3")
+            elif context.get("cli") == "typer":
+                context["dependencies"].append("typer>=0.15.3")
