@@ -86,6 +86,7 @@ cli:
   choices:
     argparse: argparse
     Click: click
+    Typer: typer
 
 features:
   type: str
