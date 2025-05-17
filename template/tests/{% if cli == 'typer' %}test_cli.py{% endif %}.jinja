@@ -1,0 +1,33 @@
+"""This module contains tests for the command-line interface."""
+
+from __future__ import annotations
+
+import pytest
+from typer.testing import CliRunner
+
+from {{ package_name }}.__version__ import __version__
+from {{ package_name }}.cli import app
+
+
+def test_app() -> None:
+    """Test the main program."""
+    runner = CliRunner()
+    result = runner.invoke(app)
+    assert result.exit_code == 0
+
+
+@pytest.mark.parametrize("option", ["-h", "--help"])
+def test_show_help(option: str) -> None:
+    """Test the help option of the command-line interface."""
+    runner = CliRunner()
+    result = runner.invoke(app, [option])
+    assert result.exit_code == 0
+
+
+@pytest.mark.parametrize("option", ["-V", "--version"])
+def test_show_version(option: str) -> None:
+    """Test the version option of the command-line interface."""
+    runner = CliRunner()
+    result = runner.invoke(app, [option])
+    assert result.exit_code == 0
+    assert __version__ in result.stdout
