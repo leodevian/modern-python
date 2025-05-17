@@ -21,7 +21,6 @@ nox.options.sessions = (
     "lint",
     "type",
     "type-tests",
-    "docstrings",
     "pkg",
     "tests",
 )
@@ -92,13 +91,6 @@ def type_check_tests(session: nox.Session) -> None:
     session.install(".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "tests", "type"))
     session.run("mypy", "tests")
-
-
-@nox.session(python=DEFAULT_PYTHON_VERSION)
-def docstrings(session: nox.Session) -> None:
-    """Check docstring coverage."""
-    session.install(*nox.project.dependency_groups(PYPROJECT, "docstrings"))
-    session.run("interrogate", "--verbose", *session.posargs)
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)

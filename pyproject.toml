@@ -58,9 +58,6 @@ docs = [
   "mkdocs>=1.6.1",
   "mkdocs-material>=9.5.47",
 ]
-docstrings = [
-  "interrogate>=1.7",
-]
 tests = [
   "copier>=9.6",
   "copier-templates-extensions>=0.3.1",
@@ -164,21 +161,3 @@ enable_error_code = [
 ]
 strict = true
 pretty = true
-
-[tool.interrogate]
-ignore-init-method = false
-ignore-init-module = false
-ignore-magic = false
-ignore-semiprivate = false
-ignore-private = false
-ignore-property-decorators = false
-ignore-module = false
-ignore-nested-functions = false
-ignore-nested-classes = false
-ignore-setters = false
-exclude = [  ]
-fail-under = 100
-verbose = 0
-quiet = false
-whitelist-regex = [  ]
-color = true

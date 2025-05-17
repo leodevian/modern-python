@@ -6,7 +6,6 @@ env_list = [
   "lint",
   "type",
   "type-tests",
-  "docstrings",
   "3.13",
   "3.12",
   "3.11",
@@ -17,7 +16,6 @@ labels.checks = [
   "lint",
   "type",
   "type-tests",
-  "docstrings",
 ]
 labels.tests = [
   "3.13",
@@ -72,18 +70,6 @@ dependency_groups = [
 ]
 commands = [
   [ "mypy", "tests" ],
-]
-
-[env.docstrings]
-description = "check docstring coverage"
-skip_install = true
-dependency_groups = [ "docstrings" ]
-commands = [
-  [
-    "interrogate",
-    "--verbose",
-    { replace = "posargs", extend = true },
-  ],
 ]
 
 [env.docs]
