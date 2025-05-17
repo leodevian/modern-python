@@ -86,7 +86,7 @@ class ContextUpdater(ContextHook):
             context["dependencies"] = []
 
             if context.get("cli") == "click":
-                context["dependencies"].append("click>=8.1.8")
+                context["dependencies"].append("click>=8.2")
 
             elif context.get("cli") == "typer":
                 context["dependencies"].append("typer>=0.15.4")
