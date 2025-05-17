@@ -80,9 +80,6 @@ docs = [
 lint = [
   "pre-commit-uv>=4.1.4",
 ]
-docstrings = [
-  "interrogate>=1.7",
-]
 tests = [
   "covdefaults>=2.3",
   "pytest>=8.3.4",
@@ -228,28 +225,3 @@ enable_error_code = [
 ]
 strict = true
 pretty = true
-
-[tool.interrogate]
-ignore-init-method = false
-ignore-init-module = false
-ignore-magic = true
-ignore-semiprivate = false
-ignore-private = false
-ignore-property-decorators = false
-ignore-module = false
-ignore-nested-functions = true
-ignore-nested-classes = true
-ignore-setters = false
-ignore-overloaded-functions = true
-{%- if tasks == 'tox' %}
-exclude = [  ]
-{%- elif tasks == 'nox' %}
-exclude = [
-  ".nox",
-]
-{%- endif %}
-fail-under = 100
-verbose = 0
-quiet = false
-whitelist-regex = [  ]
-color = true
