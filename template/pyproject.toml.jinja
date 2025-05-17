@@ -54,7 +54,9 @@ urls.changelog = "{{ repository_url }}/blob/main/CHANGELOG.md"
 urls.homepage = "{{ repository_url }}"
 urls.issues = "{{ repository_url }}/issues"
 urls.repository = "{{ repository_url }}"
-{% if cli -%}
+{% if cli == 'typer' -%}
+scripts.{{ distribution_name }} = "{{ package_name }}.cli:app"
+{% elif cli -%}
 scripts.{{ distribution_name }} = "{{ package_name }}.cli:main"
 {% endif %}
 [dependency-groups]
