@@ -78,7 +78,7 @@ def lint(session: nox.Session) -> None:
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, name="type", tags=["checks"])
-def type_check_src(session: nox.Session) -> None:
+def type_check(session: nox.Session) -> None:
     """Type check source code."""
     session.install(".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "type"))
