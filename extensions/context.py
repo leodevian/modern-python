@@ -1,4 +1,4 @@
-"""This module contains Copier context hooks."""
+"""Context hooks."""
 
 from __future__ import annotations
 
