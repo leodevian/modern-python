@@ -22,6 +22,9 @@ nox.options.sessions = (
     "type",
     "type-tests",
     "pkg",
+{%- if docs %}
+    "docs",
+{%- endif %}
     "tests",
 )
 
@@ -103,7 +106,7 @@ def pkg(session: nox.Session) -> None:
     session.run("twine", "check", "--strict", Path(tmp_dir, "*"))
 
 {% if docs == 'mkdocs' %}
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def docs(session: nox.Session) -> None:
     """Generate documentation."""
     session.install(".")
