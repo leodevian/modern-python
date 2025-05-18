@@ -1,1 +1,1 @@
-"""This package contains all tests."""
+"""The tests package."""

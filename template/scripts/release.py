@@ -5,7 +5,7 @@
 #   "towncrier>=24.8",
 # ]
 # ///
-"""Prepare a new release."""
+"""Automation for releases."""
 
 # ruff: noqa: S603, T201
 

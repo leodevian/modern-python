@@ -1,4 +1,4 @@
-"""This module contains helper functions for tests."""
+"""Helper functions for tests."""
 
 from __future__ import annotations
 
