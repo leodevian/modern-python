@@ -30,7 +30,7 @@ SUPPORTED_PYTHON_VERSIONS = nox.project.python_versions(PYPROJECT)
 DEFAULT_PYTHON_VERSION = Path(".python-version").read_text().rstrip()
 
 
-@nox.session(python=SUPPORTED_PYTHON_VERSIONS)
+@nox.session(python=SUPPORTED_PYTHON_VERSIONS, tags=["tests"])
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
     session.install(".")
@@ -64,7 +64,7 @@ def tests(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def lint(session: nox.Session) -> None:
     """Run pre-commit linting."""
     session.install(*nox.project.dependency_groups(PYPROJECT, "lint"))
@@ -77,7 +77,7 @@ def lint(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION, name="type")
+@nox.session(python=DEFAULT_PYTHON_VERSION, name="type", tags=["checks"])
 def type_check_src(session: nox.Session) -> None:
     """Type check source code."""
     session.install(".")
@@ -85,7 +85,7 @@ def type_check_src(session: nox.Session) -> None:
     session.run("mypy", "src")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION, name="type-tests")
+@nox.session(python=DEFAULT_PYTHON_VERSION, name="type-tests", tags=["checks"])
 def type_check_tests(session: nox.Session) -> None:
     """Type check tests."""
     session.install(".")
@@ -93,7 +93,7 @@ def type_check_tests(session: nox.Session) -> None:
     session.run("mypy", "tests")
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION)
+@nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def pkg(session: nox.Session) -> None:
     """Check package distributions."""
     session.install(*nox.project.dependency_groups(PYPROJECT, "pkg"))
