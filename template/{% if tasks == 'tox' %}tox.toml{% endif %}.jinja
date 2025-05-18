@@ -7,6 +7,9 @@ env_list = [
   "type",
   "type-tests",
   "pkg",
+{%- if docs %}
+  "docs",
+{%- endif %}
   "3.13",
   "3.12",
   "3.11",
@@ -17,6 +20,9 @@ labels.checks = [
   "type",
   "type-tests",
   "pkg",
+{%- if docs %}
+  "docs",
+{%- endif %}
 ]
 labels.tests = [
   "3.13",
