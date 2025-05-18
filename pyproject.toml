@@ -81,9 +81,8 @@ lint.ignore = [
   "COM812", # conflicts with formatter
   "ISC001", # conflicts with formatter
 ]
-lint.per-file-ignores."extensions.py" = [
-  "DTZ011", # naive datetime objects are okay
-  "S603",   # using subprocess is okay
+lint.per-file-ignores."extensions/**" = [
+  "S603", # using subprocess is okay
 ]
 lint.per-file-ignores."tests/**" = [
   "S101", # using assert is okay in tests
