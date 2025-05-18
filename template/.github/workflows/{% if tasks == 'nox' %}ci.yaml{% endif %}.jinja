@@ -40,27 +40,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "pyproject.toml"
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-{% if tasks == 'tox' %}
-      - name: Install tox
-        run: >-
-          uv tool install tox
-          --python-preference only-managed
-          --python 3.13
-          --with tox-uv
 
-      - name: Setup the check suite
-        run: >-
-          tox run
-          --notest
-          --skip-missing-interpreters false
-          -e {% raw %}${{ matrix.env }}{% endraw %}
-
-      - name: Run the check suite
-        run: >-
-          tox run
-          --skip-pkg-install
-          -e {% raw %}${{ matrix.env }}{% endraw %}
-{% elif tasks == 'nox' %}
       - name: Install Nox
         run: >-
           uv tool install "nox[uv]"
@@ -78,7 +58,7 @@ jobs:
           nox
           --no-install
           --session {% raw %}${{ matrix.env }}{% endraw %}
-{% endif %}
+
   tests:
     runs-on: ubuntu-latest
     needs: check
@@ -102,27 +82,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "pyproject.toml"
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-{% if tasks == 'tox' %}
-      - name: Install tox
-        run: >-
-          uv tool install tox
-          --python-preference only-managed
-          --python 3.13
-          --with tox-uv
 
-      - name: Setup the test suite
-        run: >-
-          tox run
-          --notest
-          --skip-missing-interpreters false
-          -e {% raw %}${{ matrix.python_version }}{% endraw %}
-
-      - name: Run the test suite
-        run: >-
-          tox run
-          --skip-pkg-install
-          -e {% raw %}${{ matrix.python_version }}{% endraw %}
-{% elif tasks == 'nox' %}
       - name: Install Nox
         run: >-
           uv tool install "nox[uv]"
@@ -140,4 +100,3 @@ jobs:
           nox
           --no-install
           --session {% raw %}tests-${{ matrix.python_version }}{% endraw %}
-{% endif -%}
