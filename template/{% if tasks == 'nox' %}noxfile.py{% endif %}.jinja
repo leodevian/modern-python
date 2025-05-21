@@ -28,7 +28,7 @@ nox.options.sessions = (
     "tests",
 )
 
-PYPROJECT = nox.project.load_toml("pyproject.toml")
+PYPROJECT = nox.project.load_toml()
 SUPPORTED_PYTHON_VERSIONS = nox.project.python_versions(PYPROJECT)
 DEFAULT_PYTHON_VERSION = Path(".python-version").read_text().rstrip()
 
