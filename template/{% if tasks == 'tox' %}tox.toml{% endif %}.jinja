@@ -54,6 +54,8 @@ commands = [
       "15",
       "-n",
       { replace = "env", name = "PYTEST_XDIST_AUTO_NUM_WORKERS", default = "auto" },
+      "--junit-xml",
+      "{env_tmp_dir}{/}junit.xml",
       "--cov",
       "--cov-config",
       "{tox_root}{/}pyproject.toml",
