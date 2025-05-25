@@ -67,6 +67,8 @@ def tests(session: nox.Session) -> None:
                 "15",
                 "-n",
                 os.getenv("PYTEST_XDIST_AUTO_NUM_WORKERS") or "auto",
+                "--junit-xml",
+                tmp_dir / "junit.xml",
                 "--cov",
                 "--cov-config",
                 "pyproject.toml",
