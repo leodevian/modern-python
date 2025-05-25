@@ -133,7 +133,13 @@ def type_check(session: nox.Session) -> None:
         env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
     )
 {%- endif %}
-    session.run("mypy", "src")
+    tmp_dir = session.create_tmp()
+    session.run(
+        "mypy",
+        "src",
+        "--junit-xml",
+        tmp_dir / "junit.xml",
+    )
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, name="type-tests", tags=["checks"])
@@ -156,7 +162,13 @@ def type_check_tests(session: nox.Session) -> None:
         env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
     )
 {%- endif %}
-    session.run("mypy", "tests")
+    tmp_dir = session.create_tmp()
+    session.run(
+        "mypy",
+        "tests",
+        "--junit-xml",
+        tmp_dir / "junit.xml",
+    )
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
