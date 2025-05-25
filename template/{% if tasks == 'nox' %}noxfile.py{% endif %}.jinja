@@ -58,6 +58,7 @@ def tests(session: nox.Session) -> None:
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
     htmlcov_dir = tmp_dir / "htmlcov"
+    xml_path = tmp_dir / "coverage.xml"
     session.run(
         "pytest",
         *(
@@ -78,6 +79,8 @@ def tests(session: nox.Session) -> None:
                 "term-missing:skip-covered",
                 "--cov-report",
                 f"html:{htmlcov_dir}",
+                "--cov-report",
+                f"xml:{xml_path}",
             )
         ),
         env={
