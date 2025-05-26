@@ -58,7 +58,11 @@ jobs:
       - name: Run the check suite
         run: >-
           tox run
+{%- if installer == 'uv pip' %}
           --skip-pkg-install
+{%- else %}
+          --skip-uv-sync
+{%- endif %}
           -e {% raw %}${{ matrix.env }}{% endraw %}
 
   tests:
@@ -102,5 +106,9 @@ jobs:
       - name: Run the test suite
         run: >-
           tox run
+{%- if installer == 'uv pip' %}
           --skip-pkg-install
+{%- else %}
+          --skip-uv-sync
+{%- endif %}
           -e {% raw %}${{ matrix.python_version }}{% endraw %}

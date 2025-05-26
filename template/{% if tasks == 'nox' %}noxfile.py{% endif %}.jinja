@@ -2,6 +2,9 @@
 # requires-python = ">=3.10"
 # dependencies = [
 #     "nox>=2025.2.9",
+{%- if installer == 'uv sync' %}
+#     "uv>=0.7.6",
+{%- endif %}
 # ]
 # ///
 """Task automation with Nox."""
@@ -29,6 +32,7 @@ nox.options.sessions = (
 )
 
 PYPROJECT = nox.project.load_toml()
+PROJECT_NAME = PYPROJECT["project"]["name"]
 SUPPORTED_PYTHON_VERSIONS = nox.project.python_versions(PYPROJECT)
 DEFAULT_PYTHON_VERSION = Path(".python-version").read_text().rstrip()
 
@@ -36,8 +40,22 @@ DEFAULT_PYTHON_VERSION = Path(".python-version").read_text().rstrip()
 @nox.session(python=SUPPORTED_PYTHON_VERSIONS, tags=["tests"])
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
+{%- if installer == 'uv pip' %}
     session.install(".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "tests"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--no-editable",
+        f"--reinstall-package={PROJECT_NAME}",
+        "--no-default-groups",
+        "--group=tests",
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     tmp_dir = Path(session.create_tmp())
     htmlcov_dir = tmp_dir / "htmlcov"
     session.run(
@@ -70,7 +88,18 @@ def tests(session: nox.Session) -> None:
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def lint(session: nox.Session) -> None:
     """Run pre-commit linting."""
+{%- if installer == 'uv pip' %}
     session.install(*nox.project.dependency_groups(PYPROJECT, "lint"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--only-group=lint",
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     session.run(
         "pre-commit",
         "run",
@@ -83,23 +112,63 @@ def lint(session: nox.Session) -> None:
 @nox.session(python=DEFAULT_PYTHON_VERSION, name="type", tags=["checks"])
 def type_check(session: nox.Session) -> None:
     """Type check source code."""
+{%- if installer == 'uv pip' %}
     session.install(".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "type"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--no-editable",
+        f"--reinstall-package={PROJECT_NAME}",
+        "--no-default-groups",
+        "--group=type",
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     session.run("mypy", "src")
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, name="type-tests", tags=["checks"])
 def type_check_tests(session: nox.Session) -> None:
     """Type check tests."""
+{%- if installer == 'uv pip' %}
     session.install(".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "tests", "type"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--no-editable",
+        f"--reinstall-package={PROJECT_NAME}",
+        "--no-default-groups",
+        "--group=tests",
+        "--group=type"
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     session.run("mypy", "tests")
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def pkg(session: nox.Session) -> None:
     """Check package distributions."""
+{%- if installer == 'uv pip' %}
     session.install(*nox.project.dependency_groups(PYPROJECT, "pkg"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--only-group=pkg",
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     tmp_dir = session.create_tmp()
     session.run("uv", "build", "--out-dir", tmp_dir)
     session.run("check-wheel-contents", "--no-config", tmp_dir)
@@ -109,8 +178,22 @@ def pkg(session: nox.Session) -> None:
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def docs(session: nox.Session) -> None:
     """Generate documentation."""
+{%- if installer == 'uv pip' %}
     session.install(".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "docs"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--no-editable",
+        f"--reinstall-package={PROJECT_NAME}",
+        "--no-default-groups",
+        "--group=docs",
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     session.run(
         "mkdocs",
         "build",
@@ -123,8 +206,20 @@ def docs(session: nox.Session) -> None:
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def autodocs(session: nox.Session) -> None:
     """Serve documentation locally."""
+{%- if installer == 'uv pip' %}
     session.install("-e", ".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "docs"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--no-default-groups",
+        "--group=docs",
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     session.run(
         "mkdocs",
         "serve",
@@ -137,7 +232,18 @@ def autodocs(session: nox.Session) -> None:
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def release(session: nox.Session) -> None:
     """Prepare a new release."""
+{%- if installer == 'uv pip' %}
     session.install(*nox.project.dependency_groups(PYPROJECT, "release"))
+{%- else %}
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--only-group=release",
+        f"--python={session.virtualenv.location}",
+        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+    )
+{%- endif %}
     session.run("python", Path("scripts", "release.py"), *session.posargs)
 
 

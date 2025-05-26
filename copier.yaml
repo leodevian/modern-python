@@ -103,6 +103,14 @@ tasks:
     tox: tox
     Nox: nox
 
+installer:
+  type: str
+  help: Which package installer do you want to use?
+  when: tasks
+  choices:
+    uv pip: uv pip
+    uv sync: uv sync
+
 docs:
   type: str
   help: Which static site generator do you want to use?
