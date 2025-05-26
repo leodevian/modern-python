@@ -139,8 +139,6 @@ def type_check(session: nox.Session) -> None:
         "src",
         "--junit-xml",
         tmp_dir / "junit.xml",
-        "--cobertura-xml-report",
-        tmp_dir,
     )
 
 
@@ -170,8 +168,6 @@ def type_check_tests(session: nox.Session) -> None:
         "tests",
         "--junit-xml",
         tmp_dir / "junit.xml",
-        "--cobertura-xml-report",
-        tmp_dir,
     )
 
 
