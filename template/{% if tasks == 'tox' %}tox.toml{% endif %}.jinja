@@ -94,24 +94,14 @@ commands = [
 description = "type check source code"
 dependency_groups = [ "type" ]
 commands = [
-  [
-    "mypy",
-    "src",
-    "--junit-xml",
-    "{env_tmp_dir}{/}junit.xml",
-  ],
+  [ "mypy", "src" ],
 ]
 
 [env.type-tests]
 description = "type check tests"
 dependency_groups = [ "tests", "type" ]
 commands = [
-  [
-    "mypy",
-    "tests",
-    "--junit-xml",
-    "{env_tmp_dir}{/}junit.xml",
-  ],
+  [ "mypy", "tests" ],
 ]
 
 [env.pkg]
