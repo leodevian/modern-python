@@ -199,11 +199,14 @@ def docs(session: nox.Session) -> None:
         env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
     )
 {%- endif %}
+    tmp_dir = Path(session.create_tmp())
     session.run(
         "mkdocs",
         "build",
         "--clean",
         "--strict",
+        "--site-dir",
+        tmp_dir,
         *session.posargs,
     )
 
