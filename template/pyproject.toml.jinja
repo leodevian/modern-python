@@ -112,6 +112,9 @@ lint.ignore = [
 lint.per-file-ignores."tests/**" = [
   "S101", # using assert is okay in tests
 ]
+lint.isort.required-imports = [
+  "from __future__ import annotations",
+]
 lint.pydocstyle.convention = "google"
 
 [tool.codespell]
