@@ -100,6 +100,7 @@ release = [
 build.hooks.vcs.version-file = "src/{{ package_name }}/VERSION.txt"
 version.fallback-version = "0.0.0"
 version.source = "vcs"
+version.raw-options.local_scheme = "no-local-version"
 
 [tool.ruff]
 lint.select = [
