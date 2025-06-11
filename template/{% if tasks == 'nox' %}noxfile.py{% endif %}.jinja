@@ -177,7 +177,7 @@ def pkg(session: nox.Session) -> None:
     tmp_dir = Path(session.create_tmp())
     session.run("uv", "build", "--out-dir", tmp_dir)
     session.run("check-wheel-contents", "--no-config", tmp_dir)
-    session.run("twine", "check", "--strict", *tmp_dir.glob("*"))
+    session.run("twine", "check", "--strict", tmp_dir / "*")
 
 {% if docs == 'mkdocs' %}
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
