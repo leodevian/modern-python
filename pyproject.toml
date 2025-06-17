@@ -58,12 +58,7 @@ docs = [
   "mkdocs>=1.6.1",
   "mkdocs-material>=9.5.47",
 ]
-tests = [
-  "copier>=9.6",
-  "copier-templates-extensions>=0.3.1",
-  "pytest>=8.3.4",
-  "uv>=0.6.5",
-]
+tests = [  ]
 lint = [
   "pre-commit-uv>=4.1.4",
 ]
@@ -97,22 +92,6 @@ write-changes = true
 
 [tool.pyproject-fmt]
 max_supported_python = "3.13"
-
-[tool.pytest.ini_options]
-minversion = "6.0"
-addopts = [
-  "-ra",
-  "--showlocals",
-  "--strict-config",
-  "--strict-markers",
-]
-filterwarnings = [ "error" ]
-log_level = "info"
-testpaths = [ "tests" ]
-xfail_strict = true
-markers = [
-  "integration: integration tests",
-]
 
 [tool.towncrier]
 name = "modern-python"
