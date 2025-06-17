@@ -7,8 +7,10 @@ _envops:
   keep_trailing_newline: true
 _jinja_extensions:
   - copier_templates_extensions.TemplateExtensionLoader
-  - extensions/context.py:ContextUpdater
   - extensions/git.py:GitExtension
+  - extensions/slugify.py:SlugifyExtension
+  - extensions/today.py:TodayExtension
+  - jinja2.ext.ExprStmtExtension
 _skip_if_exists:
   - CHANGELOG.md
 _preserve_symlinks: true
@@ -37,6 +39,22 @@ _message_after_copy: |
 project_name:
   type: str
   help: Your project name?
+  validator: >-
+    {% if project_name == '' %}
+    The name is required.
+    {% endif %}
+
+distribution_name:
+  type: str
+  help: Your distribution name.
+  default: "{{ project_name | slugify }}"
+  when: false
+
+package_name:
+  type: str
+  help: Your package name.
+  default: "{{ project_name | slugify('_') }}"
+  when: false
 
 project_description:
   type: str
@@ -56,6 +74,36 @@ github_user:
   type: str
   help: Your GitHub username?
   default: leodevian
+
+repository_path:
+  type: str
+  help: Your GitHub repository path.
+  default: "{{ github_user }}/{{ distribution_name }}"
+  when: false
+
+repository_url:
+  type: str
+  help: Your GitHub repository URL.
+  default: "https://github.com/{{ repository_path }}"
+  when: false
+
+documentation_url:
+  type: str
+  help: Your GitHub Pages URL.
+  default: "https://{{ github_user }}.github.io/{{ distribution_name }}/"
+  when: false
+
+copyright_owner:
+  type: str
+  help: The copyright owner.
+  default: "{{ user_name }}"
+  when: false
+
+copyright_year:
+  type: str
+  help: The copyright year.
+  default: "{{ today.year }}"
+  when: false
 
 license:
   type: str
