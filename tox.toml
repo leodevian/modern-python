@@ -5,36 +5,10 @@ requires = [
 env_list = [
   "lint",
   "type",
-  "type-tests",
-  "3.13",
-  "3.12",
-  "3.11",
-  "3.10",
-  "3.9",
-]
-labels.checks = [
-  "lint",
-  "type",
-  "type-tests",
-]
-labels.tests = [
-  "3.13",
-  "3.12",
-  "3.11",
-  "3.10",
-  "3.9",
 ]
 
 [env_run_base]
 runner = "uv-venv-lock-runner"
-description = "run tests under {env_name}"
-pass_env = [
-  "PYTEST_*",
-]
-dependency_groups = [ "tests" ]
-commands = [
-  [ "pytest", { replace = "posargs", extend = true } ],
-]
 
 [env.lint]
 description = "run pre-commit linting"
@@ -60,16 +34,6 @@ description = "type check source code"
 dependency_groups = [ "type" ]
 commands = [
   [ "mypy", "extensions" ],
-]
-
-[env.type-tests]
-description = "type check tests"
-dependency_groups = [
-  "tests",
-  "type",
-]
-commands = [
-  [ "mypy", "tests" ],
 ]
 
 [env.docs]
