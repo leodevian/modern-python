@@ -5,6 +5,7 @@ requires = [
 env_list = [
   "lint",
   "type",
+  "docs",
 ]
 
 [env_run_base]
