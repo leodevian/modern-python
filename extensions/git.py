@@ -37,7 +37,7 @@ class GitExtension(Extension):
     """An extension to provide Git user information."""
 
     def __init__(self, environment: Environment) -> None:
-        """Initialize an extension."""
+        """Initialize the extension."""
         super().__init__(environment)
         environment.filters["git_user_name"] = git_user_name
         environment.filters["git_user_email"] = git_user_email
