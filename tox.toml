@@ -59,7 +59,7 @@ commands = [
 description = "type check source code"
 dependency_groups = [ "type" ]
 commands = [
-  [ "mypy", "extensions.py" ],
+  [ "mypy", "extensions" ],
 ]
 
 [env.type-tests]
