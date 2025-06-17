@@ -7,7 +7,7 @@
 # ///
 """Automation for releases."""
 
-# ruff: noqa: S603, T201
+# ruff: noqa: T201
 
 from __future__ import annotations
 
