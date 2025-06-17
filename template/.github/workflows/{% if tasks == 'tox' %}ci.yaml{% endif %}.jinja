@@ -58,7 +58,7 @@ jobs:
       - name: Run the check suite
         run: >-
           tox run
-{%- if installer == 'uv pip' %}
+{%- if install == 'uv pip' %}
           --skip-pkg-install
 {%- else %}
           --skip-uv-sync
@@ -106,7 +106,7 @@ jobs:
       - name: Run the test suite
         run: >-
           tox run
-{%- if installer == 'uv pip' %}
+{%- if install == 'uv pip' %}
           --skip-pkg-install
 {%- else %}
           --skip-uv-sync

@@ -151,13 +151,14 @@ tasks:
     tox: tox
     Nox: nox
 
-installer:
+install:
   type: str
-  help: Which package installer do you want to use?
+  help: How do you want to install dependencies when running tasks?
+  default: uv sync
   when: tasks
   choices:
-    uv pip: uv pip
-    uv sync: uv sync
+    Install latest versions: uv pip
+    Install locked versions: uv sync
 
 docs:
   type: str

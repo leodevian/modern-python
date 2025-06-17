@@ -32,7 +32,7 @@ labels.tests = [
 ]
 
 [env_run_base]
-{%- if installer == 'uv sync' %}
+{%- if install == 'uv sync' %}
 runner = "uv-venv-lock-runner"
 {%- endif %}
 description = "run tests under {env_name}"
