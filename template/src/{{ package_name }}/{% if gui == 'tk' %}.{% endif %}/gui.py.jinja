@@ -1,0 +1,26 @@
+"""The graphical user interface."""
+
+from __future__ import annotations
+
+import tkinter as tk
+
+from .__version__ import __version__
+
+
+class App(tk.Tk):
+    """The app."""
+
+    def __init__(self) -> None:
+        """Initialize the app."""
+        super().__init__()
+        self.title(f"{{ distribution_name }} {__version__}")
+
+
+def main() -> None:  # pragma: no cover
+    """Run the main program."""
+    app = App()
+    app.mainloop()
+
+
+if __name__ == "__main__":
+    main()

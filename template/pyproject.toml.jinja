@@ -62,6 +62,9 @@ urls.repository = "{{ repository_url }}"
 scripts.{{ distribution_name }} = "{{ package_name }}.cli:app"
 {% elif cli -%}
 scripts.{{ distribution_name }} = "{{ package_name }}.cli:main"
+{% elif gui -%}
+scripts.{{ distribution_name }} = "{{ package_name }}.gui:main"
+gui-scripts.{{ distribution_name }} = "{{ package_name }}.gui:main"
 {% endif %}
 [dependency-groups]
 dev = [

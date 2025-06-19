@@ -120,9 +120,10 @@ license:
 entry_points:
   type: str
   help: Which entry points do you want to add?
-  multiselect: true
   choices:
+    None:
     Command-line interface: cli
+    Graphical user interface: gui
 
 cli:
   type: str
@@ -132,6 +133,13 @@ cli:
     argparse: argparse
     Click: click
     Typer: typer
+
+gui:
+  type: str
+  help: Which GUI framework do you want to use?
+  when: "{{ 'gui' in entry_points }}"
+  choices:
+    Tkinter: tk
 
 features:
   type: str
