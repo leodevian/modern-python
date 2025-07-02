@@ -155,7 +155,7 @@ install:
   type: str
   help: How do you want to install dependencies when running tasks?
   default: uv sync
-  when: tasks
+  when: "{{ tasks }}"
   choices:
     Install latest versions: uv pip
     Install locked versions: uv sync
