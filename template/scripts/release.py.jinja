@@ -136,6 +136,8 @@ def main(argv: Sequence[str] | None = None) -> int:  # noqa: PLR0911, PLR0915
             f"Removed release branch {release_branch!r} "
             f"and switched back to {base_branch!r}."
         )
+        run(("git", "tag", "-d", release_tag))
+        print(f"Removed release tag {release_tag!r}.")
         return 0
 
     # Push changes to the remote repository and push the release tag.
