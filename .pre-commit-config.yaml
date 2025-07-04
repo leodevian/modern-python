@@ -39,8 +39,6 @@ repos:
     rev: 0.7.13
     hooks:
       - id: uv-lock
-      - id: uv-export
-        args: [--output-file, pylock.toml]
 
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.1
