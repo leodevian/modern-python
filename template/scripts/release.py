@@ -97,7 +97,7 @@ def main(argv: Sequence[str] | None = None) -> int:  # noqa: PLR0911, PLR0915
         return 1
 
     # Commit changes.
-    run(("git", "add", "-A", ":/changelog.d/*", "CHANGELOG.md"))
+    run(("git", "add", "-A", ":/changelog.d/*", ":/CHANGELOG.md"))
     run(("git", "commit", "-m", f"chore: prepare release {version}", "--no-verify"))
 
     print(f"Committed changes on branch {release_branch!r}.")
