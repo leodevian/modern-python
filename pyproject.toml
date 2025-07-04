@@ -63,7 +63,9 @@ lint = [
   "pre-commit-uv>=4.1.4",
 ]
 release = [
+  "packaging>=24.2",
   "towncrier>=24.8",
+  "uv>=0.7.7",
 ]
 
 [tool.ruff]

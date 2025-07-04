@@ -289,7 +289,7 @@ name = "importlib-metadata"
 version = "8.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp" },
+    { name = "zipp", marker = "python_full_version < '3.10'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/76/66/650a33bd90f786193e4de4b3ad86ea60b53c89b669a5c7be931fac31cdb0/importlib_metadata-8.7.0.tar.gz", hash = "sha256:d13b81ad223b890aa16c5471f2ac3056cf76c5f10f82d6f9292f0b415f389000", size = 56641, upload-time = "2025-04-27T15:29:01.736Z" }
 wheels = [
@@ -506,8 +506,10 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "mypy" },
+    { name = "packaging" },
     { name = "pre-commit-uv" },
     { name = "towncrier" },
+    { name = "uv" },
 ]
 docs = [
     { name = "mkdocs" },
@@ -517,7 +519,9 @@ lint = [
     { name = "pre-commit-uv" },
 ]
 release = [
+    { name = "packaging" },
     { name = "towncrier" },
+    { name = "uv" },
 ]
 type = [
     { name = "mypy" },
@@ -532,15 +536,21 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "mypy", specifier = ">=1.15" },
+    { name = "packaging", specifier = ">=24.2" },
     { name = "pre-commit-uv", specifier = ">=4.1.4" },
     { name = "towncrier", specifier = ">=24.8" },
+    { name = "uv", specifier = ">=0.7.7" },
 ]
 docs = [
     { name = "mkdocs", specifier = ">=1.6.1" },
     { name = "mkdocs-material", specifier = ">=9.5.47" },
 ]
 lint = [{ name = "pre-commit-uv", specifier = ">=4.1.4" }]
-release = [{ name = "towncrier", specifier = ">=24.8" }]
+release = [
+    { name = "packaging", specifier = ">=24.2" },
+    { name = "towncrier", specifier = ">=24.8" },
+    { name = "uv", specifier = ">=0.7.7" },
+]
 tests = []
 type = [{ name = "mypy", specifier = ">=1.15" }]
 
