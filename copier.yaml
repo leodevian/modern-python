@@ -117,6 +117,29 @@ license:
     MIT License: MIT
     Mozilla Public License 2.0: MPL-2.0
 
+build_backend:
+  type: str
+  help: Which build backend do you want to use?
+  default: hatch
+  choices:
+    Hatchling: hatch
+    uv: uv
+
+hatch_plugins:
+  type: str
+  help: Which Hatch plugins do you want to use?
+  multiselect: true
+  default: []
+  when: "{{ build_backend == 'hatch' }}"
+  choices:
+    hatch-vcs: hatch-vcs
+
+dynamic_version:
+  type: bool
+  help: Whether the version is dynamic.
+  default: "{{ 'hatch-vcs' in hatch_plugins }}"
+  when: false
+
 entry_points:
   type: str
   help: Which entry points do you want to add?
