@@ -3,6 +3,9 @@
 # dependencies = [
 #   "packaging>=24.2",
 #   "towncrier>=24.8",
+{%- if not dynamic_version %}
+#   "uv>=0.7.7",
+{%- endif %}
 # ]
 # ///
 """Automation for releases."""
@@ -82,14 +85,17 @@ def main(argv: Sequence[str] | None = None) -> int:  # noqa: PLR0911, PLR0915
 
     print(f"Switched from branch {base_branch!r} to release branch {release_branch!r}.")
 
-    # Build the changelog.
+    # Bump the version.
     try:
+{%- if not dynamic_version %}
+        run(("uv", "version", "--no-sync", version))
+{%- endif %}
         run(("towncrier", "build", "--yes", "--version", version))
 
     except subprocess.CalledProcessError:
         run(("git", "checkout", base_branch))
         run(("git", "branch", "-D", release_branch))
-        print_error("An error occurred while building the changelog.")
+        print_error("An error occurred while bumping the version.")
         print_error(
             f"Removed release branch {release_branch!r} "
             f"and switched back to {base_branch!r}."
@@ -97,6 +103,9 @@ def main(argv: Sequence[str] | None = None) -> int:  # noqa: PLR0911, PLR0915
         return 1
 
     # Commit changes.
+{%- if not dynamic_version %}
+    run(("git", "add", ":/pyproject.toml", ":/uv.lock"))
+{%- endif %}
     run(("git", "add", "-A", ":/changelog.d/*", ":/CHANGELOG.md"))
     run(("git", "commit", "-m", f"chore: prepare release {version}", "--no-verify"))
 

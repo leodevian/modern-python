@@ -1,12 +1,25 @@
 [build-system]
+{%- with requires = [] %}
+{%- if build_backend == 'hatch' %}
 build-backend = "hatchling.build"
+{%- if 'hatch-vcs' in hatch_plugins %}{% do requires.append('hatch-vcs>=0.4') %}{% endif %}
+{%- do requires.append('hatchling>=1.27') %}
+{%- elif build_backend == 'uv' %}
+build-backend = "uv_build"
+{%- do requires.append('uv-build>=0.7.19,<0.8') %}
+{%- endif %}
 requires = [
-  "hatch-vcs>=0.4",
-  "hatchling>=1.27",
+{%- for requirement in requires | sort %}
+  "{{ requirement }}",
+{%- endfor %}
 ]
+{%- endwith %}
 
 [project]
 name = "{{ distribution_name }}"
+{%- if not dynamic_version %}
+version = "0.1.0"
+{%- endif %}
 description = "{{ project_description }}"
 readme = "README.md"
 license = "{{ license }}"
@@ -33,12 +46,14 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Typing :: Typed",
 ]
+{%- if dynamic_version %}
 dynamic = [
   "version",
 ]
+{%- endif %}
 {%- with dependencies = [] %}
-{%- if cli == 'click' %}{% do dependencies.append('click>=8.2') %}{% endif %}
-{%- if cli == 'typer' %}{% do dependencies.append('typer>=0.15.4') %}{% endif %}
+{%- if cli == 'click' %}{% do dependencies.append('click>=8.2') %}
+{%- elif cli == 'typer' %}{% do dependencies.append('typer>=0.15.4') %}{% endif %}
 {%- if dependencies %}
 dependencies = [
 {%- for dependency in dependencies | sort %}
@@ -98,14 +113,19 @@ pkg = [
 release = [
   "packaging>=24.2",
   "towncrier>=24.8",
+{%- if not dynamic_version %}
+  "uv>=0.7.7",
+{%- endif %}
 ]
-
+{% if hatch_plugins %}
 [tool.hatch]
+{%- if 'hatch-vcs' in hatch_plugins %}
 build.hooks.vcs.version-file = "src/{{ package_name }}/VERSION.txt"
 version.fallback-version = "0.0.0"
 version.source = "vcs"
 version.raw-options.local_scheme = "no-local-version"
-
+{%- endif %}
+{% endif %}
 [tool.ruff]
 lint.select = [
   "ALL",
