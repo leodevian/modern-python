@@ -127,6 +127,8 @@ def main(argv: Sequence[str] | None = None) -> int:  # noqa: PLR0911, PLR0915
         )
         return 1
 
+    print(f"Created release tag {release_tag!r}.")
+
     # Exit on dry run.
     if args.dry_run:
         print("Dry run success!")
