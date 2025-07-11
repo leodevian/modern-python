@@ -129,7 +129,7 @@ hatch_plugins:
   type: str
   help: Which Hatch plugins do you want to use?
   multiselect: true
-  default: []
+  default: [hatch-vcs]
   when: "{{ build_backend == 'hatch' }}"
   choices:
     hatch-vcs: hatch-vcs
@@ -137,7 +137,7 @@ hatch_plugins:
 dynamic_version:
   type: bool
   help: Whether the version is dynamic.
-  default: "{{ 'hatch-vcs' in hatch_plugins }}"
+  default: "{{ build_backend == 'hatch' and 'hatch-vcs' in hatch_plugins }}"
   when: false
 
 entry_points:

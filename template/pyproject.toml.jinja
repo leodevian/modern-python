@@ -117,7 +117,7 @@ release = [
   "uv>=0.7.7",
 {%- endif %}
 ]
-{% if hatch_plugins %}
+{% if build_backend == 'hatch' and hatch_plugins %}
 [tool.hatch]
 {%- if 'hatch-vcs' in hatch_plugins %}
 build.hooks.vcs.version-file = "src/{{ package_name }}/VERSION.txt"
