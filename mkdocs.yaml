@@ -50,7 +50,6 @@ theme:
 site_dir: site
 
 watch:
-  - mkdocs.yaml
   - CHANGELOG.md
 
 markdown_extensions:
