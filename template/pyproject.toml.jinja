@@ -1,10 +1,10 @@
 [build-system]
 {%- with requires = [] %}
-{%- if build_backend == 'hatch' %}
+{%- if backend == 'hatch' %}
 build-backend = "hatchling.build"
 {%- if 'hatch-vcs' in hatch_plugins %}{% do requires.append('hatch-vcs>=0.4') %}{% endif %}
 {%- do requires.append('hatchling>=1.27') %}
-{%- elif build_backend == 'uv' %}
+{%- elif backend == 'uv' %}
 build-backend = "uv_build"
 {%- do requires.append('uv-build>=0.7.19,<0.8') %}
 {%- endif %}
@@ -117,7 +117,7 @@ release = [
   "uv>=0.7.7",
 {%- endif %}
 ]
-{% if build_backend == 'hatch' and hatch_plugins %}
+{% if backend == 'hatch' and hatch_plugins %}
 [tool.hatch]
 {%- if 'hatch-vcs' in hatch_plugins %}
 build.hooks.vcs.version-file = "src/{{ package_name }}/VERSION.txt"
