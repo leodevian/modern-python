@@ -39,9 +39,8 @@ def main(argv: Sequence[str] | None = None) -> int:  # noqa: PLR0911, PLR0915
     # Parse command-line arguments.
     parser = argparse.ArgumentParser(description="prepare a new release")
     parser.add_argument(
-        "--version",
+        "version",
         type=Version,
-        required=True,
         help="provide the release version",
     )
     parser.add_argument(
