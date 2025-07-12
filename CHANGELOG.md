@@ -9,6 +9,28 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [1.1.0](https://github.com/leodevian/modern-python/tree/v1.1.0)
+
+### Changed
+
+- Add hatch-vcs to default Hatch plugins.
+- In pytest options, write the minimum log message level that should be captured for logging capture in uppercase.
+- Parse the target version as an argument in `scripts/release.py`.
+- Remove `mkdocs.yaml` from the watch list.
+- Remove unnecessary pytest option for coverage (see <https://pytest-cov.readthedocs.io/en/latest/xdist.html>).
+- Rename `build_backend` to `backend`.
+- Update pre-commit hooks to their latest versions.
+- Use our own settings for code coverage.
+- Use single quotes in commands.
+
+### Fixed
+
+- Add missing comma in `noxfile.py`.
+- Fix sources to measure coverage for.
+- Fix variable name in `noxfile.py`.
+- Removed unused import in `noxfile.py`: `from nox.command import CommandFailed`.
+
+
 ## [1.0.0](https://github.com/leodevian/modern-python/tree/v1.0.0)
 
 ### Added
