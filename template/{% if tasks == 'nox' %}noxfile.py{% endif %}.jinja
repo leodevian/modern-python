@@ -150,7 +150,7 @@ def type_check_tests(session: nox.Session) -> None:
         f"--reinstall-package={PROJECT_NAME}",
         "--no-default-groups",
         "--group=tests",
-        "--group=type"
+        "--group=type",
         f"--python={session.virtualenv.location}",
         env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
     )
