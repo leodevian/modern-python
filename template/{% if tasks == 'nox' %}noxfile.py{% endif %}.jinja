@@ -57,7 +57,7 @@ def tests(session: nox.Session) -> None:
     )
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
-    work_dir = tmp_path.parents[1]
+    work_dir = tmp_dir.parents[1]
     junit_xml_path = work_dir / f"junit-{session.python}.xml"
     htmlcov_dir = tmp_dir / "htmlcov"
     coverage_xml_path = work_dir / f"coverage-{session.python}.xml"
