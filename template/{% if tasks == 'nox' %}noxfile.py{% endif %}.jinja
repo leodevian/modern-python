@@ -73,8 +73,6 @@ def tests(session: nox.Session) -> None:
                 "--junit-xml",
                 junit_xml_path,
                 "--cov",
-                "--cov-config",
-                "pyproject.toml",
                 "--cov-context",
                 "test",
                 "--cov-report",
@@ -87,7 +85,6 @@ def tests(session: nox.Session) -> None:
         ),
         env={
             "COVERAGE_FILE": os.getenv("COVERAGE_FILE") or str(tmp_dir / ".coverage"),
-            "COVERAGE_PROCESS_START": "pyproject.toml",
         },
     )
 

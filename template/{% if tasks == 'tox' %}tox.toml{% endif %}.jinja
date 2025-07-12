@@ -43,7 +43,6 @@ pass_env = [
 ]
 set_env = [
   { COVERAGE_FILE = { replace = "env", name = "COVERAGE_FILE", default = "{env_tmp_dir}{/}.coverage" } },
-  { COVERAGE_PROCESS_START = "{tox_root}/pyproject.toml" },
 ]
 dependency_groups = [ "tests" ]
 commands = [
@@ -57,8 +56,6 @@ commands = [
       "--junit-xml",
       "{work_dir}{/}junit-{env_name}.xml",
       "--cov",
-      "--cov-config",
-      "{tox_root}{/}pyproject.toml",
       "--cov-context",
       "test",
       "--cov-report",
