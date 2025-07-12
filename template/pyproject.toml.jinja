@@ -100,7 +100,7 @@ lint = [
   "pre-commit-uv>=4.1.4",
 ]
 tests = [
-  "covdefaults>=2.3",
+  "coverage>=7.8",
   "pytest>=8.3.4",
   "pytest-cov>=6",
   "pytest-xdist>=3.6.1",
@@ -190,18 +190,33 @@ paths.source = [
   ".nox/**/site-packages",
 {%- endif %}
 ]
-{%- if tasks == 'nox' %}
+report.exclude_also = [
+  "-> [\"']?(Never|NoReturn)[\"']?:",
+  ": \\.\\.\\.(\\s*#.*)?$",
+  "^\\s*(typing\\.)?assert_never\\b",
+  "^\\s*@(abc\\.)?abstractmethod\\b",
+  "^\\s*@(typing\\.)?overload\\b",
+  "^\\s*if (typing\\.)?TYPE_CHECKING:",
+  "^\\s*if False:",
+  "^\\s*raise NotImplementedError\\b",
+  "^\\s*return NotImplemented\\b",
+  "^\\s+\\.\\.\\.$",
+  "^if __name__ == [\"']__main__[\"']:$",
+]
+report.fail_under = 100
+report.show_missing = true
+report.skip_covered = true
+run.branch = true
 run.omit = [
-  "noxfile.py",
+  "__main__.py",
+  "setup.py",
 ]
-{%- endif %}
 run.parallel = true
-run.plugins = [
-  "covdefaults",
-]
-run.source = [
-  "{{ package_name }}",
+run.source_dirs = [
   "tests",
+]
+run.source_pkgs = [
+  "{{ package_name }}",
 ]
 
 [tool.towncrier]
