@@ -9,6 +9,17 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [1.2.0](https://github.com/leodevian/modern-python/tree/v1.2.0)
+
+### Added
+
+- Print log records with `INFO` or higher level to the console during testing.
+
+### Changed
+
+- Stop setting the log level to `INFO` during testing.
+
+
 ## [1.1.1](https://github.com/leodevian/modern-python/tree/v1.1.1)
 
 ### Fixed
