@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [1.2.1](https://github.com/leodevian/modern-python/tree/v1.2.1)
+
+### Fixed
+
+- Prevent coverage warnings for unclosed SQLite connections being raised as errors.
+
+
 ## [1.2.0](https://github.com/leodevian/modern-python/tree/v1.2.0)
 
 ### Added
