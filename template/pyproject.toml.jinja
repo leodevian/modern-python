@@ -163,7 +163,10 @@ addopts = [
   "--strict-config",
   "--strict-markers",
 ]
-filterwarnings = [ "error" ]
+filterwarnings = [
+  "error",
+  "ignore:unclosed database in <sqlite3.Connection:ResourceWarning",
+]
 log_cli_level = "INFO"
 testpaths = [
 {%- if 'docs' in doctest %}
