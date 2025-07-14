@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [1.1.1](https://github.com/leodevian/modern-python/tree/v1.1.1)
+
+### Fixed
+
+- Fix the extension of the version test.
+
+
 ## [1.1.0](https://github.com/leodevian/modern-python/tree/v1.1.0)
 
 ### Changed
