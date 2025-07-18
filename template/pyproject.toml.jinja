@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 {%- do requires.append('hatchling>=1.27') %}
 {%- elif backend == 'uv' %}
 build-backend = "uv_build"
-{%- do requires.append('uv-build>=0.7.19,<0.8') %}
+{%- do requires.append('uv-build>=0.7.19') %}
 {%- endif %}
 requires = [
 {%- for requirement in requires | sort %}
