@@ -66,15 +66,3 @@ commands = [
     { replace = "posargs", extend = true },
   ],
 ]
-
-[env.release]
-description = "prepare a new release"
-skip_install = true
-dependency_groups = [ "release" ]
-commands = [
-  [
-    "python",
-    "{tox_root}{/}scripts{/}release.py",
-    { replace = "posargs", extend = true },
-  ],
-]
