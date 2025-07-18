@@ -9,6 +9,16 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [1.3.0](https://github.com/leodevian/modern-python/tree/v1.3.0)
+
+### Changed
+
+- Drop the legacy alias for Ruff's lint hook.
+- Manage `scripts/release.py` using inline metadata.
+- Remove the upper version boundary for uv-build.
+- Update pre-commit hooks.
+
+
 ## [1.2.1](https://github.com/leodevian/modern-python/tree/v1.2.1)
 
 ### Fixed
