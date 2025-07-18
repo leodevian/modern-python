@@ -235,23 +235,5 @@ def autodocs(session: nox.Session) -> None:
     )
 
 {% endif %}
-@nox.session(python=DEFAULT_PYTHON_VERSION)
-def release(session: nox.Session) -> None:
-    """Prepare a new release."""
-{%- if install == 'uv pip' %}
-    session.install(*nox.project.dependency_groups(PYPROJECT, "release"))
-{%- else %}
-    session.run_install(
-        "uv",
-        "sync",
-        "--locked",
-        "--only-group=release",
-        f"--python={session.virtualenv.location}",
-        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
-    )
-{%- endif %}
-    session.run("python", Path("scripts", "release.py"), *session.posargs)
-
-
 if __name__ == "__main__":
     nox.main()

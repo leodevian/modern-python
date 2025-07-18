@@ -124,7 +124,8 @@ commands = [
     "{env_tmp_dir}{/}*",
   ],
 ]
-{% if docs == 'mkdocs' %}
+{%- if docs == 'mkdocs' %}
+
 [env.docs]
 description = "generate documentation"
 package = "editable"
@@ -154,15 +155,4 @@ commands = [
     { replace = "posargs", extend = true },
   ],
 ]
-{% endif %}
-[env.release]
-description = "prepare a new release"
-skip_install = true
-dependency_groups = [ "release" ]
-commands = [
-  [
-    "python",
-    "{tox_root}{/}scripts{/}release.py",
-    { replace = "posargs", extend = true },
-  ],
-]
+{%- endif %}
