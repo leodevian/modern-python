@@ -63,12 +63,12 @@ project_description:
 user_name:
   type: str
   help: Your name?
-  default: "{{ 'Léo Bernard' | git_user_name }}"
+  default: "{{ git_user_name }}"
 
 user_email:
   type: str
   help: Your email?
-  default: "{{ 'leodevian.gh@gmail.com' | git_user_email }}"
+  default: "{{ git_user_email }}"
 
 github_user:
   type: str
