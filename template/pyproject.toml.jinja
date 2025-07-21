@@ -81,6 +81,7 @@ scripts.{{ distribution_name }} = "{{ package_name }}.cli:main"
 [dependency-groups]
 dev = [
   { include-group = "lint" },
+  { include-group = "release" },
   { include-group = "tests" },
   { include-group = "type" },
 ]
@@ -108,6 +109,9 @@ pkg = [
   "check-wheel-contents>=0.6.1",
   "twine>=6.0.1",
   "uv>=0.6.5",
+]
+release = [
+  "towncrier>=24.8",
 ]
 {% if backend == 'hatch' and hatch_plugins %}
 [tool.hatch]
