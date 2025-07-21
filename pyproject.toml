@@ -59,7 +59,7 @@ docs = [
 ]
 tests = [  ]
 lint = [
-  "pre-commit-uv>=4.1.4",
+  "pre-commit>=4.2",
 ]
 
 [tool.ruff]
