@@ -48,6 +48,7 @@ urls.repository = "https://github.com/leodevian/modern-python"
 [dependency-groups]
 dev = [
   { include-group = "lint" },
+  { include-group = "release" },
   { include-group = "type" },
 ]
 type = [
@@ -60,6 +61,9 @@ docs = [
 tests = [  ]
 lint = [
   "pre-commit>=4.2",
+]
+release = [
+  "towncrier>=24.8",
 ]
 
 [tool.ruff]
