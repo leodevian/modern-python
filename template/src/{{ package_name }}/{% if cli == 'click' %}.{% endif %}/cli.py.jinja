@@ -8,8 +8,8 @@ from . import __version__
 
 
 @click.command()
-@click.help_option("-h", "--help")
-@click.version_option(__version__, "-V", "--version")
+@click.help_option("--help", "-h")
+@click.version_option(__version__, "--version", "-V")
 def main() -> None:
     """Run the main program."""
     return

@@ -11,7 +11,7 @@ from . import __version__
 
 console = Console()
 
-app = typer.Typer(context_settings={"help_option_names": ["-h", "--help"]})
+app = typer.Typer(context_settings={"help_option_names": ["--help", "-h"]})
 
 
 def show_version(value: bool) -> None:  # noqa: FBT001
@@ -33,8 +33,8 @@ def main(
     version: Annotated[  # noqa: ARG001, FBT002
         bool,
         typer.Option(
-            "-V",
             "--version",
+            "-V",
             callback=show_version,
             is_eager=True,
             help="Show the version and exit.",

@@ -13,7 +13,7 @@ def test_main() -> None:
     assert main([]) == 0
 
 
-@pytest.mark.parametrize("option", ["-h", "--help"])
+@pytest.mark.parametrize("option", ["--help", "-h"])
 def test_show_help(option: str) -> None:
     """Test the help option of the command-line interface."""
     with pytest.raises(SystemExit) as excinfo:
@@ -22,7 +22,7 @@ def test_show_help(option: str) -> None:
     assert excinfo.value.code == 0
 
 
-@pytest.mark.parametrize("option", ["-V", "--version"])
+@pytest.mark.parametrize("option", ["--version", "-V"])
 def test_show_version(option: str, capsys: pytest.CaptureFixture[str]) -> None:
     """Test the version option of the command-line interface."""
     with pytest.raises(SystemExit) as excinfo:
