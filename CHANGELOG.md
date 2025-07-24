@@ -9,6 +9,19 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [1.5.0](https://github.com/leodevian/modern-python/tree/v1.5.0)
+
+### Changed
+
+- Add Git user information to globals during generation.
+- Stop creating reports for test runs.
+- Stop using pytest-cov and require Coverage.py 7.10 or more.
+
+### Fixed
+
+- Always install uv to run Nox sessions.
+
+
 ## [1.4.0](https://github.com/leodevian/modern-python/tree/v1.4.0)
 
 ### Added
