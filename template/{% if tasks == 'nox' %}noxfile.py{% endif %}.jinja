@@ -53,7 +53,16 @@ def tests(session: nox.Session) -> None:
     )
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
+    session.env["COVERAGE_FILE"] = os.getenv("COVERAGE_FILE") or str(
+        tmp_dir / ".coverage"
+    )
+    session.run("coverage", "erase")
     session.run(
+        "coverage",
+        "run",
+        "--context",
+        "test",
+        "-m",
         "pytest",
         *(
             session.posargs
@@ -62,17 +71,11 @@ def tests(session: nox.Session) -> None:
                 "15",
                 "-n",
                 os.getenv("PYTEST_XDIST_AUTO_NUM_WORKERS") or "auto",
-                "--cov",
-                "--cov-context",
-                "test",
-                "--cov-report",
-                "term-missing:skip-covered",
             )
         ),
-        env={
-            "COVERAGE_FILE": os.getenv("COVERAGE_FILE") or str(tmp_dir / ".coverage"),
-        },
     )
+    session.run("coverage", "combine")
+    session.run("coverage", "report")
 
 
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])

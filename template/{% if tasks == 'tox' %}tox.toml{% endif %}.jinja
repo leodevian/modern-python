@@ -47,19 +47,21 @@ set_env = [
 dependency_groups = [ "tests" ]
 commands = [
   [
+    "coverage",
+    "run",
+    "--context",
+    "test",
+    "-m",
     "pytest",
     { replace = "posargs", extend = true, default = [
       "--durations",
       "15",
       "-n",
       { replace = "env", name = "PYTEST_XDIST_AUTO_NUM_WORKERS", default = "auto" },
-      "--cov",
-      "--cov-context",
-      "test",
-      "--cov-report",
-      "term-missing:skip-covered",
     ] },
   ],
+  [ "coverage", "combine" ],
+  [ "coverage", "report" ],
 ]
 
 [env.lint]

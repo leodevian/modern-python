@@ -100,9 +100,8 @@ lint = [
   "pre-commit>=4.2",
 ]
 tests = [
-  "coverage>=7.8",
+  "coverage>=7.10",
   "pytest>=8.3.4",
-  "pytest-cov>=6",
   "pytest-xdist>=3.6.1",
 ]
 pkg = [
@@ -161,7 +160,6 @@ addopts = [
 ]
 filterwarnings = [
   "error",
-  "ignore:unclosed database in <sqlite3.Connection:ResourceWarning",
 ]
 log_cli_level = "INFO"
 testpaths = [
@@ -191,7 +189,6 @@ paths.source = [
 ]
 report.exclude_also = [
   "-> [\"']?(Never|NoReturn)[\"']?:",
-  ": \\.\\.\\.(\\s*#.*)?$",
   "^\\s*(typing\\.)?assert_never\\b",
   "^\\s*@(abc\\.)?abstractmethod\\b",
   "^\\s*@(typing\\.)?overload\\b",
@@ -199,18 +196,22 @@ report.exclude_also = [
   "^\\s*if False:",
   "^\\s*raise NotImplementedError\\b",
   "^\\s*return NotImplemented\\b",
-  "^\\s+\\.\\.\\.$",
   "^if __name__ == [\"']__main__[\"']:$",
 ]
 report.fail_under = 100
 report.show_missing = true
 report.skip_covered = true
 run.branch = true
+run.disable_warnings = [
+  "module-not-imported",
+]
 run.omit = [
   "__main__.py",
   "setup.py",
 ]
-run.parallel = true
+run.patch = [
+  "subprocess",
+]
 run.source_dirs = [
   "tests",
 ]
