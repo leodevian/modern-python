@@ -53,10 +53,6 @@ def tests(session: nox.Session) -> None:
     )
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
-    work_dir = tmp_dir.parents[1]
-    junit_xml_path = work_dir / f"junit-{session.python}.xml"
-    htmlcov_dir = tmp_dir / "htmlcov"
-    coverage_xml_path = work_dir / f"coverage-{session.python}.xml"
     session.run(
         "pytest",
         *(
@@ -66,17 +62,11 @@ def tests(session: nox.Session) -> None:
                 "15",
                 "-n",
                 os.getenv("PYTEST_XDIST_AUTO_NUM_WORKERS") or "auto",
-                "--junit-xml",
-                junit_xml_path,
                 "--cov",
                 "--cov-context",
                 "test",
                 "--cov-report",
                 "term-missing:skip-covered",
-                "--cov-report",
-                f"html:{htmlcov_dir}",
-                "--cov-report",
-                f"xml:{coverage_xml_path}",
             )
         ),
         env={
