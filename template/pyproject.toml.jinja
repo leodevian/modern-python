@@ -53,7 +53,7 @@ dynamic = [
 {%- endif %}
 {%- with dependencies = [] %}
 {%- if cli == 'click' %}{% do dependencies.append('click>=8.2') %}
-{%- elif cli == 'typer' %}{% do dependencies.append('typer>=0.15.4') %}{% endif %}
+{%- elif cli == 'typer' %}{% do dependencies.append('typer>=0.16') %}{% endif %}
 {%- if dependencies %}
 dependencies = [
 {%- for dependency in dependencies | sort %}
