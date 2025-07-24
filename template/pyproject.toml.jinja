@@ -53,7 +53,8 @@ dynamic = [
 {%- endif %}
 {%- with dependencies = [] %}
 {%- if cli == 'click' %}{% do dependencies.append('click>=8.2') %}
-{%- elif cli == 'typer' %}{% do dependencies.append('typer>=0.16') %}{% endif %}
+{%- elif cli == 'typer' %}{% do dependencies.append('typer>=0.16') %}
+{%- elif cli == 'cyclopts' %}{% do dependencies.append('cyclopts>=3.22.3') %}{% endif %}
 {%- if dependencies %}
 dependencies = [
 {%- for dependency in dependencies | sort %}
@@ -73,7 +74,7 @@ urls.changelog = "{{ repository_url }}/blob/main/CHANGELOG.md"
 urls.homepage = "{{ repository_url }}"
 urls.issues = "{{ repository_url }}/issues"
 urls.repository = "{{ repository_url }}"
-{% if cli == 'typer' -%}
+{% if cli == 'typer' or cli == 'cyclopts' -%}
 scripts.{{ distribution_name }} = "{{ package_name }}.cli:app"
 {% elif cli -%}
 scripts.{{ distribution_name }} = "{{ package_name }}.cli:main"

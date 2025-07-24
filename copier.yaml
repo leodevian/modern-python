@@ -155,6 +155,7 @@ cli:
     argparse: argparse
     Click: click
     Typer: typer
+    Cyclopts: cyclopts
 
 features:
   type: str

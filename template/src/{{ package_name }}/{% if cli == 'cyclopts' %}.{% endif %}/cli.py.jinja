@@ -1,0 +1,23 @@
+"""The command-line interface."""
+
+from __future__ import annotations
+
+import cyclopts
+
+from . import __version__
+
+app = cyclopts.App(
+    help="Run the main program.",
+    version=f"{{ distribution_name }}, version {__version__}",
+    version_flags=("-V", "--version"),
+)
+
+
+@app.default
+def main() -> None:
+    """Run the main program."""
+    return
+
+
+if __name__ == "__main__":
+    app()

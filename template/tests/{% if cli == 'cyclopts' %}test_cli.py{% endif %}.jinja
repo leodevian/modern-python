@@ -1,0 +1,31 @@
+"""Tests for the command-line interface."""
+
+from __future__ import annotations
+
+import pytest
+
+from {{ package_name }} import __version__
+from {{ package_name }}.cli import app
+
+
+def test_app() -> None:
+    """Test the main program."""
+    result = app([])
+    assert result is None
+
+
+@pytest.mark.parametrize("option", ["--help", "-h"])
+def test_show_help(option: str) -> None:
+    """Test the help option of the command-line interface."""
+    result = app([option])
+    assert result is None
+
+
+@pytest.mark.parametrize("option", ["--version", "-V"])
+def test_show_version(option: str, capsys: pytest.CaptureFixture[str]) -> None:
+    """Test the version option of the command-line interface."""
+    result = app([option])
+    assert result is None
+
+    captured = capsys.readouterr()
+    assert __version__ in captured.out
