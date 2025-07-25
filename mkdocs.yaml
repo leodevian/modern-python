@@ -9,6 +9,7 @@ copyright: Copyright &copy; 2025 Léo Bernard
 nav:
   - Home: index.md
   - Changelog: changelog.md
+  - License: license.md
 
 validation:
   omitted_files: warn
