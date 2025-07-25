@@ -195,15 +195,15 @@ wheels = [
 ]
 
 [[package]]
-name = "copier-templates-extensions"
-version = "0.3.1"
+name = "copier-template-extensions"
+version = "0.3.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "copier" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f2/c4/1827fa1457401eea9c2665423a552614dbe13c1341587b48aa379c928405/copier_templates_extensions-0.3.1.tar.gz", hash = "sha256:f604f6dc58814204b79aa0697d919b94077b28942595d2fa0a20e4d94b6890a6", size = 34921, upload-time = "2025-03-10T13:06:14.715Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8a/47/1a6638b4323a9eba2f19f4b1364bd77fcdb2b525a1c1cccb1f73422ff97e/copier_template_extensions-0.3.3.tar.gz", hash = "sha256:86bd5e2e89c94b6f9321e4078781b4456c5658b820bcae49ac60fd1e1dd23c10", size = 34991, upload-time = "2025-07-15T10:40:41.309Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/eb/a7/85c6ac6e91d80eede4683fa7dda285cf77720ac0f567680a24322249d810/copier_templates_extensions-0.3.1-py3-none-any.whl", hash = "sha256:d0834ecacaaeef84f81e745fd8fdcd519cb0731ddb5bd45bc0129633c717f5e2", size = 9355, upload-time = "2025-03-10T13:06:13.572Z" },
+    { url = "https://files.pythonhosted.org/packages/c6/da/117372469b9bb1555ae7f8a0b1f3e00345044e6006c50f3f6d3cb20c9843/copier_template_extensions-0.3.3-py3-none-any.whl", hash = "sha256:bf6bbdebada26132640d6e1128723fa1ff7eb59d008de07a7543c51e0facb0ea", size = 9893, upload-time = "2025-07-15T10:40:39.928Z" },
 ]
 
 [[package]]
@@ -500,7 +500,7 @@ version = "1.5.0"
 source = { virtual = "." }
 dependencies = [
     { name = "copier" },
-    { name = "copier-templates-extensions" },
+    { name = "copier-template-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -526,7 +526,7 @@ type = [
 [package.metadata]
 requires-dist = [
     { name = "copier", specifier = ">=9.6" },
-    { name = "copier-templates-extensions", specifier = ">=0.3.1" },
+    { name = "copier-template-extensions", specifier = ">=0.3.2" },
 ]
 
 [package.metadata.requires-dev]
