@@ -9,6 +9,20 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2.0.0](https://github.com/leodevian/modern-python/tree/v2.0.0)
+
+### Added
+
+- Add an option to use Cyclopts.
+
+### Changed
+
+- Bump the lower version boundary for Typer to 0.16.
+- Require Copier Template-Extensions to generate projects.
+- Rewrite the quick setup and usage guide.
+- Sort CLI options in source code and tests.
+
+
 ## [1.5.0](https://github.com/leodevian/modern-python/tree/v1.5.0)
 
 ### Changed
