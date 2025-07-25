@@ -5,7 +5,7 @@
 - GitHub repository: <https://github.com/leodevian/modern-python>
 - License: MIT
 
-## Prerequisites
+## Quick setup and usage
 
 Install Copier using [uv](https://docs.astral.sh/uv/):
 
@@ -13,10 +13,8 @@ Install Copier using [uv](https://docs.astral.sh/uv/):
 uv tool install copier --with copier-template-extensions
 ```
 
-## Usage
-
 Run `copier copy` to generate your Python package:
 
 ```bash
-copier copy --trust "gh:leodevian/modern-python" .
+copier copy --trust gh:leodevian/modern-python $PROJECT_DIR
 ```
