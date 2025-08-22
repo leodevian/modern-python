@@ -3,7 +3,7 @@ exclude: ^(CHANGELOG\.md|CODE_OF_CONDUCT\.md)$
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-case-conflict
@@ -26,14 +26,14 @@ repos:
       - id: tox-toml-fmt
 {% endif %}
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.3
+    rev: v0.12.10
     hooks:
       - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.7.21
+    rev: 0.8.13
     hooks:
       - id: uv-lock
 
