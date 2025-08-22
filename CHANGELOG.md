@@ -9,6 +9,23 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2.1.0](https://github.com/leodevian/modern-python/tree/v2.1.0)
+
+### Security
+
+- Bump the lower version boundary for uv to 0.8.6.
+
+### Added
+
+- Add license and requirements to the documentation.
+- Start a new dynamic coverage context for each test function.
+
+### Changed
+
+- Edit descriptions in `tox.toml` and `noxfile.py`.
+- Update pre-commit hooks to their latest versions.
+
+
 ## [2.0.0](https://github.com/leodevian/modern-python/tree/v2.0.0)
 
 ### Added
