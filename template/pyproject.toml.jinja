@@ -66,14 +66,14 @@ dependencies = [  ]
 {%- endif %}
 {%- endwith %}
 {%- if docs %}
-urls.changelog = "{{ documentation_url }}changelog/"
-urls.documentation = "{{ documentation_url }}"
+urls.Changelog = "{{ documentation_url }}changelog/"
+urls.Documentation = "{{ documentation_url }}"
 {%- else %}
-urls.changelog = "{{ repository_url }}/blob/main/CHANGELOG.md"
+urls.Changelog = "{{ repository_url }}/blob/main/CHANGELOG.md"
 {%- endif %}
-urls.homepage = "{{ repository_url }}"
-urls.issues = "{{ repository_url }}/issues"
-urls.repository = "{{ repository_url }}"
+urls.Homepage = "{{ repository_url }}"
+urls.Issues = "{{ repository_url }}/issues"
+urls.Repository = "{{ repository_url }}"
 {% if cli == 'typer' or cli == 'cyclopts' -%}
 scripts.{{ distribution_name }} = "{{ package_name }}.cli:app"
 {% elif cli -%}
