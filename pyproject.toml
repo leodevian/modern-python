@@ -39,11 +39,11 @@ dependencies = [
   "copier>=9.6",
   "copier-template-extensions>=0.3.2",
 ]
-urls.changelog = "https://github.com/leodevian/modern-python/blob/main/CHANGELOG.md"
-urls.documentation = "https://github.com/leodevian/modern-python/tree/main/docs"
-urls.homepage = "https://github.com/leodevian/modern-python"
-urls.issues = "https://github.com/leodevian/modern-python/issues"
-urls.repository = "https://github.com/leodevian/modern-python"
+urls.Changelog = "https://github.com/leodevian/modern-python/blob/main/CHANGELOG.md"
+urls.Documentation = "https://github.com/leodevian/modern-python/tree/main/docs"
+urls.Homepage = "https://github.com/leodevian/modern-python"
+urls.Issues = "https://github.com/leodevian/modern-python/issues"
+urls.Repository = "https://github.com/leodevian/modern-python"
 
 [dependency-groups]
 dev = [
