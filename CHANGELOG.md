@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2.2.0](https://github.com/leodevian/modern-python/tree/v2.2.0)
+
+### Changed
+
+- Capitalize `Project-URL` labels in `pyproject.toml`.
+
+
 ## [2.1.0](https://github.com/leodevian/modern-python/tree/v2.1.0)
 
 ### Security
