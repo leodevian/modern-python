@@ -1,8 +1,8 @@
 # modern-python
 
-![release](https://img.shields.io/github/v/release/leodevian/modern-python)
+![Latest release](https://img.shields.io/github/v/release/leodevian/modern-python)
 [![CI](https://img.shields.io/github/actions/workflow/status/leodevian/modern-python/ci.yaml?branch=main&logo=github&label=CI)](https://github.com/leodevian/modern-python/actions/workflows/ci.yaml)
-[![license](https://img.shields.io/github/license/leodevian/modern-python)](https://github.com/leodevian/modern-python/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/leodevian/modern-python)](https://github.com/leodevian/modern-python/blob/main/LICENSE)
 
 [Copier](https://copier.readthedocs.io/en/stable/) template for modern Python packages.
 
