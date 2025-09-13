@@ -1,10 +1,9 @@
 # {{ project_name }}
 
-- GitHub repository: <{{ repository_url }}>
-{%- if docs %}
-- Documentation: <{{ documentation_url }}>
-{%- endif %}
-- License: {{ license }}
+[![PyPI](https://img.shields.io/pypi/v/{{ distribution_name }})](https://pypi.org/project/{{ distribution_name }}/)
+[![Supported Python versions](https://img.shields.io/pypi/pyversions/{{ distribution_name }}?logo=python)](https://pypi.org/project/{{ distribution_name }}/)
+[![CI](https://img.shields.io/github/actions/workflow/status/{{ repository_path }}/ci.yaml?branch=main&logo=github&label=CI)](https://github.com/{{ repository_path }}/actions/workflows/ci.yaml)
+[![License](https://img.shields.io/github/license/{{ repository_path }})](https://github.com/{{ repository_path }}/blob/main/LICENSE)
 
 ## Installation
 
