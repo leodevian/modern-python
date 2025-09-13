@@ -1,11 +1,12 @@
 # modern-python
 
+![release](https://img.shields.io/github/v/release/leodevian/modern-python)
+[![CI](https://img.shields.io/github/actions/workflow/status/leodevian/modern-python/ci.yaml?branch=main&logo=github&label=CI)](https://github.com/leodevian/modern-python/actions/workflows/ci.yaml)
+[![license](https://img.shields.io/github/license/leodevian/modern-python)](https://github.com/leodevian/modern-python/blob/main/LICENSE)
+
 [Copier](https://copier.readthedocs.io/en/stable/) template for modern Python packages.
 
-- GitHub repository: <https://github.com/leodevian/modern-python>
-- License: MIT
-
-## Requirements
+## Setup and usage
 
 This Copier template requires:
 
@@ -24,8 +25,6 @@ To install Copier and Copier Template-Extensions, use [uv](https://docs.astral.s
 ```bash
 uv tool install copier --with copier-template-extensions
 ```
-
-## Quick usage
 
 Run `copier copy` to generate your Python package:
 
