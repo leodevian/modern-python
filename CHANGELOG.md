@@ -9,6 +9,21 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2.3.0](https://github.com/leodevian/modern-python/tree/v2.3.0)
+
+### Added
+
+- Add badges to `README.md`.
+- Add badges to the documentation homepage.
+
+### Changed
+
+- Bump actions/checkout from 4 to 5.
+- Bump actions/download-artifact from 4 to 5.
+- Bump astral-sh/setup-uv from 5 to 6.
+- Update pre-commit hooks.
+
+
 ## [2.2.0](https://github.com/leodevian/modern-python/tree/v2.2.0)
 
 ### Changed
