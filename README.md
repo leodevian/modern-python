@@ -4,7 +4,7 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/leodevian/modern-python/ci.yaml?branch=main&logo=github&label=CI)](https://github.com/leodevian/modern-python/actions/workflows/ci.yaml)
 [![License](https://img.shields.io/github/license/leodevian/modern-python)](https://github.com/leodevian/modern-python/blob/main/LICENSE)
 
-[Copier](https://copier.readthedocs.io/en/stable/) template for modern Python packages.
+[Copier](https://copier.readthedocs.io/) template for modern Python packages.
 
 ## Setup and usage
 
@@ -12,7 +12,7 @@ This Copier template requires:
 
 - [Git](https://git-scm.com/) version 2.
 - [Python](https://www.python.org/) 3.9 or more.
-- [Copier](https://copier.readthedocs.io/en/stable/) version 9.6 or more.
+- [Copier](https://copier.readthedocs.io/) version 9.6 or more.
 - [Copier Template-Extensions](https://github.com/copier-org/copier-template-extensions) version 0.3.2 or more.
 
 To install Git, [download and install it from the official website](https://git-scm.com/downloads).
