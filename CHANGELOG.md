@@ -9,6 +9,17 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2.4.0](https://github.com/leodevian/modern-python/tree/v2.4.0)
+
+### Added
+
+- Add the description to `README.md`.
+
+### Changed
+
+- Shorten URLs.
+
+
 ## [2.3.0](https://github.com/leodevian/modern-python/tree/v2.3.0)
 
 ### Added

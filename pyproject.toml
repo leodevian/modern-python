@@ -1,6 +1,6 @@
 [project]
 name = "modern-python"
-version = "2.3.0"
+version = "2.4.0"
 description = "Copier template for Python projects"
 readme = "README.md"
 keywords = [
