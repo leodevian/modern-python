@@ -6,7 +6,7 @@ _envops:
   autoescape: false
   keep_trailing_newline: true
 _jinja_extensions:
-  - copier_templates_extensions.TemplateExtensionLoader
+  - copier_template_extensions.TemplateExtensionLoader
   - extensions/git.py:GitExtension
   - extensions/slugify.py:SlugifyExtension
   - extensions/today.py:TodayExtension
