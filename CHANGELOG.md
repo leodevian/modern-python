@@ -9,6 +9,18 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [3.0.0](https://github.com/leodevian/modern-python/tree/v3.0.0)
+
+### Added
+
+- Add badges to `README.md`.
+
+### Changed
+
+- Allow Ruff to add `from __future__ import annotations` to enable the deferred evaluation of annotations.
+- Import the extension loader from `copier_template_extensions` instead of `copier_templates_extensions`.
+
+
 ## [2.4.0](https://github.com/leodevian/modern-python/tree/v2.4.0)
 
 ### Added
