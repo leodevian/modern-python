@@ -86,6 +86,7 @@ lint.isort.required-imports = [
   "from __future__ import annotations",
 ]
 lint.pydocstyle.convention = "google"
+lint.future-annotations = true
 
 [tool.codespell]
 write-changes = true
