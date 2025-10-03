@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.10"
+# requires-python = ">=3.11"
 # dependencies = [
 #   "towncrier>=24.8",
 #   "uv>=0.8.6",
@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import argparse
+import enum
 import json
 import subprocess
 import sys
@@ -31,12 +32,32 @@ run = partial(
 )
 
 
+class Bump(enum.StrEnum):
+    """The enumeration of supported version bump semantics."""
+
+    MAJOR = enum.auto()
+    MINOR = enum.auto()
+    PATCH = enum.auto()
+    STABLE = enum.auto()
+    ALPHA = enum.auto()
+    BETA = enum.auto()
+    RC = enum.auto()
+    POST = enum.auto()
+    DEV = enum.auto()
+
+
 def create_parser() -> argparse.ArgumentParser:
     """Create the argument parser."""
     parser = argparse.ArgumentParser(description="make a release")
-    parser.add_argument(
+    mutex = parser.add_mutually_exclusive_group(required=True)
+    mutex.add_argument(
+        "--version",
+        help="provide the version",
+    )
+    mutex.add_argument(
         "--bump",
-        required=True,
+        type=Bump,
+        choices=Bump,
         help="update the version using the given semantics",
     )
     parser.add_argument(
@@ -57,20 +78,18 @@ def check_repository() -> None:
         raise SystemExit(1) from None
 
 
-def bump_version(bump: str) -> str:
-    """Bump the version and return the new version."""
+def update_version(version: str | None = None, bump: str | None = None) -> str:
+    """Update the version and return the new version."""
+    args = ["uv", "version", "--no-sync", "--output-format", "json"]
+
+    if version:
+        args.append(version)
+
+    if bump:
+        args.extend(("--bump", bump))
+
     try:
-        version_json = subprocess.check_output(
-            (
-                "uv",
-                "version",
-                "--no-sync",
-                "--output-format",
-                "json",
-                "--bump",
-                bump,
-            )
-        )
+        version_json = subprocess.check_output(args)
 
     except subprocess.CalledProcessError:
         print_error("An error occurred while bumping the version.")
@@ -80,17 +99,16 @@ def bump_version(bump: str) -> str:
     return version["version"]
 
 
-@contextmanager
-def switch_to_branch(branch: str) -> Generator[None]:
-    """Create a new branch and switch to it.
-
-    It is removed on exit.
-    """
-    base_branch = subprocess.check_output(
+def get_branch() -> str:
+    """Get the current branch."""
+    return subprocess.check_output(
         ("git", "rev-parse", "--abbrev-ref", "HEAD"),
         text=True,
     ).rstrip()
 
+
+def create_branch(branch: str) -> None:
+    """Create a new branch."""
     try:
         run(("git", "branch", branch))
 
@@ -99,6 +117,16 @@ def switch_to_branch(branch: str) -> Generator[None]:
         raise SystemExit(1) from None
 
     print(f"Created new branch {branch!r}.")
+
+
+@contextmanager
+def switch_to_branch(branch: str) -> Generator[None]:
+    """Create a new branch and switch to it.
+
+    It is removed on exit.
+    """
+    base_branch = get_branch()
+    create_branch(branch)
 
     try:
         run(("git", "checkout", branch))
@@ -143,14 +171,14 @@ def push_changes(branch: str, remote_branch: str = "main") -> None:
     print(f"Pushed changes from {branch!r} to 'origin/{remote_branch}'.")
 
 
-def main(argv: Sequence[str] | None = None) -> None:
+def main(argv: Sequence[str] | None = None) -> int:
     """Prepare a new release."""
     parser = create_parser()
     args = parser.parse_args(argv)
 
     check_repository()
 
-    version = bump_version(args.bump)
+    version = update_version(args.version, args.bump)
 
     release_branch = f"release/{version}"
 
@@ -171,7 +199,7 @@ def main(argv: Sequence[str] | None = None) -> None:
             print("Dry run success!")
             run(("git", "tag", "-d", release_tag))
             print(f"Removed release tag {release_tag!r}.")
-            return
+            return 0
 
         push_changes(release_branch, "main")
 
@@ -179,6 +207,7 @@ def main(argv: Sequence[str] | None = None) -> None:
     run(("git", "checkout", "main"))
     run(("git", "fetch"))
     run(("git", "reset", "--hard", "origin/main"))
+    return 0
 
 
 if __name__ == "__main__":
