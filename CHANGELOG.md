@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [3.1.1](https://github.com/leodevian/modern-python/tree/v3.1.1)
+
+### Changed
+
+- Sort version flags for Cyclopts CLIs.
+
+
 ## [3.1.0](https://github.com/leodevian/modern-python/tree/v3.1.0)
 
 ### Changed
