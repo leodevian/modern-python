@@ -23,7 +23,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Generator, Sequence
 
-print_error = partial(print, file=sys.stderr)
+print_err = partial(print, file=sys.stderr)
 
 run = partial(
     subprocess.check_call,
@@ -74,7 +74,7 @@ def check_repository() -> None:
         run(("git", "diff", "--quiet"))
 
     except subprocess.CalledProcessError:
-        print_error("The Git repository is dirty.")
+        print_err("The Git repository is dirty.")
         raise SystemExit(1) from None
 
 
@@ -92,7 +92,7 @@ def update_version(version: str | None = None, bump: str | None = None) -> str:
         version_json = subprocess.check_output(cmd)
 
     except subprocess.CalledProcessError:
-        print_error("An error occurred while bumping the version.")
+        print_err("An error occurred while bumping the version.")
         raise SystemExit(1) from None
 
     version = json.loads(version_json)
@@ -113,7 +113,7 @@ def create_branch(branch: str) -> None:
         run(("git", "branch", branch))
 
     except subprocess.CalledProcessError:
-        print_error(f"The branch already exists: {branch!r}.")
+        print_err(f"The branch already exists: {branch!r}.")
         raise SystemExit(1) from None
 
     print(f"Created new branch {branch!r}.")
@@ -145,7 +145,7 @@ def build_changelog(version: str) -> None:
         run(("towncrier", "build", "--yes", "--version", version))
 
     except subprocess.CalledProcessError:
-        print_error("An error occurred while building the changelog.")
+        print_err("An error occurred while building the changelog.")
         raise SystemExit(1) from None
 
 
@@ -158,7 +158,7 @@ def create_release_tag(version: str) -> str:
         run(("git", "tag", "-a", release_tag, "-m", message))
 
     except subprocess.CalledProcessError:
-        print_error(f"The release tag already exists: {release_tag!r}.")
+        print_err(f"The release tag already exists: {release_tag!r}.")
         raise SystemExit(1) from None
 
     print(f"Created release tag {release_tag!r}.")
