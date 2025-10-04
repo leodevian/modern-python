@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.1.0](https://github.com/leodevian/modern-python/tree/v4.1.0)
+
+### Changed
+
+- Rename the `print_error` function to `print_err` in `scripts/release.py`.
+
+
 ## [4.0.0](https://github.com/leodevian/modern-python/tree/v4.0.0)
 
 ### Security
