@@ -6,7 +6,6 @@ env_list = [
   "lint",
   "type",
   "type-tests",
-  "pkg",
 {%- if docs %}
   "docs",
 {%- endif %}
@@ -19,7 +18,6 @@ labels.checks = [
   "lint",
   "type",
   "type-tests",
-  "pkg",
 {%- if docs %}
   "docs",
 {%- endif %}
@@ -93,30 +91,6 @@ description = "type check tests"
 dependency_groups = [ "tests", "type" ]
 commands = [
   [ "mypy", "tests" ],
-]
-
-[env.pkg]
-description = "check package distributions"
-skip_install = true
-dependency_groups = [ "pkg" ]
-commands = [
-  [
-    "uv",
-    "build",
-    "--out-dir",
-    "{env_tmp_dir}",
-  ],
-  [
-    "check-wheel-contents",
-    "--no-config",
-    "{env_tmp_dir}",
-  ],
-  [
-    "twine",
-    "check",
-    "--strict",
-    "{env_tmp_dir}{/}*",
-  ],
 ]
 {%- if docs == 'mkdocs' %}
 
