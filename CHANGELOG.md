@@ -9,6 +9,31 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.0.0](https://github.com/leodevian/modern-python/tree/v4.0.0)
+
+### Security
+
+- Set a lower version boundary for uv to create Nox sessions and tox environments.
+
+### Removed
+
+- Stop checking package distributions.
+
+### Changed
+
+- Bump the lower version boundary for uv-build to 0.8.6.
+- Change the default build backend to uv-build.
+- Create a function to install dependencies with `uv sync` in `noxfile.py`.
+- In Nox sessions, set `COVERAGE_FILE` if it is not set yet.
+- Refactor typechecking tasks into one task.
+- Rename local variable in `scripts/release.py`.
+- Use command-line options to install dependency groups.
+
+### Fixed
+
+- Install the package in editable mode to build the documentation.
+
+
 ## [3.1.1](https://github.com/leodevian/modern-python/tree/v3.1.1)
 
 ### Changed
