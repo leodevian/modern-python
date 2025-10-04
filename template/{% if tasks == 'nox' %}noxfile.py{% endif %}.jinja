@@ -51,9 +51,10 @@ def tests(session: nox.Session) -> None:
     )
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
-    session.env["COVERAGE_FILE"] = os.getenv("COVERAGE_FILE") or str(
-        tmp_dir / ".coverage"
-    )
+
+    if os.getenv("COVERAGE_FILE") is None:
+        session.env["COVERAGE_FILE"] = str(tmp_dir / ".coverage")
+
     session.run("coverage", "erase")
     session.run(
         "coverage",
