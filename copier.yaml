@@ -120,7 +120,7 @@ license:
 backend:
   type: str
   help: Which build backend do you want to use?
-  default: hatch
+  default: uv
   choices:
     Hatchling: hatch
     uv: uv
