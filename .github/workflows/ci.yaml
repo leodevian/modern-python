@@ -22,7 +22,7 @@ jobs:
       matrix:
         env:
           - lint
-          - type
+          - typecheck
           - docs
 
     steps:

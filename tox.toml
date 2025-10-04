@@ -30,8 +30,8 @@ commands = [
   ],
 ]
 
-[env.type]
-description = "type check source code"
+[env.typecheck]
+description = "typecheck Python code"
 dependency_groups = [ "type" ]
 commands = [
   [ "mypy", "extensions" ],
