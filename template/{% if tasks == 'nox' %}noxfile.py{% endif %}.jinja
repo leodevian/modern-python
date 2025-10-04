@@ -36,8 +36,7 @@ DEFAULT_PYTHON_VERSION = Path(".python-version").read_text().rstrip()
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
 {%- if install == 'uv pip' %}
-    session.install(".")
-    session.install(*nox.project.dependency_groups(PYPROJECT, "tests"))
+    session.install(".", "--group", "tests")
 {%- else %}
     session.run_install(
         "uv",
@@ -79,7 +78,7 @@ def tests(session: nox.Session) -> None:
 def lint(session: nox.Session) -> None:
     """Run pre-commit linting."""
 {%- if install == 'uv pip' %}
-    session.install(*nox.project.dependency_groups(PYPROJECT, "lint"))
+    session.install("--group", "lint")
 {%- else %}
     session.run_install(
         "uv",
@@ -103,8 +102,7 @@ def lint(session: nox.Session) -> None:
 def typecheck(session: nox.Session) -> None:
     """Typecheck Python code."""
 {%- if install == 'uv pip' %}
-    session.install(".")
-    session.install(*nox.project.dependency_groups(PYPROJECT, "type"))
+    session.install(".", "--group", "type")
 {%- else %}
     session.run_install(
         "uv",
@@ -125,8 +123,7 @@ def typecheck(session: nox.Session) -> None:
 def docs(session: nox.Session) -> None:
     """Generate the documentation."""
 {%- if install == 'uv pip' %}
-    session.install("-e", ".")
-    session.install(*nox.project.dependency_groups(PYPROJECT, "docs"))
+    session.install("-e", ".", "--group", "docs")
 {%- else %}
     session.run_install(
         "uv",
@@ -156,8 +153,7 @@ def docs(session: nox.Session) -> None:
 def autodocs(session: nox.Session) -> None:
     """Serve the documentation locally."""
 {%- if install == 'uv pip' %}
-    session.install("-e", ".")
-    session.install(*nox.project.dependency_groups(PYPROJECT, "docs"))
+    session.install("-e", ".", "--group", "docs")
 {%- else %}
     session.run_install(
         "uv",
