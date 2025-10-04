@@ -97,16 +97,16 @@ def check_repository() -> None:
 {% if not dynamic_version %}
 def update_version(version: str | None = None, bump: str | None = None) -> str:
     """Update the version and return the new version."""
-    args = ["uv", "version", "--no-sync", "--output-format", "json"]
+    cmd = ["uv", "version", "--no-sync", "--output-format", "json"]
 
     if version:
-        args.append(version)
+        cmd.append(version)
 
     if bump:
-        args.extend(("--bump", bump))
+        cmd.extend(("--bump", bump))
 
     try:
-        version_json = subprocess.check_output(args)
+        version_json = subprocess.check_output(cmd)
 
     except subprocess.CalledProcessError:
         print_error("An error occurred while bumping the version.")
