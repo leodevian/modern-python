@@ -53,6 +53,7 @@ dev = [
 ]
 type = [
   "mypy>=1.15",
+  { include-group = "tests" },
 ]
 docs = [
   "mkdocs>=1.6.1",

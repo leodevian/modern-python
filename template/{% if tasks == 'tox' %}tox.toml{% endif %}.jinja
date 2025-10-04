@@ -4,8 +4,7 @@ requires = [
 ]
 env_list = [
   "lint",
-  "type",
-  "type-tests",
+  "typecheck",
 {%- if docs %}
   "docs",
 {%- endif %}
@@ -16,8 +15,7 @@ env_list = [
 ]
 labels.checks = [
   "lint",
-  "type",
-  "type-tests",
+  "typecheck",
 {%- if docs %}
   "docs",
 {%- endif %}
@@ -79,18 +77,17 @@ commands = [
   ],
 ]
 
-[env.type]
-description = "type check source code"
+[env.typecheck]
+description = "typecheck Python code"
 dependency_groups = [ "type" ]
 commands = [
-  [ "mypy", "src" ],
-]
-
-[env.type-tests]
-description = "type check tests"
-dependency_groups = [ "tests", "type" ]
-commands = [
-  [ "mypy", "tests" ],
+  [
+    "mypy",
+    { replace = "posargs", extend = true, default = [
+      "src",
+      "tests",
+    ] },
+  ],
 ]
 {%- if docs == 'mkdocs' %}
 

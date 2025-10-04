@@ -18,8 +18,7 @@ nox.options.default_venv_backend = "uv"
 nox.options.reuse_existing_virtualenvs = True
 nox.options.sessions = (
     "lint",
-    "type",
-    "type-tests",
+    "typecheck",
 {%- if docs %}
     "docs",
 {%- endif %}
@@ -99,9 +98,9 @@ def lint(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=DEFAULT_PYTHON_VERSION, name="type", tags=["checks"])
-def type_check(session: nox.Session) -> None:
-    """Type check source code."""
+@nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
+def typecheck(session: nox.Session) -> None:
+    """Typecheck Python code."""
 {%- if install == 'uv pip' %}
     session.install(".")
     session.install(*nox.project.dependency_groups(PYPROJECT, "type"))
@@ -118,30 +117,7 @@ def type_check(session: nox.Session) -> None:
         env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
     )
 {%- endif %}
-    session.run("mypy", "src")
-
-
-@nox.session(python=DEFAULT_PYTHON_VERSION, name="type-tests", tags=["checks"])
-def type_check_tests(session: nox.Session) -> None:
-    """Type check tests."""
-{%- if install == 'uv pip' %}
-    session.install(".")
-    session.install(*nox.project.dependency_groups(PYPROJECT, "tests", "type"))
-{%- else %}
-    session.run_install(
-        "uv",
-        "sync",
-        "--locked",
-        "--no-editable",
-        f"--reinstall-package={PROJECT_NAME}",
-        "--no-default-groups",
-        "--group=tests",
-        "--group=type",
-        f"--python={session.virtualenv.location}",
-        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
-    )
-{%- endif %}
-    session.run("mypy", "tests")
+    session.run(*(session.posargs or ("mypy", "src", "tests")))
 
 {% if docs == 'mkdocs' %}
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
