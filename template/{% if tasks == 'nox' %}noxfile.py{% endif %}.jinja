@@ -129,8 +129,6 @@ def docs(session: nox.Session) -> None:
         "uv",
         "sync",
         "--locked",
-        "--no-editable",
-        f"--reinstall-package={PROJECT_NAME}",
         "--no-default-groups",
         "--group=docs",
         f"--python={session.virtualenv.location}",
