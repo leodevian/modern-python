@@ -121,7 +121,7 @@ def typecheck(session: nox.Session) -> None:
 {% if docs == 'mkdocs' %}
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def docs(session: nox.Session) -> None:
-    """Generate the documentation."""
+    """Build the documentation."""
 {%- if install == 'uv pip' %}
     session.install("-e", ".", "--group", "docs")
 {%- else %}

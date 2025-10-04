@@ -38,7 +38,7 @@ commands = [
 ]
 
 [env.docs]
-description = "generate documentation"
+description = "build the documentation"
 skip_install = true
 dependency_groups = [ "docs" ]
 commands = [
@@ -54,7 +54,7 @@ commands = [
 ]
 
 [env.autodocs]
-description = "serve documentation locally"
+description = "serve the documentation locally"
 skip_install = true
 dependency_groups = [ "docs" ]
 commands = [
