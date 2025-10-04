@@ -38,16 +38,13 @@ def tests(session: nox.Session) -> None:
 {%- if install == 'uv pip' %}
     session.install(".", "--group", "tests")
 {%- else %}
-    session.run_install(
-        "uv",
-        "sync",
-        "--locked",
+    uv_sync(
         "--no-editable",
-        f"--reinstall-package={PROJECT_NAME}",
-        "--no-default-groups",
-        "--group=tests",
-        f"--python={session.virtualenv.location}",
-        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+        "--reinstall-package",
+        PROJECT_NAME,
+        "--group",
+        "tests",
+        session=session,
     )
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
@@ -81,14 +78,7 @@ def lint(session: nox.Session) -> None:
 {%- if install == 'uv pip' %}
     session.install("--group", "lint")
 {%- else %}
-    session.run_install(
-        "uv",
-        "sync",
-        "--locked",
-        "--only-group=lint",
-        f"--python={session.virtualenv.location}",
-        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
-    )
+    uv_sync("--group", "lint", session=session)
 {%- endif %}
     session.run(
         "pre-commit",
@@ -105,16 +95,13 @@ def typecheck(session: nox.Session) -> None:
 {%- if install == 'uv pip' %}
     session.install(".", "--group", "type")
 {%- else %}
-    session.run_install(
-        "uv",
-        "sync",
-        "--locked",
+    uv_sync(
         "--no-editable",
-        f"--reinstall-package={PROJECT_NAME}",
-        "--no-default-groups",
-        "--group=type",
-        f"--python={session.virtualenv.location}",
-        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
+        "--reinstall-package",
+        PROJECT_NAME,
+        "--group",
+        "type",
+        session=session,
     )
 {%- endif %}
     session.run(*(session.posargs or ("mypy", "src", "tests")))
@@ -126,15 +113,7 @@ def docs(session: nox.Session) -> None:
 {%- if install == 'uv pip' %}
     session.install("-e", ".", "--group", "docs")
 {%- else %}
-    session.run_install(
-        "uv",
-        "sync",
-        "--locked",
-        "--no-default-groups",
-        "--group=docs",
-        f"--python={session.virtualenv.location}",
-        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
-    )
+    uv_sync("--group", "docs", session=session)
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
     session.run(
@@ -154,15 +133,7 @@ def autodocs(session: nox.Session) -> None:
 {%- if install == 'uv pip' %}
     session.install("-e", ".", "--group", "docs")
 {%- else %}
-    session.run_install(
-        "uv",
-        "sync",
-        "--locked",
-        "--no-default-groups",
-        "--group=docs",
-        f"--python={session.virtualenv.location}",
-        env={"UV_PROJECT_ENVIRONMENT": session.virtualenv.location},
-    )
+    uv_sync("--group", "docs", session=session)
 {%- endif %}
     session.run(
         "mkdocs",
@@ -170,6 +141,21 @@ def autodocs(session: nox.Session) -> None:
         "--strict",
         "--open",
         *session.posargs,
+    )
+
+{% endif %}{% if install == 'uv sync' %}
+def uv_sync(*args: str, session: nox.Session) -> None:
+    """Run ``uv sync`` to install dependencies."""
+    session.run_install(
+        "uv",
+        "sync",
+        "--locked",
+        "--no-default-groups",
+        *args,
+        env={
+            "UV_PROJECT_ENVIRONMENT": session.virtualenv.location,
+            "UV_PYTHON": session.virtualenv.location,
+        },
     )
 
 {% endif %}
