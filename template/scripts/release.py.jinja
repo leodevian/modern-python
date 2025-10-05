@@ -12,7 +12,7 @@
 # ///
 """Make a release."""
 
-# ruff: noqa: S603, T201
+# ruff: noqa: T201
 
 from __future__ import annotations
 
@@ -106,7 +106,7 @@ def update_version(version: str | None = None, bump: str | None = None) -> str:
         cmd.extend(("--bump", bump))
 
     try:
-        version_json = subprocess.check_output(cmd)
+        version_json = subprocess.check_output(cmd)  # noqa: S603
 
     except subprocess.CalledProcessError:
         print_err("An error occurred while bumping the version.")
