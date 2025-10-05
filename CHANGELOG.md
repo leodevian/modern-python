@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.1.3](https://github.com/leodevian/modern-python/tree/v4.1.3)
+
+### Fixed
+
+- Remove an unused `noqa` directive in `scripts/release.py` when the project version is provided dynamically.
+
+
 ## [4.1.2](https://github.com/leodevian/modern-python/tree/v4.1.2)
 
 ### Fixed
