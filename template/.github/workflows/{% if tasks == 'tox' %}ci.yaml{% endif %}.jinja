@@ -36,7 +36,6 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
-          cache-dependency-glob: "pyproject.toml"
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
 
       - name: Install tox
@@ -84,7 +83,6 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
-          cache-dependency-glob: "pyproject.toml"
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
 
       - name: Install tox
