@@ -49,6 +49,7 @@ jobs:
         run: >-
           nox
           --install-only
+          --error-on-missing-interpreters
           --session {% raw %}${{ matrix.env }}{% endraw %}
 
       - name: Run the check suite
@@ -91,6 +92,7 @@ jobs:
         run: >-
           nox
           --install-only
+          --error-on-missing-interpreters
           --session {% raw %}tests-${{ matrix.python_version }}{% endraw %}
 
       - name: Run the test suite
