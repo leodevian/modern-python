@@ -9,6 +9,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.2.0](https://github.com/leodevian/modern-python/tree/v4.2.0)
+
+### Changed
+
+- Make Nox raise an error on missing interpreters in CI.
+- Use the default cache dependency glob for `astral-sh/setup-uv`.
+
+
 ## [4.1.3](https://github.com/leodevian/modern-python/tree/v4.1.3)
 
 ### Fixed
