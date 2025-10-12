@@ -9,6 +9,17 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.3.0](https://github.com/leodevian/modern-python/tree/v4.3.0)
+
+### Added
+
+- Run tests under Python 3.14.
+
+### Changed
+
+- Drop support for Python 3.9 and add support for Python 3.14.
+
+
 ## [4.2.0](https://github.com/leodevian/modern-python/tree/v4.2.0)
 
 ### Changed
