@@ -49,17 +49,18 @@ urls.Repository = "https://github.com/leodevian/modern-python"
 dev = [
   { include-group = "lint" },
   { include-group = "release" },
+  { include-group = "test" },
   { include-group = "type" },
 ]
+test = [  ]
 type = [
   "mypy>=1.15",
-  { include-group = "tests" },
+  { include-group = "test" },
 ]
 docs = [
   "mkdocs>=1.6.1",
   "mkdocs-material>=9.5.47",
 ]
-tests = [  ]
 lint = [
   "pre-commit>=4.2",
 ]

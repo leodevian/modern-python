@@ -36,14 +36,14 @@ DEFAULT_PYTHON_VERSION = Path(".python-version").read_text().rstrip()
 def tests(session: nox.Session) -> None:
     """Run the test suite."""
 {%- if install == 'uv pip' %}
-    session.install(".", "--group", "tests")
+    session.install(".", "--group", "test")
 {%- else %}
     uv_sync(
         "--no-editable",
         "--reinstall-package",
         PROJECT_NAME,
         "--group",
-        "tests",
+        "test",
         session=session,
     )
 {%- endif %}

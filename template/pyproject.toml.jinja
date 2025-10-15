@@ -84,12 +84,12 @@ scripts.{{ distribution_name }} = "{{ package_name }}.cli:main"
 dev = [
   { include-group = "lint" },
   { include-group = "release" },
-  { include-group = "tests" },
+  { include-group = "test" },
   { include-group = "type" },
 ]
 type = [
   "mypy>=1.15",
-  { include-group = "tests" },
+  { include-group = "test" },
 ]
 {%- if docs == 'mkdocs' %}
 docs = [
@@ -102,7 +102,7 @@ docs = [
 lint = [
   "pre-commit>=4.2",
 ]
-tests = [
+test = [
   "coverage>=7.10",
   "pytest>=8.3.4",
   "pytest-xdist>=3.6.1",
