@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.4.0](https://github.com/leodevian/modern-python/tree/v4.4.0)
+
+### Changed
+
+- Rename dependency group `tests` into `test`.
+
+
 ## [4.3.0](https://github.com/leodevian/modern-python/tree/v4.3.0)
 
 ### Added
