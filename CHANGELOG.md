@@ -9,6 +9,19 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.5.0](https://github.com/leodevian/modern-python/tree/v4.5.0)
+
+### Changed
+
+- Add `.gitignore` to the package root to ignore `VERSION.txt`.
+- Bump the lower version boundary for Coverage.py to 7.11.0.
+- Edit docstring in `scripts/release.py`.
+
+### Fixed
+
+- Fix command in Nox session `typecheck`.
+
+
 ## [4.4.0](https://github.com/leodevian/modern-python/tree/v4.4.0)
 
 ### Changed
