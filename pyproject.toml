@@ -60,6 +60,7 @@ type = [
 docs = [
   "mkdocs>=1.6.1",
   "mkdocs-material>=9.5.47",
+  "termynal>=0.13.1",
 ]
 lint = [
   "pre-commit>=4.2",
