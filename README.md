@@ -34,5 +34,5 @@ uv tool install copier --with copier-template-extensions
 Run `copier copy` to generate your Python package:
 
 ```bash
-copier copy --trust gh:leodevian/modern-python $DESTINATION_PATH
+copier copy --trust gh:leodevian/modern-python ./path/to/directory
 ```
