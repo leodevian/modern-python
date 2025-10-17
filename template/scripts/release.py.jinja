@@ -183,7 +183,7 @@ def create_release_tag(version: str) -> str:
 
 
 def push_changes(branch: str, remote_branch: str = "main") -> None:
-    """Push the changes to the target branch."""
+    """Push the changes to the origin remote."""
     run(("git", "push", "origin", f"{branch}:{remote_branch}", "--follow-tags"))
     print(f"Pushed changes from {branch!r} to 'origin/{remote_branch}'.")
 
