@@ -6,10 +6,10 @@ import importlib.resources
 
 
 def get_version() -> str:
-    """Read `VERSION.txt` and return its contents.
+    """Read ``VERSION.txt`` and return its contents.
 
     Returns:
-        Version string.
+        The version string.
     """
     return (
         (importlib.resources.files("{{ package_name }}") / "VERSION.txt")
