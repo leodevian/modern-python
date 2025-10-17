@@ -87,6 +87,11 @@ dev = [
   { include-group = "test" },
   { include-group = "type" },
 ]
+test = [
+  "coverage>=7.11",
+  "pytest>=8.3.4",
+  "pytest-xdist>=3.6.1",
+]
 type = [
   "mypy>=1.15",
   { include-group = "test" },
@@ -101,11 +106,6 @@ docs = [
 {%- endif %}
 lint = [
   "pre-commit>=4.2",
-]
-test = [
-  "coverage>=7.11",
-  "pytest>=8.3.4",
-  "pytest-xdist>=3.6.1",
 ]
 release = [
   "towncrier>=24.8",
