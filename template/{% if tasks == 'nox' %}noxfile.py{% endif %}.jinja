@@ -104,7 +104,7 @@ def typecheck(session: nox.Session) -> None:
         session=session,
     )
 {%- endif %}
-    session.run(*(session.posargs or ("mypy", "src", "tests")))
+    session.run("mypy", *(session.posargs or ("src", "tests")))
 
 {% if docs == 'mkdocs' %}
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
