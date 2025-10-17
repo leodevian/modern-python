@@ -1,3 +1,8 @@
+---
+hide:
+  - toc
+---
+
 # modern-python
 
 [![Copier](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/copier-org/copier/master/img/badge/badge-grayscale-inverted-border-purple.json)](https://github.com/copier-org/copier)
@@ -25,12 +30,18 @@ or [install uv](https://docs.astral.sh/uv/getting-started/installation/) to inst
 
 To install Copier and Copier Template-Extensions, use [uv](https://docs.astral.sh/uv/):
 
-```bash
-uv tool install copier --with copier-template-extensions
+<!-- termynal -->
+
+```
+$ uv tool install copier --with copier-template-extensions
+---> 100%
+Installed 1 executable: copier
 ```
 
 Run `copier copy` to generate your Python package:
 
-```bash
-copier copy --trust gh:leodevian/modern-python $DESTINATION_PATH
+<!-- termynal -->
+
+```
+$ copier copy --trust gh:leodevian/modern-python ./path/to/directory
 ```
