@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import importlib.metadata
+import importlib.resources
 
 from {{ package_name }} import __version__
 
@@ -10,5 +10,6 @@ from {{ package_name }} import __version__
 # https://packaging.python.org/discussions/single-source-version/#single-sourcing-the-project-version
 def test_version() -> None:
     """Test that the version attribute matches the package version."""
-    version = importlib.metadata.version("{{ distribution_name }}")
+    version_path = importlib.resources.files("{{ package_name }}")
+    version = version_path.read_text().rstrip()
     assert __version__ == version
