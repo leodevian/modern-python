@@ -9,6 +9,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.7.0](https://github.com/leodevian/modern-python/tree/v4.7.0)
+
+### Changed
+
+- Format `pyproject.toml`.
+- Stop reading `VERSION.txt` to set the version attribute.
+
+
 ## [4.6.0](https://github.com/leodevian/modern-python/tree/v4.6.0)
 
 ### Changed
