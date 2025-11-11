@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.8.0](https://github.com/leodevian/modern-python/tree/v4.8.0)
+
+### Changed
+
+- Turn off live logs when running tests.
+
+
 ## [4.7.0](https://github.com/leodevian/modern-python/tree/v4.7.0)
 
 ### Changed
