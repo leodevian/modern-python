@@ -142,8 +142,8 @@ write-changes = true
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
 
-[tool.pytest.ini_options]
-minversion = "6.0"
+[tool.pytest]
+minversion = "9.0"
 addopts = [
   "-ra",
 {%- if 'readme' in doctest or 'docs' in doctest and docs == 'mkdocs' %}
@@ -154,8 +154,6 @@ addopts = [
   "--doctest-modules",
 {%- endif %}
   "--showlocals",
-  "--strict-config",
-  "--strict-markers",
 ]
 filterwarnings = [
   "error",
@@ -173,7 +171,7 @@ testpaths = [
   "README.md",
 {%- endif %}
 ]
-xfail_strict = true
+strict = true
 
 [tool.coverage]
 html.show_contexts = true
