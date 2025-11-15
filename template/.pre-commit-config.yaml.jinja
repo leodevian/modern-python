@@ -47,27 +47,9 @@ repos:
   - repo: https://github.com/hukkin/mdformat
     rev: 0.7.22
     hooks:
+      - id: mdformat
 {%- if docs == 'mkdocs' %}
-      - id: mdformat
         exclude: ^docs/
-        additional_dependencies:
-          - black==25.9.0
-          - mdformat-black
-          - mdformat-gfm
-      - id: mdformat
-        files: ^docs/
-        additional_dependencies:
-          - black==25.9.0
-          - mdformat-black
-          - mdformat-footnote
-          - mdformat-frontmatter
-          - mdformat-mkdocs
-          - mdformat-simple-breaks
-          - mdformat-tables
-{%- else %}
-      - id: mdformat
-        additional_dependencies:
-          - black==25.9.0
-          - mdformat-black
-          - mdformat-gfm
 {%- endif %}
+        additional_dependencies:
+          - mdformat-gfm
