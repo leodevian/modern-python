@@ -53,3 +53,10 @@ repos:
 {%- endif %}
         additional_dependencies:
           - mdformat-gfm
+
+  - repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.20.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies:
+          - black==25.11.0
