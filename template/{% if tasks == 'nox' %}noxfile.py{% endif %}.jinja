@@ -138,7 +138,6 @@ def autodocs(session: nox.Session) -> None:
     session.run(
         "mkdocs",
         "serve",
-        "--strict",
         "--open",
         *session.posargs,
     )
