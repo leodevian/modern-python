@@ -9,6 +9,15 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.9.0](https://github.com/leodevian/modern-python/tree/v4.9.0)
+
+### Changed
+
+- Remove `if __name__ == "__main__":` from `__main__.py`.
+- Stop turning warnings into errors when serving the documentation locally.
+- Use raw strings in `mkdocs.yaml`.
+
+
 ## [4.8.0](https://github.com/leodevian/modern-python/tree/v4.8.0)
 
 ### Changed
