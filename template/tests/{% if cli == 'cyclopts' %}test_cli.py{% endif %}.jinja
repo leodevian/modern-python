@@ -10,21 +10,27 @@ from {{ package_name }}.cli import app
 
 def test_app() -> None:
     """Test the main program."""
-    result = app([])
-    assert result is None
+    with pytest.raises(SystemExit) as excinfo:
+        app([])
+
+    assert excinfo.value.code == 0
 
 
 @pytest.mark.parametrize("option", ["--help", "-h"])
 def test_show_help(option: str) -> None:
     """Test the help option of the command-line interface."""
-    result = app([option])
-    assert result is None
+    with pytest.raises(SystemExit) as excinfo:
+        app([option])
+
+    assert excinfo.value.code == 0
 
 
 def test_show_version(capsys: pytest.CaptureFixture[str]) -> None:
     """Test the version option of the command-line interface."""
-    result = app(["--version"])
-    assert result is None
+    with pytest.raises(SystemExit) as excinfo:
+        app(["--version"])
+
+    assert excinfo.value.code == 0
 
     captured = capsys.readouterr()
     assert __version__ in captured.out
