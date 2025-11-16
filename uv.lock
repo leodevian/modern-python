@@ -467,7 +467,7 @@ wheels = [
 
 [[package]]
 name = "modern-python"
-version = "4.9.0"
+version = "4.10.0"
 source = { virtual = "." }
 dependencies = [
     { name = "copier" },

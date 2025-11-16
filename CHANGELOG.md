@@ -9,6 +9,24 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.10.0](https://github.com/leodevian/modern-python/tree/v4.10.0)
+
+### Removed
+
+- Remove the short version flag `-V` for all command-line interfaces.
+- Stop formatting documentation sources.
+
+### Changed
+
+- Bump the lower version boundary for Cyclopts to 4.0.0.
+- Bump the lower version boundary for pytest to 9.0.0.
+- Make Cyclopts applications return an exit code.
+- Update pre-commit hooks.
+- Use `[tool.pytest]` to provide pytest settings and turn on the new strict mode.
+- Use `typer.echo` to print the version.
+- Use blacken-docs to format Python code blocks in documentation files.
+
+
 ## [4.9.0](https://github.com/leodevian/modern-python/tree/v4.9.0)
 
 ### Changed
