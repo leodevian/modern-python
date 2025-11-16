@@ -6,16 +6,17 @@ import cyclopts
 
 from . import __version__
 
-app = cyclopts.App(
-    help="Run the main program.",
-    version=f"{{ distribution_name }}, version {__version__}",
-)
+app = cyclopts.App(version=f"{{ distribution_name }}, version {__version__}")
 
 
 @app.default
-def main() -> None:
-    """Run the main program."""
-    return
+def main() -> int:
+    """Run the main program.
+
+    Returns:
+        An exit code.
+    """
+    return 0
 
 
 if __name__ == "__main__":
