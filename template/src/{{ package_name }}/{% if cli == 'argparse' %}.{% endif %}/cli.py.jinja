@@ -22,7 +22,7 @@ def create_parser() -> argparse.ArgumentParser:
         description="run the main program",
     )
     parser.add_argument(
-        "--version", "-V", action="version", version="%(prog)s " + __version__
+        "--version", action="version", version=f"%(prog)s {__version__}"
     )
     return parser
 

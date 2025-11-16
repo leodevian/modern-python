@@ -21,10 +21,9 @@ def test_show_help(option: str) -> None:
     assert result is None
 
 
-@pytest.mark.parametrize("option", ["--version", "-V"])
-def test_show_version(option: str, capsys: pytest.CaptureFixture[str]) -> None:
+def test_show_version(capsys: pytest.CaptureFixture[str]) -> None:
     """Test the version option of the command-line interface."""
-    result = app([option])
+    result = app(["--version"])
     assert result is None
 
     captured = capsys.readouterr()

@@ -9,7 +9,7 @@ from . import __version__
 
 @click.command()
 @click.help_option("--help", "-h")
-@click.version_option(__version__, "--version", "-V")
+@click.version_option()
 def main() -> None:
     """Run the main program."""
     return

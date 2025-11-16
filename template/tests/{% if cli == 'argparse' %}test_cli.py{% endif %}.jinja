@@ -22,11 +22,10 @@ def test_show_help(option: str) -> None:
     assert excinfo.value.code == 0
 
 
-@pytest.mark.parametrize("option", ["--version", "-V"])
-def test_show_version(option: str, capsys: pytest.CaptureFixture[str]) -> None:
+def test_show_version(capsys: pytest.CaptureFixture[str]) -> None:
     """Test the version option of the command-line interface."""
     with pytest.raises(SystemExit) as excinfo:
-        main([option])
+        main(["--version"])
 
     assert excinfo.value.code == 0
 
