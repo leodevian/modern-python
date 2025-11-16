@@ -67,8 +67,8 @@ dependencies = [  ]
 {%- endif %}
 {%- endwith %}
 {%- if docs %}
-urls.Changelog = "{{ documentation_url }}changelog/"
-urls.Documentation = "{{ documentation_url }}"
+urls.Changelog = "{{ documentation_url }}/changelog"
+urls.Documentation = "{{ documentation_url }}/"
 {%- else %}
 urls.Changelog = "{{ repository_url }}/blob/main/CHANGELOG.md"
 {%- endif %}

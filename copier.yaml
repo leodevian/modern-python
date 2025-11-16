@@ -90,7 +90,7 @@ repository_url:
 documentation_url:
   type: str
   help: Your GitHub Pages URL.
-  default: "https://{{ github_user }}.github.io/{{ distribution_name }}/"
+  default: "https://{{ github_user }}.github.io/{{ distribution_name }}"
   when: false
 
 copyright_owner:
