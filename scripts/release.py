@@ -5,14 +5,13 @@
 #   "uv>=0.8.6",
 # ]
 # ///
-"""Make a release."""
+"""Create a release."""
 
-# ruff: noqa: T201
+# ruff: noqa: S603, T201
 
 from __future__ import annotations
 
 import argparse
-import enum
 import json
 import subprocess
 import sys
@@ -32,20 +31,6 @@ run = partial(
 )
 
 
-class Bump(enum.StrEnum):
-    """The enumeration of supported version bump semantics."""
-
-    MAJOR = enum.auto()
-    MINOR = enum.auto()
-    PATCH = enum.auto()
-    STABLE = enum.auto()
-    ALPHA = enum.auto()
-    BETA = enum.auto()
-    RC = enum.auto()
-    POST = enum.auto()
-    DEV = enum.auto()
-
-
 def create_parser() -> argparse.ArgumentParser:
     """Create the argument parser."""
     parser = argparse.ArgumentParser(description="make a release")
@@ -56,8 +41,6 @@ def create_parser() -> argparse.ArgumentParser:
     )
     mutex.add_argument(
         "--bump",
-        type=Bump,
-        choices=Bump,
         help="update the version using the given semantics",
     )
     parser.add_argument(
@@ -89,7 +72,7 @@ def update_version(version: str | None = None, bump: str | None = None) -> str:
         cmd.extend(("--bump", bump))
 
     try:
-        version_json = subprocess.check_output(cmd)  # noqa: S603
+        version_json = subprocess.check_output(cmd)
 
     except subprocess.CalledProcessError:
         print_err("An error occurred while bumping the version.")
@@ -139,13 +122,25 @@ def switch_to_branch(branch: str) -> Generator[None]:
         print(f"Removed branch {branch!r} and switched back to {base_branch!r}.")
 
 
-def build_changelog(version: str) -> None:
-    """Build the changelog."""
+def get_release_notes(version: str) -> str:
+    """Return the release notes."""
+    release_notes = subprocess.check_output(
+        ("towncrier", "build", "--version", version, "--draft"),
+        stderr=subprocess.DEVNULL,
+        text=True,
+    ).rstrip()
+    release_notes = "".join(release_notes.splitlines(keepends=True)[1:])
+    release_notes = release_notes.strip()
+    return f"## Release notes\n\n{release_notes}"
+
+
+def update_changelog(version: str) -> None:
+    """Update the changelog."""
     try:
-        run(("towncrier", "build", "--yes", "--version", version))
+        run(("towncrier", "build", "--version", version, "--yes"))
 
     except subprocess.CalledProcessError:
-        print_err("An error occurred while building the changelog.")
+        print_err("An error occurred while updating the changelog.")
         raise SystemExit(1) from None
 
 
@@ -165,14 +160,13 @@ def create_release_tag(version: str) -> str:
     return release_tag
 
 
-def push_changes(branch: str, remote_branch: str = "main") -> None:
-    """Push changes to the origin remote."""
-    run(("git", "push", "origin", f"{branch}:{remote_branch}", "--follow-tags"))
-    print(f"Pushed changes from {branch!r} to 'origin/{remote_branch}'.")
+def create_release(release_tag: str, release_notes: str) -> None:
+    """Create the GitHub release."""
+    run(("gh", "release", "create", release_tag, "--notes", release_notes))
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Prepare a new release."""
+    """Create a release."""
     parser = create_parser()
     args = parser.parse_args(argv)
 
@@ -183,11 +177,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     release_branch = f"release/{version}"
 
     with switch_to_branch(release_branch):
-        build_changelog(version)
+        release_notes = get_release_notes(version)
+        update_changelog(version)
 
         # Commit changes.
         run(("git", "add", ":/pyproject.toml", ":/uv.lock"))
-        run(("git", "add", "-A", ":/changelog.d/*", ":/CHANGELOG.md"))
+        run(("git", "add", "-A", ":/changelog.d", ":/CHANGELOG.md"))
         message = f"chore: prepare release {version}"
         run(("git", "commit", "--no-verify", "-m", message))
         print(f"Committed changes on branch {release_branch!r}.")
@@ -201,7 +196,14 @@ def main(argv: Sequence[str] | None = None) -> int:
             print(f"Removed release tag {release_tag!r}.")
             return 0
 
-        push_changes(release_branch, "main")
+        # Push changes to the origin remote.
+        run(
+            ("git", "push", "--atomic", "origin", f"{release_branch}:main", release_tag)
+        )
+        print(f"Pushed changes from branch {release_branch!r} to branch 'origin/main'.")
+        print(f"Pushed release tag {release_tag!r} to the origin remote.")
+
+        create_release(release_tag, release_notes)
 
     # Switch to the main branch.
     run(("git", "checkout", "main"))
