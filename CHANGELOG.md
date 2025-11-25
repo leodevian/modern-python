@@ -9,6 +9,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [4.11.0](https://github.com/leodevian/modern-python/tree/v4.11.0)
+
+### Changed
+
+- Improve `scripts/release.py`. It can now pass arguments or options to `uv version` and create GitHub releases.
+- Remove the trailing slash from the documentation URL.
+
+
 ## [4.10.0](https://github.com/leodevian/modern-python/tree/v4.10.0)
 
 ### Removed
