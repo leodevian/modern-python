@@ -1,5 +1,5 @@
 # /// script
-# requires-python = "{% if dynamic_version %}>=3.10{% else %}>=3.11{% endif %}"
+# requires-python = ">=3.10"
 # dependencies = [
 {%- if dynamic_version %}
 #   "packaging>=24.2",
@@ -10,9 +10,9 @@
 {%- endif %}
 # ]
 # ///
-"""Create a release."""
+"""Release a new version."""
 
-# ruff: noqa: T201
+# ruff: noqa: S603, S607
 
 from __future__ import annotations
 
@@ -21,128 +21,70 @@ import argparse
 import json
 {%- endif %}
 import subprocess
-import sys
-from contextlib import contextmanager
-from functools import partial
 from typing import TYPE_CHECKING
 {% if dynamic_version %}
 from packaging.version import Version
 {% endif %}
 if TYPE_CHECKING:
-    from collections.abc import Generator, Sequence
-
-print_err = partial(print, file=sys.stderr)
-
-run = partial(
-    subprocess.check_call,
-    stdout=subprocess.DEVNULL,
-    stderr=subprocess.DEVNULL,
-)
+    from collections.abc import Sequence
 
 
 def create_parser() -> argparse.ArgumentParser:
-    """Create the argument parser."""
-    parser = argparse.ArgumentParser(description="make a release")
-{%- if dynamic_version %}
-    parser.add_argument(
-        "--version",
-        type=Version,
-        help="provide the version",
+    """Return the argument parser."""
+    parser = argparse.ArgumentParser(
+        description="release a new version",
     )
-{%- else %}
-    mutex = parser.add_mutually_exclusive_group(required=True)
-    mutex.add_argument(
-        "--version",
-        help="provide the version",
-    )
-    mutex.add_argument(
-        "--bump",
-        help="update the version using the given semantics",
-    )
-{%- endif %}
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="do not push changes and reset the repository",
+        help="do not update the origin remote and reset the local repository",
     )
+{%- if dynamic_version %}
+    parser.add_argument("version", type=Version, help="provide the version")
+{%- else %}
+    parser.add_argument(
+        "version_args",
+        nargs=argparse.PARSER,
+        help="arguments or options to pass to the uv version command",
+    )
+{%- endif %}
     return parser
 
 
 def check_repository() -> None:
-    """Check whether the repository is dirty."""
-    try:
-        run(("git", "diff", "--quiet"))
-
-    except subprocess.CalledProcessError:
-        print_err("The Git repository is dirty.")
-        raise SystemExit(1) from None
+    """Check whether the local repository is dirty or clean."""
+    subprocess.check_call(["git", "diff", "--exit-code"])
 
 {% if not dynamic_version %}
-def update_version(version: str | None = None, bump: str | None = None) -> str:
-    """Update the version and return the new version."""
-    cmd = ["uv", "version", "--no-sync", "--output-format", "json"]
-
-    if version:
-        cmd.append(version)
-
-    if bump:
-        cmd.extend(("--bump", bump))
-
-    try:
-        version_json = subprocess.check_output(cmd)  # noqa: S603
-
-    except subprocess.CalledProcessError:
-        print_err("An error occurred while bumping the version.")
-        raise SystemExit(1) from None
-
+def update_version(args: Sequence[str] | None) -> str:
+    """Update and return the version."""
+    # Update the version.
+    version_json = subprocess.check_output(
+        [
+            "uv",
+            "version",
+            "--no-sync",
+            "--output-format",
+            "json",
+            *args,
+        ],
+    )
     version = json.loads(version_json)
     return version["version"]
 
 {% endif %}
-def get_branch() -> str:
-    """Get the current branch."""
+def get_current_branch() -> str:
+    """Get the current Git branch."""
     return subprocess.check_output(
-        ("git", "rev-parse", "--abbrev-ref", "HEAD"),
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
         text=True,
     ).rstrip()
-
-
-def create_branch(branch: str) -> None:
-    """Create a new branch."""
-    try:
-        run(("git", "branch", branch))
-
-    except subprocess.CalledProcessError:
-        print_err(f"The branch already exists: {branch!r}.")
-        raise SystemExit(1) from None
-
-    print(f"Created new branch {branch!r}.")
-
-
-@contextmanager
-def switch_to_branch(branch: str) -> Generator[None]:
-    """Create a new branch and switch to it.
-
-    It is removed on exit.
-    """
-    base_branch = get_branch()
-    create_branch(branch)
-
-    try:
-        run(("git", "checkout", branch))
-        print(f"Switched from branch {base_branch!r} to branch {branch!r}.")
-        yield
-
-    finally:
-        run(("git", "checkout", base_branch))
-        run(("git", "branch", "-D", branch))
-        print(f"Removed branch {branch!r} and switched back to {base_branch!r}.")
 
 
 def get_release_notes(version: str) -> str:
     """Return the release notes."""
     release_notes = subprocess.check_output(
-        ("towncrier", "build", "--version", version, "--draft"),
+        ["towncrier", "build", "--version", version, "--draft"],
         stderr=subprocess.DEVNULL,
         text=True,
     ).rstrip()
@@ -153,82 +95,89 @@ def get_release_notes(version: str) -> str:
 
 def update_changelog(version: str) -> None:
     """Update the changelog."""
-    try:
-        run(("towncrier", "build", "--version", version, "--yes"))
-
-    except subprocess.CalledProcessError:
-        print_err("An error occurred while building the changelog.")
-        raise SystemExit(1) from None
+    subprocess.check_call(["towncrier", "build", "--version", version, "--yes"])
 
 
 def create_release_tag(version: str) -> str:
-    """Create the release tag."""
+    """Create and return the release tag."""
     release_tag = f"v{version}"
     message = f"bump version to {version}"
-
-    try:
-        run(("git", "tag", "-a", release_tag, "-m", message))
-
-    except subprocess.CalledProcessError:
-        print_err(f"The release tag already exists: {release_tag!r}.")
-        raise SystemExit(1) from None
-
-    print(f"Created release tag {release_tag!r}.")
+    # Make sure to create an annotated tag.
+    subprocess.check_call(
+        ["git", "tag", "--annotate", release_tag, "--message", message],
+    )
     return release_tag
 
 
 def create_release(release_tag: str, release_notes: str) -> None:
-    """Create the GitHub release."""
-    run(("gh", "release", "create", release_tag, "--notes", release_notes))
+    """Create the GitHub release with release notes."""
+    subprocess.check_call(
+        ["gh", "release", "create", release_tag, "--notes", release_notes]
+    )
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Create a release."""
+    """Release a new version."""
+    # Parse command-line arguments.
     parser = create_parser()
     args = parser.parse_args(argv)
 
+    # Check whether the local repository is dirty or clean.
     check_repository()
 {% if dynamic_version %}
-    version = args.version.public
+    version = str(args.version)
 {% else %}
-    version = update_version(args.version, args.bump)
+    # Run the uv version command to update the version.
+    version = update_version(args.uv_version_args)
 {% endif %}
     release_branch = f"release/{version}"
+    base_branch = get_current_branch()
 
-    with switch_to_branch(release_branch):
+    try:
+        # Create the release branch and switch to it.
+        subprocess.check_call(["git", "switch", "--create", release_branch])
+
+        # Update the changelog.
         release_notes = get_release_notes(version)
         update_changelog(version)
 
-        # Commit changes.
-{%- if not dynamic_version %}
-        run(("git", "add", ":/pyproject.toml", ":/uv.lock"))
-{%- endif %}
-        run(("git", "add", "-A", ":/changelog.d", ":/CHANGELOG.md"))
-        message = f"chore: prepare release {version}"
-        run(("git", "commit", "--no-verify", "-m", message))
-        print(f"Committed changes on branch {release_branch!r}.")
+        # Add all changes as the local repository was clean.
+        subprocess.check_call(["git", "add", "--all", "."])
 
+        # Commit changes.
+        message = f"chore: prepare release {version}"
+        subprocess.check_call(["git", "commit", "--no-verify", "--message", message])
+
+        # Create the release tag.
         release_tag = create_release_tag(version)
 
-        # Exit on dry run.
         if args.dry_run:
-            print("Dry run success!")
-            run(("git", "tag", "-d", release_tag))
-            print(f"Removed release tag {release_tag!r}.")
+            # Remove the release tag.
+            subprocess.check_call(["git", "tag", "--delete", release_tag])
             return 0
 
-        run(
-            ("git", "push", "--atomic", "origin", f"{release_branch}:main", release_tag)
+        # Push the release branch and the release tag to the origin remote.
+        # The local release branch is pushed to the remote main branch.
+        subprocess.check_call(
+            ["git", "push", "--atomic", "origin", f"{release_branch}:main", release_tag]
         )
-        print(f"Pushed changes from branch {release_branch!r} to branch 'origin/main'.")
-        print(f"Pushed release tag {release_tag!r} to the origin remote.")
 
+        # Create the GitHub release.
         create_release(release_tag, release_notes)
 
+    finally:
+        # Switch back to the base Git branch.
+        subprocess.check_call(["git", "checkout", base_branch])
+        # Remove the release branch.
+        subprocess.check_call(["git", "branch", "--delete", "--force", release_branch])
+
+    # Fetch all changes from the remote main branch.
+    subprocess.check_call(["git", "fetch", "origin", "main"])
     # Switch to the main branch.
-    run(("git", "checkout", "main"))
-    run(("git", "fetch"))
-    run(("git", "reset", "--hard", "origin/main"))
+    subprocess.check_call(["git", "switch", "main"])
+    # Pull changes from the remote main branch.
+    subprocess.check_call(["git", "pull", "--ff-only", "origin", "main"])
+
     return 0
 
 
