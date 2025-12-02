@@ -137,7 +137,7 @@ name = "Fixed"
 showcontent = true
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
 warn_unreachable = true
 enable_error_code = [
   "ignore-without-code",
