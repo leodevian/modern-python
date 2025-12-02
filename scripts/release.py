@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.10"
 # dependencies = [
-#   "towncrier>=24.8",
+#   "towncrier>=25.8",
 #   "uv>=0.8.6",
 # ]
 # ///

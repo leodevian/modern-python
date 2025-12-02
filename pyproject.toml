@@ -54,19 +54,19 @@ dev = [
 ]
 test = [  ]
 type = [
-  "mypy>=1.15",
+  "mypy>=1.19",
   { include-group = "test" },
 ]
 docs = [
   "mkdocs>=1.6.1",
-  "mkdocs-material>=9.5.47",
+  "mkdocs-material>=9.7",
   "termynal>=0.13.1",
 ]
 lint = [
-  "pre-commit>=4.2",
+  "pre-commit>=4.5",
 ]
 release = [
-  "towncrier>=24.8",
+  "towncrier>=25.8",
 ]
 
 [tool.ruff]
