@@ -9,6 +9,37 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [5.0.0](https://github.com/leodevian/modern-python/tree/v5.0.0)
+
+### Removed
+
+- Remove unnecessary pre-commit hooks.
+
+### Added
+
+- Add pre-commit hook to check documentation sources.
+
+### Changed
+
+- Add mkdocstrings-python to the `docs` dependency group and set its lower version boundary to 2.0.0.
+- Bump the lower version boundary for Black to 25.11.0.
+- Bump the lower version boundary for Click to 8.3.0.
+- Bump the lower version boundary for Material for MkDocs to 9.7.0.
+- Bump the lower version boundary for Towncrier to 25.8.0.
+- Bump the lower version boundary for Typer to 0.20.0.
+- Bump the lower version boundary for pre-commit to 4.5.0.
+- Bump the lower version boundary for pytest-xdist to 3.8.0.
+- Refactor the reference section of the MkDocs documentation.
+- Remove syntax highlighting for commands.
+- Rename the MkDocs configuration file from `mkdocs.yaml` to `mkdocs.yml`.
+- Turn on `show_root_heading`, `type_parameter_headings` and `show_signature_type_parameters` for mkdocstrings-python.
+- Update pre-commit hooks.
+
+### Fixed
+
+- Add TOML support for Coverage.py.
+
+
 ## [4.11.0](https://github.com/leodevian/modern-python/tree/v4.11.0)
 
 ### Changed
