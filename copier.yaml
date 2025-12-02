@@ -15,7 +15,7 @@ _skip_if_exists:
   - CHANGELOG.md
 _preserve_symlinks: true
 _message_after_copy: |
-  {{ project_name }} has been created successfully!
+  {{ project_name }} has been created!
 
   1. Change directory:
 
