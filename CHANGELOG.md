@@ -266,11 +266,11 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 ### Added
 
-- Add `towncrier` to the `release` dependency group.
+- Add Towncrier to the `release` dependency group.
 
 ### Changed
 
-- Use `pre-commit` instead of `pre-commit-uv`.
+- Use pre-commit instead of pre-commit-uv.
 
 
 ## [1.3.0](https://github.com/leodevian/modern-python/tree/v1.3.0)
