@@ -54,6 +54,13 @@ repos:
         exclude: ^(docs/|template/\{% if docs %\}docs\{% endif %\}/)
         additional_dependencies:
           - mdformat-gfm
+      - id: mdformat
+        files: ^docs/
+        additional_dependencies:
+          - mdformat-footnote
+          - mdformat-front-matters
+          - mdformat-mkdocs
+          - mdformat-simple-breaks
 
   - repo: https://github.com/adamchainz/blacken-docs
     rev: 1.20.0
