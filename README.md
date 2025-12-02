@@ -27,12 +27,12 @@ or [install uv](https://docs.astral.sh/uv/getting-started/installation/) to inst
 
 To install Copier and Copier Template-Extensions, use [uv](https://docs.astral.sh/uv/):
 
-```bash
+```
 uv tool install copier --with copier-template-extensions
 ```
 
 Run `copier copy` to generate your Python package:
 
-```bash
+```
 copier copy --trust gh:leodevian/modern-python ./path/to/directory
 ```
