@@ -1,19 +1,35 @@
-*.egg-info
-*.py[co]
-.DS_Store
+# Cache
 .cache/
-.coverage
-.coverage.*
-.idea/
-.hypothesis/
-.mypy_cache/
+
+# Python
+*.py[codz]
+__pycache__/
+
+# Python environments
 .nox/
-.pytest_cache/
-.ruff_cache/
 .tox/
 .venv/
-.vscode/
-build/
-dist/
+
+# Testing
+.coverage
+.coverage.*
+.hypothesis/
+.pytest_cache/
 htmlcov/
-site/
+
+# Type checking
+.dmypy.json
+.mypy_cache/
+
+# Linting
+.ruff_cache/
+
+# Documentation
+/site/
+
+# IDEs
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
