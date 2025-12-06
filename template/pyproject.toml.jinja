@@ -103,6 +103,12 @@ docs = [
   "mkdocs-material>=9.7",
   "mkdocstrings-python>=2",
 ]
+{%- elif docs == "zensical" %}
+docs = [
+  "black>=25.11",
+  "zensical>=0.0.11",
+  "mkdocstrings-python>=2",
+]
 {%- endif %}
 lint = [
   "pre-commit>=4.5",
