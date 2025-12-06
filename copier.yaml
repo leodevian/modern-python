@@ -190,6 +190,7 @@ docs:
   when: "{{ 'docs' in features }}"
   choices:
     MkDocs: mkdocs
+    Zensical: zensical
 
 doctest:
   type: str

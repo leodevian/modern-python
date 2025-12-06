@@ -48,7 +48,7 @@ repos:
 {%- endif %}
         additional_dependencies:
           - mdformat-gfm
-{%- if docs == 'mkdocs' %}
+{%- if docs == 'mkdocs' or docs == 'zensical' %}
       - id: mdformat
         files: ^docs/
         additional_dependencies:

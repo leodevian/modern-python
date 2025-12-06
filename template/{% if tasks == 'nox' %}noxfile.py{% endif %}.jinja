@@ -106,7 +106,7 @@ def typecheck(session: nox.Session) -> None:
 {%- endif %}
     session.run("mypy", *(session.posargs or ("src", "tests")))
 
-{% if docs == 'mkdocs' %}
+{% if docs %}
 @nox.session(python=DEFAULT_PYTHON_VERSION, tags=["checks"])
 def docs(session: nox.Session) -> None:
     """Build the documentation."""
@@ -116,6 +116,7 @@ def docs(session: nox.Session) -> None:
     uv_sync("--group", "docs", session=session)
 {%- endif %}
     tmp_dir = Path(session.create_tmp())
+{%- if docs == 'mkdocs' %}
     session.run(
         "mkdocs",
         "build",
@@ -125,7 +126,15 @@ def docs(session: nox.Session) -> None:
         tmp_dir,
         *session.posargs,
     )
-
+{%- elif docs == 'zensical' %}
+    session.run(
+        "zensical",
+        "build",
+        "--clean",
+        "--strict",
+        *session.posargs,
+    )
+{%- endif %}
 
 @nox.session(python=DEFAULT_PYTHON_VERSION)
 def autodocs(session: nox.Session) -> None:
@@ -135,12 +144,21 @@ def autodocs(session: nox.Session) -> None:
 {%- else %}
     uv_sync("--group", "docs", session=session)
 {%- endif %}
+{%- if docs == 'mkdocs' %}
     session.run(
         "mkdocs",
         "serve",
         "--open",
         *session.posargs,
     )
+{%- elif docs == 'zensical' %}
+    session.run(
+        "zensical",
+        "serve",
+        "--open",
+        *session.posargs,
+    )
+{%- endif %}
 
 {% endif %}{% if install == 'uv sync' %}
 def uv_sync(*args: str, session: nox.Session) -> None:

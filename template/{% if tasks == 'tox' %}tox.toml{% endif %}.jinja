@@ -92,12 +92,13 @@ commands = [
     ] },
   ],
 ]
-{%- if docs == 'mkdocs' %}
+{%- if docs %}
 
 [env.docs]
 description = "build the documentation"
 package = "editable"
 dependency_groups = [ "docs" ]
+{%- if docs == 'mkdocs' %}
 commands = [
   [
     "mkdocs",
@@ -109,11 +110,23 @@ commands = [
     { replace = "posargs", extend = true },
   ],
 ]
+{%- elif docs == 'zensical' %}
+commands = [
+  [
+    "zensical",
+    "build",
+    "--clean",
+    "--strict",
+    { replace = "posargs", extend = true },
+  ],
+]
+{%- endif %}
 
 [env.autodocs]
 description = "serve the documentation locally"
 package = "editable"
 dependency_groups = [ "docs" ]
+{%- if docs == 'mkdocs' %}
 commands = [
   [
     "mkdocs",
@@ -122,4 +135,14 @@ commands = [
     { replace = "posargs", extend = true },
   ],
 ]
+{%- elif docs == 'zensical' %}
+commands = [
+  [
+    "zensical",
+    "serve",
+    "--open",
+    { replace = "posargs", extend = true },
+  ],
+]
+{%- endif %}
 {%- endif %}
