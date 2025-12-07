@@ -65,6 +65,10 @@ watch:
   - src/{{ package_name }}
 
 markdown_extensions:
+{%- if cli == 'click' %}
+  - attr_list
+  - mkdocs-click
+{%- endif %}
   - pymdownx.highlight:
       use_pygments: true
       pygments_lang_class: true
