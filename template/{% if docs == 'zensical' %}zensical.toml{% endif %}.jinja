@@ -7,6 +7,20 @@ copyright = "Copyright &copy; {{ copyright_year }} {{ copyright_owner }}"
 repo_url =  "{{ repository_url }}"
 repo_name = "{{ repository_path }}"
 edit_uri = "edit/main/docs/"
+nav = [
+  { "Home" = [
+    "index.md",
+    { "Release notes" = "changelog.md" },
+    { "License" = "license.md" },
+  ] },
+  { "Reference" = [
+    "reference/index.md",
+    { "API" = "reference/api.md" },
+{%- if cli %}
+    { "Commands" = "reference/cli.md" },
+{%- endif %}
+  ] },
+]
 
 [project.theme]
 features = [
