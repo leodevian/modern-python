@@ -12,7 +12,9 @@
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
+import re
 import subprocess
 from typing import TYPE_CHECKING
 
@@ -30,11 +32,6 @@ def create_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="do not update the origin remote and reset the local repository",
     )
-    parser.add_argument(
-        "version_args",
-        nargs=argparse.PARSER,
-        help="provide arguments or options to pass to the uv version command",
-    )
     return parser
 
 
@@ -43,21 +40,37 @@ def check_repository() -> None:
     subprocess.check_call(["git", "diff", "--exit-code"])
 
 
-def update_version(args: Sequence[str] | None) -> str:
+VERSION_PATTERN = r"""
+(?P<release>
+    (?:[1-9][0-9]{3})\.
+    (?:[1-9]|1[0-2])\.
+    (?:[1-9]|[1-2][0-9]|3[0-1])
+)
+(?:\.(?P<patch>\d+))?
+"""
+
+
+def update_version() -> str:
     """Update and return the version."""
+    # Check the version.
+    version_json = subprocess.check_output(["uv", "version", "--output-format", "json"])
+    version = json.loads(version_json)["version"]
+
+    today = datetime.datetime.now(tz=datetime.timezone.utc)
+    new_version = f"{today.year}.{today.month}.{today.day}"
+
+    match = re.match(f"^{VERSION_PATTERN}$", version, re.VERBOSE)
+
+    # Bump the patch number.
+    if match and match.group("release") == new_version:
+        patch = int(match.group("patch") or 0) + 1
+        new_version = f"{new_version}.{patch}"
+
     # Update the version.
-    version_json = subprocess.check_output(
-        [
-            "uv",
-            "version",
-            "--no-sync",
-            "--output-format",
-            "json",
-            *args,
-        ],
+    subprocess.check_call(
+        ["uv", "version", "--no-sync", "--output-format", "json", new_version]
     )
-    version = json.loads(version_json)
-    return version["version"]
+    return new_version
 
 
 def get_current_branch() -> str:
@@ -113,7 +126,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     check_repository()
 
     # Run the uv version command to update the version.
-    version = update_version(args.version_args)
+    version = update_version()
 
     release_branch = f"release/{version}"
     base_branch = get_current_branch()
