@@ -11,28 +11,43 @@
 
 [Copier](https://copier.readthedocs.io/) template for modern Python packages.
 
-## Setup and usage
+> [!NOTE]
+> This Copier template requires:
+>
+> - [Git](https://git-scm.com/) version 2.
+> - [Python](https://www.python.org/) 3.9 or more.
+> - [Copier](https://copier.readthedocs.io/) version 9.6 or more.
+> - [Copier Template-Extensions](https://github.com/copier-org/copier-template-extensions) version 0.3.2 or more.
+>
+> To install Git, [download and install it from git-scm.com](https://git-scm.com/downloads).
+>
+> To install Python, [download and install it from python.org](https://www.python.org/downloads/),
+> or [install uv](https://docs.astral.sh/uv/getting-started/installation/) to install it.
 
-This Copier template requires:
+To install Copier and Copier Template-Extensions, use [uv](https://docs.astral.sh/uv/)
+or [pipx](https://pipx.pypa.io/):
 
-- [Git](https://git-scm.com/) version 2.
-- [Python](https://www.python.org/) 3.9 or more.
-- [Copier](https://copier.readthedocs.io/) version 9.6 or more.
-- [Copier Template-Extensions](https://github.com/copier-org/copier-template-extensions) version 0.3.2 or more.
-
-To install Git, [download and install it from the official website](https://git-scm.com/downloads).
-
-To install Python, [download and install it from the official website](https://www.python.org/downloads/),
-or [install uv](https://docs.astral.sh/uv/getting-started/installation/) to install it.
-
-To install Copier and Copier Template-Extensions, use [uv](https://docs.astral.sh/uv/):
-
-```
+```bash
+# Use uv.
 uv tool install copier --with copier-template-extensions
+# Use pipx.
+pipx install copier
+pipx inject copier copier-template-extensions
 ```
+
+## Usage
 
 Run `copier copy` to generate your Python package:
 
-```
+```bash
+# Use HTTPS.
 copier copy --trust gh:leodevian/modern-python ./path/to/directory
+# Use SSH.
+copier copy --trust git@github.com:leodevian/modern-python ./path/to/directory
+```
+
+Run `copier update` to update your Python package to the latest version:
+
+```
+copier update --trust
 ```
