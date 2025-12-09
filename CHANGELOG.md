@@ -9,6 +9,31 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2025.12.9](https://github.com/leodevian/modern-python/tree/v2025.12.9)
+
+### Removed
+
+- Remove unnecessary setting `site_dir: site` from `mkdocs.yml`.
+
+### Added
+
+- Add an option to use Zensical.
+- Add icons to MkDocs documentation pages.
+- Add the license text to the documentation.
+
+### Changed
+
+- Edit theme features for MkDocs.
+- Remove heading in `docs/reference/cli.md`.
+- Remove unused patterns from `.gitignore` and add comments.
+- Switch to Calendar Versioning `YYYY.MM.DD.MICRO`.
+- Use mkdocs-click to create the CLI reference.
+
+### Fixed
+
+- Remove the CLI reference from the MkDocs documentation when the project does not provide `console_scripts` entry points.
+
+
 ## [5.0.0](https://github.com/leodevian/modern-python/tree/v5.0.0)
 
 ### Removed
