@@ -58,9 +58,7 @@ type = [
   { include-group = "test" },
 ]
 docs = [
-  "mkdocs>=1.6.1",
-  "mkdocs-material>=9.7",
-  "termynal>=0.13.1",
+  "zensical>=0.0.11",
 ]
 lint = [
   "pre-commit>=4.5",

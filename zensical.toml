@@ -1,0 +1,68 @@
+[project]
+site_name = "modern-python"
+site_description = "Copier template for modern Python packages"
+site_author = "Léo Bernard"
+copyright = "Copyright &copy; 2025 Léo Bernard"
+repo_url =  "https://github.com/leodevian/modern-python"
+repo_name = "leodevian/modern-python"
+edit_uri = "edit/main/docs/"
+nav = [
+  { "Home" = [
+    "index.md",
+    { "Release notes" = "changelog.md" },
+    { "License" = "license.md" },
+  ] },
+]
+
+[project.theme]
+features = [
+  "announce.dismiss",
+  "content.action.edit",
+  "content.action.view",
+  "content.code.annotate",
+  "content.code.copy",
+  "content.code.select",
+  "content.footnote.tooltips",
+  "content.tabs.link",
+  "content.tooltips",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.path",
+  "navigation.sections",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "toc.follow",
+]
+
+[project.theme.icon]
+logo = "lucide/copy-check"
+repo = "fontawesome/brands/github"
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[project.theme.font]
+text = "Inter"
+code = "JetBrains Mono"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/leodevian/modern-python"
+
+[project.markdown_extensions]
+admonition = {}
+pymdownx.details = {}
+pymdownx.highlight = { anchor_linenums = true, pygments_lang_class = true }
+pymdownx.snippets = {}
+pymdownx.superfences = {}
+pymdownx.tabbed = { alternate_style = true }

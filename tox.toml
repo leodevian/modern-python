@@ -44,12 +44,9 @@ skip_install = true
 dependency_groups = [ "docs" ]
 commands = [
   [
-    "mkdocs",
+    "zensical",
     "build",
     "--clean",
-    "--strict",
-    "--site-dir",
-    "{env_tmp_dir}",
     { replace = "posargs", extend = true },
   ],
 ]
@@ -60,9 +57,8 @@ skip_install = true
 dependency_groups = [ "docs" ]
 commands = [
   [
-    "mkdocs",
+    "zensical",
     "serve",
-    "--strict",
     "--open",
     { replace = "posargs", extend = true },
   ],
