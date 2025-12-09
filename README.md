@@ -15,7 +15,7 @@
 > This Copier template requires:
 >
 > - [Git](https://git-scm.com/) version 2.
-> - [Python](https://www.python.org/) 3.9 or more.
+> - [Python](https://www.python.org/) 3.10 or more.
 > - [Copier](https://copier.readthedocs.io/) version 9.6 or more.
 > - [Copier Template-Extensions](https://github.com/copier-org/copier-template-extensions) version 0.3.2 or more.
 >
