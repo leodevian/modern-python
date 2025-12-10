@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        env:
+        session:
           - lint
           - typecheck
 {%- if docs %}
@@ -40,17 +40,17 @@ jobs:
           uv tool install nox
           --python-preference only-managed
           --python 3.13
-      - name: Set up {% raw %}${{ matrix.env }}{% endraw %}
+      - name: Set up {% raw %}${{ matrix.session }}{% endraw %}
         run: >-
           nox
           --install-only
           --error-on-missing-interpreters
-          --session {% raw %}${{ matrix.env }}{% endraw %}
-      - name: Run {% raw %}${{ matrix.env }}{% endraw %}
+          --session {% raw %}${{ matrix.session }}{% endraw %}
+      - name: Run {% raw %}${{ matrix.session }}{% endraw %}
         run: >-
           nox
           --no-install
-          --session {% raw %}${{ matrix.env }}{% endraw %}
+          --session {% raw %}${{ matrix.session }}{% endraw %}
 
   tests:
     runs-on: ubuntu-latest
