@@ -21,10 +21,7 @@ jobs:
           enable-cache: true
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
       - name: Build the source distribution and the wheel
-        run: >-
-          uv build
-          --python-preference only-managed
-          --python 3.13
+        run: uv build
       - name: Store Python package distributions
         uses: actions/upload-artifact@v4
         with:
