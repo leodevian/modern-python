@@ -53,5 +53,5 @@ jobs:
       - name: Run the check suite
         run: >-
           tox run
-          --skip-pkg-install
+          --skip-uv-sync
           -e ${{ matrix.env }}
