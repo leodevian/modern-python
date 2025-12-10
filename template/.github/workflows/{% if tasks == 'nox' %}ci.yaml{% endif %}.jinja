@@ -37,7 +37,7 @@ jobs:
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
       - name: Install Nox
         run: >-
-          uv tool install 'nox[uv]'
+          uv tool install nox
           --python-preference only-managed
           --python 3.13
       - name: Set up {% raw %}${{ matrix.env }}{% endraw %}
@@ -74,7 +74,7 @@ jobs:
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
       - name: Install Nox
         run: >-
-          uv tool install 'nox[uv]'
+          uv tool install nox
           --python-preference only-managed
           --python 3.13
       - name: Set up the test suite
