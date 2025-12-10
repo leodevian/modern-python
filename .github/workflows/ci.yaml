@@ -24,32 +24,27 @@ jobs:
           - lint
           - typecheck
           - docs
-
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Install tox and extend it with tox-uv
         run: >-
           uv tool install tox
           --python-preference only-managed
           --python 3.13
           --with tox-uv
-
       - name: Set up ${{ matrix.env }}
         run: >-
           tox run
           --notest
           --skip-missing-interpreters false
           -e ${{ matrix.env }}
-
       - name: Run ${{ matrix.env }}
         run: >-
           tox run
