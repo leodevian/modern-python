@@ -9,6 +9,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2025.12.10.1](https://github.com/leodevian/modern-python/tree/v2025.12.10.1)
+
+### Changed
+
+- Rename release jobs.
+
+
 ## [2025.12.10](https://github.com/leodevian/modern-python/tree/v2025.12.10)
 
 ### Changed
