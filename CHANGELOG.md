@@ -9,6 +9,20 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
+## [2025.12.10](https://github.com/leodevian/modern-python/tree/v2025.12.10)
+
+### Changed
+
+- Bump astral-sh/setup-uv from 6 to 7.
+- Install `nox` instead of `nox[uv]` as uv is already installed.
+- Run CI on tags.
+- Run `uv build` to build Python package distributions.
+- Run checks and tests in parallel in CI.
+- Use Python 3.14 to install Nox in CI.
+- Use Python 3.14 to install tox in CI.
+- Use `null` for null values in YAML.
+
+
 ## [2025.12.9](https://github.com/leodevian/modern-python/tree/v2025.12.9)
 
 ### Removed
