@@ -26,32 +26,27 @@ jobs:
 {%- if docs %}
           - docs
 {%- endif %}
-
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-
       - name: Install tox
         run: >-
           uv tool install tox
           --python-preference only-managed
           --python 3.13
           --with tox-uv
-
       - name: Setup the check suite
         run: >-
           tox run
           --notest
           --skip-missing-interpreters false
           -e {% raw %}${{ matrix.env }}{% endraw %}
-
       - name: Run the check suite
         run: >-
           tox run
@@ -74,32 +69,27 @@ jobs:
           - "3.12"
           - "3.11"
           - "3.10"
-
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-
       - name: Install tox
         run: >-
           uv tool install tox
           --python-preference only-managed
           --python 3.13
           --with tox-uv
-
       - name: Setup the test suite
         run: >-
           tox run
           --notest
           --skip-missing-interpreters false
           -e {% raw %}${{ matrix.python_version }}{% endraw %}
-
       - name: Run the test suite
         run: >-
           tox run

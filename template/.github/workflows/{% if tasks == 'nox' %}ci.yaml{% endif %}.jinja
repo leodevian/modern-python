@@ -26,31 +26,26 @@ jobs:
 {%- if docs %}
           - docs
 {%- endif %}
-
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-
       - name: Install Nox
         run: >-
           uv tool install 'nox[uv]'
           --python-preference only-managed
           --python 3.13
-
       - name: Setup the check suite
         run: >-
           nox
           --install-only
           --error-on-missing-interpreters
           --session {% raw %}${{ matrix.env }}{% endraw %}
-
       - name: Run the check suite
         run: >-
           nox
@@ -69,31 +64,26 @@ jobs:
           - "3.12"
           - "3.11"
           - "3.10"
-
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
       - name: Install uv
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           github-token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-
       - name: Install Nox
         run: >-
           uv tool install 'nox[uv]'
           --python-preference only-managed
           --python 3.13
-
       - name: Setup the test suite
         run: >-
           nox
           --install-only
           --error-on-missing-interpreters
           --session {% raw %}tests-${{ matrix.python_version }}{% endraw %}
-
       - name: Run the test suite
         run: >-
           nox
