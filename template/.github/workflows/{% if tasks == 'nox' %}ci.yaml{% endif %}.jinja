@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Install uv
+      - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
@@ -40,13 +40,13 @@ jobs:
           uv tool install 'nox[uv]'
           --python-preference only-managed
           --python 3.13
-      - name: Setup the check suite
+      - name: Set up {% raw %}${{ matrix.env }}{% endraw %}
         run: >-
           nox
           --install-only
           --error-on-missing-interpreters
           --session {% raw %}${{ matrix.env }}{% endraw %}
-      - name: Run the check suite
+      - name: Run {% raw %}${{ matrix.env }}{% endraw %}
         run: >-
           nox
           --no-install
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Install uv
+      - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
@@ -78,7 +78,7 @@ jobs:
           uv tool install 'nox[uv]'
           --python-preference only-managed
           --python 3.13
-      - name: Setup the test suite
+      - name: Set up the test suite
         run: >-
           nox
           --install-only
