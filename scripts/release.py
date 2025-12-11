@@ -67,9 +67,7 @@ def update_version() -> str:
         new_version = f"{new_version}.{patch}"
 
     # Update the version.
-    subprocess.check_call(
-        ["uv", "version", "--no-sync", "--output-format", "json", new_version]
-    )
+    subprocess.check_call(["uv", "version", "--no-sync", new_version])
     return new_version
 
 
