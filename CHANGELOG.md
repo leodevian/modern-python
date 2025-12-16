@@ -85,12 +85,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Add TOML support for Coverage.py.
 
+
 ## [4.11.0](https://github.com/leodevian/modern-python/tree/v4.11.0)
 
 ### Changed
 
 - Improve `scripts/release.py`. It can now pass arguments or options to `uv version` and create GitHub releases.
 - Remove the trailing slash from the documentation URL.
+
 
 ## [4.10.0](https://github.com/leodevian/modern-python/tree/v4.10.0)
 
@@ -109,6 +111,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Use `typer.echo` to print the version.
 - Use blacken-docs to format Python code blocks in documentation files.
 
+
 ## [4.9.0](https://github.com/leodevian/modern-python/tree/v4.9.0)
 
 ### Changed
@@ -117,11 +120,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Stop turning warnings into errors when serving the documentation locally.
 - Use raw strings in `mkdocs.yaml`.
 
+
 ## [4.8.0](https://github.com/leodevian/modern-python/tree/v4.8.0)
 
 ### Changed
 
 - Turn off live logs when running tests.
+
 
 ## [4.7.0](https://github.com/leodevian/modern-python/tree/v4.7.0)
 
@@ -130,11 +135,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Format `pyproject.toml`.
 - Stop reading `VERSION.txt` to set the version attribute.
 
+
 ## [4.6.0](https://github.com/leodevian/modern-python/tree/v4.6.0)
 
 ### Changed
 
 - Update pre-commit hooks.
+
 
 ## [4.5.0](https://github.com/leodevian/modern-python/tree/v4.5.0)
 
@@ -148,11 +155,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Fix command in Nox session `typecheck`.
 
+
 ## [4.4.0](https://github.com/leodevian/modern-python/tree/v4.4.0)
 
 ### Changed
 
 - Rename dependency group `tests` into `test`.
+
 
 ## [4.3.0](https://github.com/leodevian/modern-python/tree/v4.3.0)
 
@@ -164,6 +173,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Drop support for Python 3.9 and add support for Python 3.14.
 
+
 ## [4.2.0](https://github.com/leodevian/modern-python/tree/v4.2.0)
 
 ### Changed
@@ -171,11 +181,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Make Nox raise an error on missing interpreters in CI.
 - Use the default cache dependency glob for `astral-sh/setup-uv`.
 
+
 ## [4.1.3](https://github.com/leodevian/modern-python/tree/v4.1.3)
 
 ### Fixed
 
 - Remove an unused `noqa` directive in `scripts/release.py` when the project version is provided dynamically.
+
 
 ## [4.1.2](https://github.com/leodevian/modern-python/tree/v4.1.2)
 
@@ -183,17 +195,20 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Remove an unused import in `scripts/release.py` when the project version is provided dynamically.
 
+
 ## [4.1.1](https://github.com/leodevian/modern-python/tree/v4.1.1)
 
 ### Fixed
 
 - Add the project description to `README.md`.
 
+
 ## [4.1.0](https://github.com/leodevian/modern-python/tree/v4.1.0)
 
 ### Changed
 
 - Rename the `print_error` function to `print_err` in `scripts/release.py`.
+
 
 ## [4.0.0](https://github.com/leodevian/modern-python/tree/v4.0.0)
 
@@ -219,11 +234,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Install the package in editable mode to build the documentation.
 
+
 ## [3.1.1](https://github.com/leodevian/modern-python/tree/v3.1.1)
 
 ### Changed
 
 - Sort version flags for Cyclopts CLIs.
+
 
 ## [3.1.0](https://github.com/leodevian/modern-python/tree/v3.1.0)
 
@@ -231,6 +248,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Add minor changes to `README.md` and update the documentation homepage with the contents of `README.md`.
 - Update the release script `scripts/release.py`.
+
 
 ## [3.0.0](https://github.com/leodevian/modern-python/tree/v3.0.0)
 
@@ -243,6 +261,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Allow Ruff to add `from __future__ import annotations` to enable the deferred evaluation of annotations.
 - Import the extension loader from `copier_template_extensions` instead of `copier_templates_extensions`.
 
+
 ## [2.4.0](https://github.com/leodevian/modern-python/tree/v2.4.0)
 
 ### Added
@@ -252,6 +271,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 ### Changed
 
 - Shorten URLs.
+
 
 ## [2.3.0](https://github.com/leodevian/modern-python/tree/v2.3.0)
 
@@ -267,11 +287,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Bump astral-sh/setup-uv from 5 to 6.
 - Update pre-commit hooks.
 
+
 ## [2.2.0](https://github.com/leodevian/modern-python/tree/v2.2.0)
 
 ### Changed
 
 - Capitalize `Project-URL` labels in `pyproject.toml`.
+
 
 ## [2.1.0](https://github.com/leodevian/modern-python/tree/v2.1.0)
 
@@ -289,6 +311,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Edit descriptions in `tox.toml` and `noxfile.py`.
 - Update pre-commit hooks to their latest versions.
 
+
 ## [2.0.0](https://github.com/leodevian/modern-python/tree/v2.0.0)
 
 ### Added
@@ -302,6 +325,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Rewrite the quick setup and usage guide.
 - Sort CLI options in source code and tests.
 
+
 ## [1.5.0](https://github.com/leodevian/modern-python/tree/v1.5.0)
 
 ### Changed
@@ -314,6 +338,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Always install uv to run Nox sessions.
 
+
 ## [1.4.0](https://github.com/leodevian/modern-python/tree/v1.4.0)
 
 ### Added
@@ -324,6 +349,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Use pre-commit instead of pre-commit-uv.
 
+
 ## [1.3.0](https://github.com/leodevian/modern-python/tree/v1.3.0)
 
 ### Changed
@@ -333,11 +359,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Remove the upper version boundary for uv-build.
 - Update pre-commit hooks.
 
+
 ## [1.2.1](https://github.com/leodevian/modern-python/tree/v1.2.1)
 
 ### Fixed
 
 - Prevent coverage warnings for unclosed SQLite connections being raised as errors.
+
 
 ## [1.2.0](https://github.com/leodevian/modern-python/tree/v1.2.0)
 
@@ -349,11 +377,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 - Stop setting the log level to `INFO` during testing.
 
+
 ## [1.1.1](https://github.com/leodevian/modern-python/tree/v1.1.1)
 
 ### Fixed
 
 - Fix the extension of the version test.
+
 
 ## [1.1.0](https://github.com/leodevian/modern-python/tree/v1.1.0)
 
@@ -375,6 +405,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Fix sources to measure coverage for.
 - Fix variable name in `noxfile.py`.
 - Removed unused import in `noxfile.py`: `from nox.command import CommandFailed`.
+
 
 ## [1.0.0](https://github.com/leodevian/modern-python/tree/v1.0.0)
 
