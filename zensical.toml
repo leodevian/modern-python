@@ -61,8 +61,10 @@ link = "https://github.com/leodevian/modern-python"
 
 [project.markdown_extensions]
 admonition = {}
+attr_list = {}
+md_in_html = {}
 pymdownx.details = {}
-pymdownx.highlight = { anchor_linenums = true, pygments_lang_class = true }
+pymdownx.highlight = { anchor_linenums = true, line_spans = "__span", pygments_lang_class = true }
 pymdownx.snippets = {}
 pymdownx.superfences = {}
 pymdownx.tabbed = { alternate_style = true }
