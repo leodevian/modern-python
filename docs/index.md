@@ -35,7 +35,6 @@ or [pipx](https://pipx.pypa.io/):
 === "uv"
 
     ```
-
     uv tool install copier --with copier-template-extensions
     ```
 
