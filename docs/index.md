@@ -34,13 +34,13 @@ or [pipx](https://pipx.pypa.io/):
 
 === "uv"
 
-    ```
+    ```bash
     uv tool install copier --with copier-template-extensions
     ```
 
 === "pipx"
 
-    ```
+    ```bash
     pipx install copier
     pipx inject copier copier-template-extensions
     ```
@@ -51,18 +51,18 @@ Run `copier copy` to generate your Python package:
 
 === "HTTPS"
 
-    ```
+    ```bash
     copier copy --trust gh:leodevian/modern-python ./path/to/directory
     ```
 
 === "SSH"
 
-    ```
+    ```bash
     copier copy --trust git@github.com:leodevian/modern-python ./path/to/directory
     ```
 
 Run `copier update` to update your Python package to the latest version:
 
-```
+```bash
 copier update --trust
 ```
