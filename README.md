@@ -48,6 +48,6 @@ copier copy --trust git@github.com:leodevian/modern-python ./path/to/directory
 
 Run `copier update` to update your Python package to the latest version:
 
-```
+```bash
 copier update --trust
 ```
