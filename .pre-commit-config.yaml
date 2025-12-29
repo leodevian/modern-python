@@ -35,12 +35,10 @@ repos:
     hooks:
       - id: uv-lock
 
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+  - repo: https://github.com/crate-ci/typos
+    rev: v1.40.0
     hooks:
-      - id: codespell
-        additional_dependencies:
-          - tomli
+      - id: typos
 
   - repo: https://github.com/hukkin/mdformat
     rev: 1.0.0

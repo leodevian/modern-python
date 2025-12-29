@@ -89,9 +89,6 @@ lint.isort.required-imports = [
 lint.pydocstyle.convention = "google"
 lint.future-annotations = true
 
-[tool.codespell]
-write-changes = true
-
 [tool.pyproject-fmt]
 max_supported_python = "3.14"
 
