@@ -1,10 +1,10 @@
 [project]
-site_name = "modern-python"
+site_name = "python-package-template"
 site_description = "Copier template for modern Python packages"
 site_author = "Léo Bernard"
 copyright = "Copyright &copy; 2025 Léo Bernard"
-repo_url =  "https://github.com/leodevian/modern-python"
-repo_name = "leodevian/modern-python"
+repo_url =  "https://github.com/sztal/python-package-template"
+repo_name = "sztal/python-package-template"
 edit_uri = "edit/main/docs/"
 nav = [
   { "Home" = [
@@ -57,7 +57,7 @@ code = "JetBrains Mono"
 
 [[project.extra.social]]
 icon = "fontawesome/brands/github"
-link = "https://github.com/leodevian/modern-python"
+link = "https://github.com/sztal/python-package-template"
 
 [project.markdown_extensions]
 admonition = {}

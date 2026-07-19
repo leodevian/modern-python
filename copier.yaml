@@ -60,6 +60,17 @@ project_description:
   type: str
   help: Your project description?
 
+target_python:
+  type: str
+  help: Which Python version should tools target?
+  default: py314
+  choices:
+    Python 3.10: py310
+    Python 3.11: py311
+    Python 3.12: py312
+    Python 3.13: py313
+    Python 3.14: py314
+
 user_name:
   type: str
   help: Your name?
@@ -73,7 +84,7 @@ user_email:
 github_user:
   type: str
   help: Your GitHub username?
-  default: leodevian
+  default: sztal
 
 repository_path:
   type: str
@@ -117,33 +128,54 @@ license:
     MIT License: MIT
     Mozilla Public License 2.0: MPL-2.0
 
-backend:
-  type: str
-  help: Which build backend do you want to use?
-  default: uv
-  choices:
-    Hatchling: hatch
-    uv: uv
-
-hatch_plugins:
-  type: str
-  help: Which Hatch plugins do you want to use?
-  multiselect: true
-  default: [hatch-vcs]
-  when: "{{ backend == 'hatch' }}"
-  choices:
-    hatch-vcs: hatch-vcs
-
 dynamic_version:
   type: bool
   help: Whether the version is dynamic.
-  default: "{{ backend == 'hatch' and 'hatch-vcs' in hatch_plugins }}"
+  default: true
   when: false
+
+package_layout:
+  type: str
+  help: Which package layout do you want to use?
+  default: flat
+  choices:
+    Flat package: flat
+    Source package: src
+    Namespace package: namespace
+
+namespace_name:
+  type: str
+  help: What is the top-level namespace name?
+  default: "{{ package_name }}"
+  when: "{{ package_layout == 'namespace' }}"
+  validator: >-
+    {% if namespace_name == '' %}
+    The namespace name is required.
+    {% endif %}
+
+package_root:
+  type: str
+  help: The package source root.
+  default: >-
+    {% if package_layout == 'src' %}src{% elif package_layout == 'namespace' %}{{ namespace_name }}{% else %}.{% endif %}
+  when: false
+
+package_path:
+  type: str
+  help: The package path.
+  default: "{{ package_root }}/{{ package_name }}"
+  when: false
+
+code_of_conduct:
+  type: bool
+  help: Do you want to include a Code of Conduct?
+  default: false
 
 entry_points:
   type: str
   help: Which entry points do you want to add?
   multiselect: true
+  default: []
   choices:
     Command-line interface: cli
 
@@ -170,10 +202,8 @@ features:
 tasks:
   type: str
   help: Which task automation tool do you want to use?
-  when: "{{ 'tasks' in features }}"
-  choices:
-    tox: tox
-    Nox: nox
+  default: nox
+  when: false
 
 install:
   type: str
@@ -186,17 +216,16 @@ install:
 
 docs:
   type: str
-  help: Which static site generator do you want to use?
-  when: "{{ 'docs' in features }}"
-  choices:
-    MkDocs: mkdocs
-    Zensical: zensical
+  help: Documentation backend.
+  default: "{{ 'zensical' if 'docs' in features else '' }}"
+  when: false
 
 doctest:
   type: str
   help: Which interactive Python examples do you want to test?
   when: "{{ 'doctest' in features }}"
   multiselect: true
+  default: []
   choices:
     Docstrings: docstrings
     Documentation:

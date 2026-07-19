@@ -52,5 +52,4 @@ repos:
         additional_dependencies:
           - mdformat-footnote
           - mdformat-front-matters
-          - mdformat-mkdocs
           - mdformat-simple-breaks

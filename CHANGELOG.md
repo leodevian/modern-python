@@ -9,14 +9,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 
 <!-- towncrier release notes start -->
 
-## [2025.12.10.1](https://github.com/leodevian/modern-python/tree/v2025.12.10.1)
+## [2025.12.10.1](https://github.com/sztal/python-package-template/tree/v2025.12.10.1)
 
 ### Changed
 
 - Rename release jobs.
 
 
-## [2025.12.10](https://github.com/leodevian/modern-python/tree/v2025.12.10)
+## [2025.12.10](https://github.com/sztal/python-package-template/tree/v2025.12.10)
 
 ### Changed
 
@@ -30,7 +30,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Use `null` for null values in YAML.
 
 
-## [2025.12.9](https://github.com/leodevian/modern-python/tree/v2025.12.9)
+## [2025.12.9](https://github.com/sztal/python-package-template/tree/v2025.12.9)
 
 ### Removed
 
@@ -55,7 +55,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Remove the CLI reference from the MkDocs documentation when the project does not provide `console_scripts` entry points.
 
 
-## [5.0.0](https://github.com/leodevian/modern-python/tree/v5.0.0)
+## [5.0.0](https://github.com/sztal/python-package-template/tree/v5.0.0)
 
 ### Removed
 
@@ -86,7 +86,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Add TOML support for Coverage.py.
 
 
-## [4.11.0](https://github.com/leodevian/modern-python/tree/v4.11.0)
+## [4.11.0](https://github.com/sztal/python-package-template/tree/v4.11.0)
 
 ### Changed
 
@@ -94,7 +94,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Remove the trailing slash from the documentation URL.
 
 
-## [4.10.0](https://github.com/leodevian/modern-python/tree/v4.10.0)
+## [4.10.0](https://github.com/sztal/python-package-template/tree/v4.10.0)
 
 ### Removed
 
@@ -112,7 +112,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Use blacken-docs to format Python code blocks in documentation files.
 
 
-## [4.9.0](https://github.com/leodevian/modern-python/tree/v4.9.0)
+## [4.9.0](https://github.com/sztal/python-package-template/tree/v4.9.0)
 
 ### Changed
 
@@ -121,14 +121,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Use raw strings in `mkdocs.yaml`.
 
 
-## [4.8.0](https://github.com/leodevian/modern-python/tree/v4.8.0)
+## [4.8.0](https://github.com/sztal/python-package-template/tree/v4.8.0)
 
 ### Changed
 
 - Turn off live logs when running tests.
 
 
-## [4.7.0](https://github.com/leodevian/modern-python/tree/v4.7.0)
+## [4.7.0](https://github.com/sztal/python-package-template/tree/v4.7.0)
 
 ### Changed
 
@@ -136,14 +136,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Stop reading `VERSION.txt` to set the version attribute.
 
 
-## [4.6.0](https://github.com/leodevian/modern-python/tree/v4.6.0)
+## [4.6.0](https://github.com/sztal/python-package-template/tree/v4.6.0)
 
 ### Changed
 
 - Update pre-commit hooks.
 
 
-## [4.5.0](https://github.com/leodevian/modern-python/tree/v4.5.0)
+## [4.5.0](https://github.com/sztal/python-package-template/tree/v4.5.0)
 
 ### Changed
 
@@ -156,14 +156,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Fix command in Nox session `typecheck`.
 
 
-## [4.4.0](https://github.com/leodevian/modern-python/tree/v4.4.0)
+## [4.4.0](https://github.com/sztal/python-package-template/tree/v4.4.0)
 
 ### Changed
 
 - Rename dependency group `tests` into `test`.
 
 
-## [4.3.0](https://github.com/leodevian/modern-python/tree/v4.3.0)
+## [4.3.0](https://github.com/sztal/python-package-template/tree/v4.3.0)
 
 ### Added
 
@@ -174,7 +174,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Drop support for Python 3.9 and add support for Python 3.14.
 
 
-## [4.2.0](https://github.com/leodevian/modern-python/tree/v4.2.0)
+## [4.2.0](https://github.com/sztal/python-package-template/tree/v4.2.0)
 
 ### Changed
 
@@ -182,35 +182,35 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Use the default cache dependency glob for `astral-sh/setup-uv`.
 
 
-## [4.1.3](https://github.com/leodevian/modern-python/tree/v4.1.3)
+## [4.1.3](https://github.com/sztal/python-package-template/tree/v4.1.3)
 
 ### Fixed
 
 - Remove an unused `noqa` directive in `scripts/release.py` when the project version is provided dynamically.
 
 
-## [4.1.2](https://github.com/leodevian/modern-python/tree/v4.1.2)
+## [4.1.2](https://github.com/sztal/python-package-template/tree/v4.1.2)
 
 ### Fixed
 
 - Remove an unused import in `scripts/release.py` when the project version is provided dynamically.
 
 
-## [4.1.1](https://github.com/leodevian/modern-python/tree/v4.1.1)
+## [4.1.1](https://github.com/sztal/python-package-template/tree/v4.1.1)
 
 ### Fixed
 
 - Add the project description to `README.md`.
 
 
-## [4.1.0](https://github.com/leodevian/modern-python/tree/v4.1.0)
+## [4.1.0](https://github.com/sztal/python-package-template/tree/v4.1.0)
 
 ### Changed
 
 - Rename the `print_error` function to `print_err` in `scripts/release.py`.
 
 
-## [4.0.0](https://github.com/leodevian/modern-python/tree/v4.0.0)
+## [4.0.0](https://github.com/sztal/python-package-template/tree/v4.0.0)
 
 ### Security
 
@@ -235,14 +235,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Install the package in editable mode to build the documentation.
 
 
-## [3.1.1](https://github.com/leodevian/modern-python/tree/v3.1.1)
+## [3.1.1](https://github.com/sztal/python-package-template/tree/v3.1.1)
 
 ### Changed
 
 - Sort version flags for Cyclopts CLIs.
 
 
-## [3.1.0](https://github.com/leodevian/modern-python/tree/v3.1.0)
+## [3.1.0](https://github.com/sztal/python-package-template/tree/v3.1.0)
 
 ### Changed
 
@@ -250,7 +250,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Update the release script `scripts/release.py`.
 
 
-## [3.0.0](https://github.com/leodevian/modern-python/tree/v3.0.0)
+## [3.0.0](https://github.com/sztal/python-package-template/tree/v3.0.0)
 
 ### Added
 
@@ -262,7 +262,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Import the extension loader from `copier_template_extensions` instead of `copier_templates_extensions`.
 
 
-## [2.4.0](https://github.com/leodevian/modern-python/tree/v2.4.0)
+## [2.4.0](https://github.com/sztal/python-package-template/tree/v2.4.0)
 
 ### Added
 
@@ -273,7 +273,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Shorten URLs.
 
 
-## [2.3.0](https://github.com/leodevian/modern-python/tree/v2.3.0)
+## [2.3.0](https://github.com/sztal/python-package-template/tree/v2.3.0)
 
 ### Added
 
@@ -288,14 +288,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Update pre-commit hooks.
 
 
-## [2.2.0](https://github.com/leodevian/modern-python/tree/v2.2.0)
+## [2.2.0](https://github.com/sztal/python-package-template/tree/v2.2.0)
 
 ### Changed
 
 - Capitalize `Project-URL` labels in `pyproject.toml`.
 
 
-## [2.1.0](https://github.com/leodevian/modern-python/tree/v2.1.0)
+## [2.1.0](https://github.com/sztal/python-package-template/tree/v2.1.0)
 
 ### Security
 
@@ -312,7 +312,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Update pre-commit hooks to their latest versions.
 
 
-## [2.0.0](https://github.com/leodevian/modern-python/tree/v2.0.0)
+## [2.0.0](https://github.com/sztal/python-package-template/tree/v2.0.0)
 
 ### Added
 
@@ -326,7 +326,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Sort CLI options in source code and tests.
 
 
-## [1.5.0](https://github.com/leodevian/modern-python/tree/v1.5.0)
+## [1.5.0](https://github.com/sztal/python-package-template/tree/v1.5.0)
 
 ### Changed
 
@@ -339,7 +339,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Always install uv to run Nox sessions.
 
 
-## [1.4.0](https://github.com/leodevian/modern-python/tree/v1.4.0)
+## [1.4.0](https://github.com/sztal/python-package-template/tree/v1.4.0)
 
 ### Added
 
@@ -350,7 +350,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Use pre-commit instead of pre-commit-uv.
 
 
-## [1.3.0](https://github.com/leodevian/modern-python/tree/v1.3.0)
+## [1.3.0](https://github.com/sztal/python-package-template/tree/v1.3.0)
 
 ### Changed
 
@@ -360,14 +360,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Update pre-commit hooks.
 
 
-## [1.2.1](https://github.com/leodevian/modern-python/tree/v1.2.1)
+## [1.2.1](https://github.com/sztal/python-package-template/tree/v1.2.1)
 
 ### Fixed
 
 - Prevent coverage warnings for unclosed SQLite connections being raised as errors.
 
 
-## [1.2.0](https://github.com/leodevian/modern-python/tree/v1.2.0)
+## [1.2.0](https://github.com/sztal/python-package-template/tree/v1.2.0)
 
 ### Added
 
@@ -378,14 +378,14 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Stop setting the log level to `INFO` during testing.
 
 
-## [1.1.1](https://github.com/leodevian/modern-python/tree/v1.1.1)
+## [1.1.1](https://github.com/sztal/python-package-template/tree/v1.1.1)
 
 ### Fixed
 
 - Fix the extension of the version test.
 
 
-## [1.1.0](https://github.com/leodevian/modern-python/tree/v1.1.0)
+## [1.1.0](https://github.com/sztal/python-package-template/tree/v1.1.0)
 
 ### Changed
 
@@ -407,7 +407,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/).
 - Removed unused import in `noxfile.py`: `from nox.command import CommandFailed`.
 
 
-## [1.0.0](https://github.com/leodevian/modern-python/tree/v1.0.0)
+## [1.0.0](https://github.com/sztal/python-package-template/tree/v1.0.0)
 
 ### Added
 

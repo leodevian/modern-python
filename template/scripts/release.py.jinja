@@ -1,13 +1,8 @@
 # /// script
 # requires-python = ">=3.10"
 # dependencies = [
-{%- if dynamic_version %}
 #   "packaging>=24.2",
-{%- endif %}
 #   "towncrier>=25.8",
-{%- if not dynamic_version %}
-#   "uv>=0.8.6",
-{%- endif %}
 # ]
 # ///
 """Release a new version."""
@@ -17,14 +12,11 @@
 from __future__ import annotations
 
 import argparse
-{%- if not dynamic_version %}
-import json
-{%- endif %}
 import subprocess
-from typing import TYPE_CHECKING
-{% if dynamic_version %}
 from packaging.version import Version
-{% endif %}
+
+from typing import TYPE_CHECKING
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
@@ -39,15 +31,7 @@ def create_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="do not update the origin remote and reset the local repository",
     )
-{%- if dynamic_version %}
     parser.add_argument("version", type=Version, help="provide the version")
-{%- else %}
-    parser.add_argument(
-        "version_args",
-        nargs=argparse.PARSER,
-        help="arguments or options to pass to the uv version command",
-    )
-{%- endif %}
     return parser
 
 
@@ -55,24 +39,6 @@ def check_repository() -> None:
     """Check whether the local repository is dirty or clean."""
     subprocess.check_call(["git", "diff", "--exit-code"])
 
-{% if not dynamic_version %}
-def update_version(args: Sequence[str] | None) -> str:
-    """Update and return the version."""
-    # Update the version.
-    version_json = subprocess.check_output(
-        [
-            "uv",
-            "version",
-            "--no-sync",
-            "--output-format",
-            "json",
-            *args,
-        ],
-    )
-    version = json.loads(version_json)
-    return version["version"]
-
-{% endif %}
 def get_current_branch() -> str:
     """Get the current Git branch."""
     return subprocess.check_output(
@@ -124,12 +90,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     # Check whether the local repository is dirty or clean.
     check_repository()
-{% if dynamic_version %}
     version = str(args.version)
-{% else %}
-    # Run the uv version command to update the version.
-    version = update_version(args.uv_version_args)
-{% endif %}
     release_branch = f"release/{version}"
     base_branch = get_current_branch()
 
