@@ -1,0 +1,77 @@
+# {{ project_name }} agent guide
+
+## Project overview
+
+- Distribution: `{{ distribution_name }}`
+- Import package: `{{ package_name }}`
+- Source directory: `src/{{ package_name }}/`
+- Tests: `tests/`
+- Repository: {{ repository_url }}
+
+{{ project_description }}
+
+## Working conventions
+
+Read and follow [STYLE.md](STYLE.md) before changing Python code or tests.
+`pyproject.toml` is the source of truth for dependency groups, Ruff, mypy,
+pytest, and coverage configuration.
+
+Keep changes focused, preserve public behavior unless the task intentionally
+changes it, and add or update tests for behavior changes.
+
+## Development notes
+
+Use `devnotes/` to record concise, task-specific context during development.
+Read [devnotes/example.md](devnotes/example.md) before starting a note, and
+replace it with notes that capture decisions, validation results, and useful
+follow-up work.
+
+## Validation
+
+{% if tasks == "tox" -%}
+Use tox to run the generated automation:
+
+```console
+uvx tox -m checks
+uvx tox -m tests
+```
+{%- elif tasks == "nox" %}
+Use the generated Nox script to run automation:
+
+```console
+uv run noxfile.py -s lint
+uv run noxfile.py -s typecheck
+uv run noxfile.py -s tests
+```
+{%- else %}
+Run the appropriate dependency group directly:
+
+```console
+uv run --group lint pre-commit run --all-files
+uv run --group type mypy src tests
+uv run --group test pytest
+```
+{%- endif %}
+{%- if docs %}
+
+## Documentation
+
+Documentation lives in `docs/`. Build it with the applicable command below
+before submitting documentation changes.
+{%- if tasks == "tox" %}
+
+```console
+uvx tox -e docs
+```
+{%- elif tasks == "nox" %}
+
+```console
+uv run noxfile.py -s docs
+```
+{%- else %}
+
+```console
+uv run --group docs {{ "mkdocs" if docs == "mkdocs" else "zensical" }} build --strict
+```
+{%- endif %}
+{%- endif %}
