@@ -17,6 +17,29 @@ Install `{{ distribution_name }}` using [pip](https://pip.pypa.io/) or [uv](http
 ```
 pip install {{ distribution_name }}
 ```
+
+## Development
+
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/) and
+create a virtual environment:
+
+```bash
+uv venv
+source .venv/bin/activate
+```
+
+Install the package and its development dependencies:
+
+```bash
+uv sync --group dev
+```
+
+Run the test suite and checks with:
+
+```bash
+uv run pytest
+uv run pre-commit run --all-files
+```
 {% if cli %}
 ## Execution
 
