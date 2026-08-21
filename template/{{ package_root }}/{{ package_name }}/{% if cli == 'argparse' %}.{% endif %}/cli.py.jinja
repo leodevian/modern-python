@@ -1,0 +1,28 @@
+"""The command-line interface."""
+
+from __future__ import annotations
+
+import argparse
+from typing import TYPE_CHECKING
+
+from . import __version__
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+
+def create_parser() -> argparse.ArgumentParser:
+    """Create the argument parser."""
+    parser = argparse.ArgumentParser(prog="{{ distribution_name }}")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
+    return parser
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """Run the main program."""
+    create_parser().parse_args(argv)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

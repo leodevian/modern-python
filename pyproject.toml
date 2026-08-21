@@ -1,5 +1,5 @@
 [project]
-name = "modern-python"
+name = "python-package-template"
 version = "2025.12.10.1"
 description = "Copier template for Python projects"
 readme = "README.md"
@@ -12,10 +12,10 @@ license-files = [
   "LICENSE",
 ]
 maintainers = [
-  { name = "Léo Bernard", email = "leodevian.gh@gmail.com" },
+  { name = "Szymon Talaga", email = "stalaga@protonmail.com" },
 ]
 authors = [
-  { name = "Léo Bernard", email = "leodevian.gh@gmail.com" },
+  { name = "Szymon Talaga", email = "stalaga@protonmail.com" },
 ]
 requires-python = ">=3.10"
 classifiers = [
@@ -39,11 +39,11 @@ dependencies = [
   "copier>=9.6",
   "copier-template-extensions>=0.3.2",
 ]
-urls.Changelog = "https://github.com/leodevian/modern-python/blob/main/CHANGELOG.md"
-urls.Documentation = "https://github.com/leodevian/modern-python/tree/main/docs"
-urls.Homepage = "https://github.com/leodevian/modern-python"
-urls.Issues = "https://github.com/leodevian/modern-python/issues"
-urls.Repository = "https://github.com/leodevian/modern-python"
+urls.Changelog = "https://github.com/sztal/python-package-template/blob/main/CHANGELOG.md"
+urls.Documentation = "https://github.com/sztal/python-package-template/tree/main/docs"
+urls.Homepage = "https://github.com/sztal/python-package-template"
+urls.Issues = "https://github.com/sztal/python-package-template/issues"
+urls.Repository = "https://github.com/sztal/python-package-template"
 
 [dependency-groups]
 dev = [
@@ -52,7 +52,11 @@ dev = [
   { include-group = "test" },
   { include-group = "type" },
 ]
-test = [  ]
+test = [
+  "coverage[toml]>=7.11",
+  "pytest>=9",
+  "pytest-xdist>=3.8",
+]
 type = [
   "mypy>=1.19",
   { include-group = "test" },
@@ -68,6 +72,8 @@ release = [
 ]
 
 [tool.ruff]
+line-length = 88
+target-version = "py310"
 extend-exclude = [  ]
 lint.select = [
   "ALL",
@@ -90,16 +96,24 @@ lint.pydocstyle.convention = "google"
 lint.future-annotations = true
 
 [tool.pyproject-fmt]
-max_supported_python = "3.14"
+[tool.pytest.ini_options]
+addopts = "-v --tb=short"
+filterwarnings = [
+  "error",
+]
+testpaths = [
+  "tests",
+]
+strict = true
 
 [tool.towncrier]
-name = "modern-python"
+name = "python-package-template"
 filename = "CHANGELOG.md"
 directory = "changelog.d"
 start_string = "<!-- towncrier release notes start -->\n"
 underlines = [ "", "", "" ]
-title_format = "## [{version}](https://github.com/leodevian/modern-python/tree/v{version})"
-issue_format = "[#{issue}](https://github.com/leodevian/modern-python/issues/{issue})"
+title_format = "## [{version}](https://github.com/sztal/python-package-template/tree/v{version})"
+issue_format = "[#{issue}](https://github.com/sztal/python-package-template/issues/{issue})"
 
 [[tool.towncrier.type]]
 directory = "security"

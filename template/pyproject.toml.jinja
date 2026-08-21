@@ -1,25 +1,20 @@
 [build-system]
-{%- with requires = [] %}
-{%- if backend == 'hatch' %}
-build-backend = "hatchling.build"
-{%- if 'hatch-vcs' in hatch_plugins %}{% do requires.append('hatch-vcs>=0.4') %}{% endif %}
-{%- do requires.append('hatchling>=1.27') %}
-{%- elif backend == 'uv' %}
-build-backend = "uv_build"
-{%- do requires.append('uv-build>=0.8.6') %}
-{%- endif %}
 requires = [
-{%- for requirement in requires | sort %}
-  "{{ requirement }}",
-{%- endfor %}
+  "hatchling>=1.27",
+  "uv-dynamic-versioning>=0.14",
 ]
-{%- endwith %}
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+[tool.hatch.build.targets.wheel]
+packages = [
+  "{{ package_path }}",
+]
 
 [project]
 name = "{{ distribution_name }}"
-{%- if not dynamic_version %}
-version = "0.1.0"
-{%- endif %}
 description = "{{ project_description }}"
 readme = "README.md"
 license = "{{ license }}"
@@ -47,25 +42,24 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Typing :: Typed",
 ]
-{%- if dynamic_version %}
 dynamic = [
   "version",
 ]
-{%- endif %}
-{%- with dependencies = [] %}
-{%- if cli == 'click' %}{% do dependencies.append('click>=8.3') %}
-{%- elif cli == 'typer' %}{% do dependencies.append('typer>=0.20') %}
-{%- elif cli == 'cyclopts' %}{% do dependencies.append('cyclopts>=4') %}{% endif %}
-{%- if dependencies %}
+{%- if cli == 'click' %}
 dependencies = [
-{%- for dependency in dependencies | sort %}
-  "{{ dependency }}",
-{%- endfor %}
+  "click>=8.3",
+]
+{%- elif cli == 'typer' %}
+dependencies = [
+  "typer>=0.20",
+]
+{%- elif cli == 'cyclopts' %}
+dependencies = [
+  "cyclopts>=4",
 ]
 {%- else %}
 dependencies = [  ]
 {%- endif %}
-{%- endwith %}
 {%- if docs %}
 urls.Changelog = "{{ documentation_url }}/changelog"
 urls.Documentation = "{{ documentation_url }}/"
@@ -96,17 +90,8 @@ type = [
   "mypy>=1.15",
   { include-group = "test" },
 ]
-{%- if docs == 'mkdocs' %}
+{%- if docs == "zensical" %}
 docs = [
-  "black>=25.11",
-  "mkdocs>=1.6.1",
-  "mkdocs-click>=0.9",
-  "mkdocs-material>=9.7",
-  "mkdocstrings-python>=2",
-]
-{%- elif docs == "zensical" %}
-docs = [
-  "black>=25.11",
   "zensical>=0.0.11",
   "mkdocstrings-python>=2",
 ]
@@ -117,43 +102,49 @@ lint = [
 release = [
   "towncrier>=25.8",
 ]
-{% if backend == 'hatch' and hatch_plugins %}
-[tool.hatch]
-{%- if 'hatch-vcs' in hatch_plugins %}
-build.hooks.vcs.version-file = "src/{{ package_name }}/VERSION.txt"
-version.fallback-version = "0.0.0"
-version.source = "vcs"
-version.raw-options.local_scheme = "no-local-version"
-{%- endif %}
-{% endif %}
 [tool.ruff]
+line-length = 88
+target-version = "{{ target_python }}"
 lint.select = [
-  "ALL",
+  "E",
+  "W",
+  "F",
+  "I",
+  "UP",
+  "B",
+  "C4",
+  "SIM",
+  "PIE",
+  "RUF",
 ]
 lint.ignore = [
+  "E501",
   "COM812", # conflicts with formatter
   "ISC001", # conflicts with formatter
 ]
 lint.per-file-ignores."tests/**" = [
   "S101", # using assert is okay in tests
 ]
-lint.isort.required-imports = [
-  "from __future__ import annotations",
+lint.isort.known-first-party = [
+  "{{ package_name }}",
 ]
-lint.pydocstyle.convention = "google"
+lint.pydocstyle.convention = "numpy"
+format.quote-style = "double"
+format.indent-style = "space"
+format.docstring-code-format = true
 lint.future-annotations = true
 
 [tool.codespell]
 write-changes = true
 
 [tool.pyproject-fmt]
-max_supported_python = "3.14"
-
 [tool.pytest]
 minversion = "9.0"
 addopts = [
   "-ra",
-{%- if 'readme' in doctest or 'docs' in doctest and docs == 'mkdocs' %}
+  "-v",
+  "--tb=short",
+{%- if 'readme' in doctest or 'docs' in doctest %}
   "--doctest-glob",
   "*.md",
 {%- endif %}
@@ -171,7 +162,7 @@ testpaths = [
   "docs",
 {%- endif %}
 {%- if 'docstrings' in doctest %}
-  "src",
+  "{{ package_root }}",
 {%- endif %}
   "tests",
 {%- if 'readme' in doctest %}
@@ -184,12 +175,8 @@ strict = true
 html.show_contexts = true
 html.skip_covered = false
 paths.source = [
-  "src",
-{%- if tasks == 'tox' %}
-  ".tox/**/site-packages",
-{%- elif tasks == 'nox' %}
+  "{{ package_root }}",
   ".nox/**/site-packages",
-{%- endif %}
 ]
 report.exclude_also = [
   "-> [\"']?(Never|NoReturn)[\"']?:",
@@ -261,7 +248,7 @@ name = "Fixed"
 showcontent = true
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.{{ target_python[3:] }}"
 warn_unreachable = true
 enable_error_code = [
   "ignore-without-code",

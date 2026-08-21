@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
-import importlib.resources
+import importlib.metadata
 
 from {{ package_name }} import __version__
 
 
 def test_version() -> None:
     """Test that the version attribute matches the package version."""
-    version_path = importlib.resources.files("{{ package_name }}")
-    version = version_path.read_text().rstrip()
+    version = importlib.metadata.version("{{ distribution_name }}")
     assert __version__ == version
