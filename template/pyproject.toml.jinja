@@ -128,10 +128,11 @@ lint.per-file-ignores."tests/**" = [
 lint.isort.known-first-party = [
   "{{ package_name }}",
 ]
-lint.pydocstyle.convention = "google"
+lint.pydocstyle.convention = "numpy"
 format.quote-style = "double"
 format.indent-style = "space"
 format.docstring-code-format = true
+lint.future-annotations = true
 
 [tool.codespell]
 write-changes = true
